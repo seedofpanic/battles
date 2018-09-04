@@ -19,6 +19,7 @@ export class Player {
     resists: {[name: string]: number};
     effects: Effect[] = [];
     character: Character;
+    ws: WebSocket;
 
     constructor(public chatId: string, public username: string) {
     }

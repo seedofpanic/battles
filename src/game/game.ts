@@ -1,6 +1,5 @@
 import {Player} from './player';
 import {Combat} from './combat';
-import {bot} from './bot';
 import {capitalize} from '../../utils/capitalize';
 import {randomBytes} from 'crypto';
 
@@ -23,7 +22,7 @@ export class Game {
         return Math.ceil(Math.random() * (maxDamage - minDamage)) + minDamage;
     }
 
-    startDuel(chatId: string, username: string, combatId: string | null) {
+    startDuel(player: Player, combatId: string | null) {
         let combat: Combat;
 
         if (combatId === null) {
@@ -33,8 +32,8 @@ export class Game {
 
             this.combatsInvites[newCombatId] = combat;
 
-            bot.sendMessage(chatId, 'Дуэль создана, передайте ссылку своему оппоненту:');
-            bot.sendMessage(chatId, `https://t.me/${bot.me.username}?start=${newCombatId}`);
+            player.ws.send('Дуэль создана, передайте ссылку своему оппоненту:');
+            player.ws.send(`https://battles.mobmind.ru?start=${newCombatId}`);
         } else {
             combat = this.combatsInvites[combatId];
 
@@ -42,28 +41,28 @@ export class Game {
         }
 
         if (!combat) {
-            bot.sendMessage(chatId, 'Ваша дуэль уже закончилась или была отменена, бросте новый вызов /вызов');
+            player.ws.send('Ваша дуэль уже закончилась или была отменена, бросте новый вызов /вызов');
 
             return;
         }
 
-        this.start(chatId, username, combat);
-        this.showCharacters(chatId);
+        this.start(player, combat);
+        this.showCharacters(player);
     }
 
-    startCombat(chatId: string, username: string) {
+    startCombat(player: Player) {
         const combat = this.getCombatFromQueue();
 
         if (combat.isFull()) {
             this.combatsQueue.splice(this.combatsQueue.indexOf(combat));
         }
 
-        this.start(chatId, username, combat);
-        this.showCharacters(chatId);
+        this.start(player, combat);
+        this.showCharacters(player);
     }
 
-    showCharacters(chatId: string) {
-        bot.sendMessage(chatId, 'выберите персонажа', this.getCharacters());
+    showCharacters(player: Player) {
+        player.ws.send({msg: 'выберите персонажа', actions: this.getCharacters()});
     }
 
     isAllowedCharacter(character: string) {
@@ -80,15 +79,14 @@ export class Game {
         return this.players[chatId];
     }
 
-    selectCharacter(chatId: string, character: string) {
-        const player = this.getPlayer(chatId);
+    selectCharacter(player: Player, character: string) {
 
         if (!this.isAllowedCharacter(character)) {
             return;
         }
 
         if (!player.currentCombat) {
-            this.startCombat(chatId, player.username);
+            this.startCombat(player);
 
             return;
         }
@@ -100,7 +98,7 @@ export class Game {
         if (combat.isReadyToStart()) {
             combat.start();
         } else {
-            bot.sendMessage(chatId, 'Ожидаем противника');
+            player.ws.send('Ожидаем противника');
         }
     }
 
@@ -115,15 +113,9 @@ export class Game {
             }};
     }
 
-    private start(chatId: string, username: string, combat: Combat) {
-        let player = this.getPlayer(chatId);
-
-        if (!player) {
-            player = this.addPlayer(chatId, username);
-        }
-
+    private start(player: Player, combat: Combat) {
         if (player.currentCombat) {
-            bot.sendMessage(chatId, 'Вы уже ожидаете противника, напишите /стоп для выхода из очереди');
+            player.ws.send('Вы уже ожидаете противника, напишите /стоп для выхода из очереди');
 
             return;
         }

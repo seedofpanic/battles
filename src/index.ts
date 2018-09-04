@@ -1,88 +1,88 @@
+import * as express from 'express';
+import * as expressWs from 'express-ws';
 import {Game} from './game/game';
 import {Combat} from './game/combat';
-import {bot} from './game/bot';
+import * as WebSocket from 'ws';
 
 const game = new Game();
 
-bot.onText(/^\/готов\s*(.*)$/, (msg, match) => {
-    const chatId = msg.chat.id.toString();
-    const username = msg.chat.username;
+export const app = expressWs(express()).app;
 
-    if (match[1]) {
-        game.selectCharacter(chatId, match[1]);
-    } else {
-        game.startCombat(chatId, username);
-    }
-});
-
-bot.onText(/^\/(invite|вызов)/, (msg) => {
-    const chatId = msg.chat.id.toString();
-    const username = msg.chat.username;
-
-    game.startDuel(chatId, username, null);
-});
-
-bot.onText(/^\/стоп$/, (msg) => {
-    const chatId = msg.chat.id.toString();
-    const player = game.players[chatId];
-
-    game.combatsQueue.splice(game.combatsQueue.indexOf(player.currentCombat), 1);
-    player.currentCombat = undefined;
-
-    bot.sendMessage(chatId, 'Вы покинули очередь');
-});
-
-bot.onText(/^\/act (.+)/, (msg, match) => {
-    const chatId = msg.chat.id.toString();
-    const player = game.players[chatId];
-    const combat = player.currentCombat;
-
-    try {
-        if (player.action) {
-            bot.sendMessage(chatId, 'Действие уже выбрано');
-
-            return;
+function wsOnJson<T>(ws: WebSocket, name: string, callback: (msg: T) => void) {
+    ws.on(name, msg => {
+        try {
+            callback(JSON.parse(msg));
+        } catch (e) {
+            console.error(e);
         }
+    });
+}
 
-        if (player.actions[match[1]] && player.actions[match[1]].isAvailable()) {
-            bot.sendMessage(chatId, 'Вы собрались ударить ' + match[1]);
-        } else {
-            bot.sendMessage(chatId, `Действие ${match[1]} сейчас не доступно`);
+app.ws('/ws', (ws, req) => {
+    const player = game.addPlayer(Math.random().toString(), req.body.username);
 
-            return;
-        }
+    wsOnJson<{characterId: string}>(ws,'ready', (msg) => {
+        game.selectCharacter(player, msg.characterId);
+    });
 
-        player.setAction(match[1]);
+    ws.on('invite', (msg) => {
+        game.startDuel(player, null);
+    });
 
-        if (combat.allReady()) {
-            combat.perform();
-            combat.showResult();
+    ws.on('stop', (msg) => {
+        const chatId = msg.chat.id.toString();
+        const player = game.players[chatId];
 
-            if (combat.isEnded) {
-                game.combatsEnded++;
+        game.combatsQueue.splice(game.combatsQueue.indexOf(player.currentCombat), 1);
+        player.currentCombat = undefined;
+
+        ws.send('Вы покинули очередь');
+    });
+
+    wsOnJson<{action: string}>(ws, 'act', (msg) => {
+        const combat = player.currentCombat;
+
+        try {
+            if (player.action) {
+                ws.send('Действие уже выбрано');
+
+                return;
             }
-        } else {
-            bot.sendMessage(chatId, 'ожидаем противника');
+
+            if (player.actions[msg.action] && player.actions[msg.action].isAvailable()) {
+                ws.send('Вы собрались ударить ' + msg.action);
+            } else {
+                ws.send(`Действие ${msg.action} сейчас не доступно`);
+
+                return;
+            }
+
+            player.setAction(msg.action);
+
+            if (combat.allReady()) {
+                combat.perform();
+                combat.showResult();
+
+                if (combat.isEnded) {
+                    game.combatsEnded++;
+                }
+            } else {
+                ws.send('ожидаем противника');
+            }
+        } catch (e) {
+            console.log(e);
         }
-    } catch (e) {
-        console.log(e);
-    }
+    });
+
+    wsOnJson<{combatId: string}>(ws, 'start', (msg) => {
+        game.startDuel(player, msg.combatId || null);
+    });
+
+    ws.on('info', (msg) => {
+        ws.send(`Боев сыграно ${game.combatsEnded} В данный момент идет ${game.combatsCount - game.combatsEnded} боев`);
+    });
 });
 
-bot.onText(/^\/start$/, (msg) => {
-    bot.sendMessage(msg.chat.id, 'Приветствую на Арене! Пиши /готов и вступай в бой!');
-});
-
-bot.onText(/^\/start (.*?)$/, (msg, match) => {
-    const chatId = msg.chat.id.toString();
-    const username = msg.chat.username;
-
-    game.startDuel(chatId, username, match[1] || null);
-});
-
-bot.onText(/^\/инфо/, (msg) => {
-    const chatId = msg.chat.id.toString();
-
-    bot.sendMessage(chatId,
-        `Боев сыграно ${game.combatsEnded} В данный момент идет ${game.combatsCount - game.combatsEnded} боев`);
+app.listen('3003', () => {
+    console.log('Listening...');
 });

@@ -1,5 +1,4 @@
 import {Player} from './player';
-import {bot} from './bot';
 
 export class Combat {
     players: {[name: string]: Player} = {};
@@ -29,14 +28,14 @@ export class Combat {
 
     showResult() {
         Object.keys(this.players).forEach(id => {
-            bot.sendMessage(id, this.battleLog.join('\n'));
+            this.players[id].ws.send(this.battleLog.join('\n'));
 
             if (this.isEnded) {
-                bot.sendMessage(id, this.getDeadResult(id));
+                this.players[id].ws.send(this.getDeadResult(id));
 
                 this.players[id].currentCombat = undefined;
             } else {
-                bot.sendMessage(id, this.getRoundResult(id), this.getActions(this.players[id]));
+                this.players[id].ws.send({result: this.getRoundResult(id), actions: this.getActions(this.players[id])});
             }
         });
 
@@ -91,8 +90,10 @@ export class Combat {
 
     start() {
         Object.keys(this.players).forEach(chatId => {
-            bot.sendMessage(chatId, 'Противник найден\n' + this.getVsMessage(),
-                this.getActions(this.players[chatId]));
+            this.players[chatId].ws.send({
+                msg: 'Противник найден\n' + this.getVsMessage(),
+                actions: this.getActions(this.players[chatId])
+            });
         });
     }
 
