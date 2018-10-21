@@ -108,9 +108,9 @@ export class Player {
         this.resists = this.character.getResists();
     }
 
-    send(action: string, payload: any) {
+    send(type: string, payload: any) {
         this.ws.send(JSON.stringify({
-            action,
+            type,
             payload
         }));
     }

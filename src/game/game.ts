@@ -103,14 +103,9 @@ export class Game {
     }
 
     private getCharacters() {
-        return {reply_markup: {
-                keyboard: [
-                    Object.keys(allowedCharacters).map(character => {
-                        return {text: '/готов ' + capitalize(character)};
-                    })
-                ],
-                one_time_keyboard: true
-            }};
+        return Object.keys(allowedCharacters).map(character => {
+                        return {name: character};
+                    });
     }
 
     private start(player: Player, combat: Combat) {
