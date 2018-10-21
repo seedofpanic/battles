@@ -62,7 +62,7 @@ export class Game {
     }
 
     showCharacters(player: Player) {
-        player.ws.send({msg: 'выберите персонажа', actions: this.getCharacters()});
+        player.send({msg: 'выберите персонажа', actions: this.getCharacters()});
     }
 
     isAllowedCharacter(character: string) {
@@ -73,8 +73,8 @@ export class Game {
         return this.players[chatId];
     }
 
-    addPlayer(chatId: string, username: string | undefined): Player {
-        this.players[chatId] = new Player(chatId, username);
+    addPlayer(chatId: string): Player {
+        this.players[chatId] = new Player(chatId);
 
         return this.players[chatId];
     }

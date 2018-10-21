@@ -8,8 +8,10 @@ import {Warrior} from './characters/warrior';
 import {Barbarian} from './characters/barbarian';
 import {Vampire} from './characters/vampire';
 import {HitAction} from './actions/hitAction';
+import * as WebSocket from 'ws';
 
 export class Player {
+    username: string;
     currentCombat: Combat;
     healthMax: number;
     health: number;
@@ -21,7 +23,7 @@ export class Player {
     character: Character;
     ws: WebSocket;
 
-    constructor(public chatId: string, public username: string) {
+    constructor(public chatId: string) {
     }
 
     setAction(action: string) {
@@ -100,5 +102,9 @@ export class Player {
         this.health = this.healthMax;
         this.actions = this.character.getActions();
         this.resists = this.character.getResists();
+    }
+
+    send(msg: any) {
+        this.ws.send(JSON.stringify(msg));
     }
 }
