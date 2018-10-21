@@ -19,22 +19,22 @@ function doAction(player: Player, msg: any) {
             game.combatsQueue.splice(game.combatsQueue.indexOf(player.currentCombat), 1);
             player.currentCombat = undefined;
 
-            player.ws.send('Вы покинули очередь');
+            player.send('note', 'Вы покинули очередь');
             break;
         case 'act':
             const combat = player.currentCombat;
 
             try {
                 if (player.action) {
-                    player.ws.send('Действие уже выбрано');
+                    player.send('error', 'Действие уже выбрано');
 
                     return;
                 }
 
                 if (player.actions[msg.action] && player.actions[msg.action].isAvailable()) {
-                    player.ws.send('Вы собрались ударить ' + msg.action);
+                    player.send('note', 'Вы собрались ударить ' + msg.action);
                 } else {
-                    player.ws.send(`Действие ${msg.action} сейчас не доступно`);
+                    player.send('error', `Действие ${msg.action} сейчас не доступно`);
 
                     return;
                 }
@@ -49,7 +49,7 @@ function doAction(player: Player, msg: any) {
                         game.combatsEnded++;
                     }
                 } else {
-                    player.ws.send('ожидаем противника');
+                    player.send('note', 'ожидаем противника');
                 }
             } catch (e) {
                 console.log(e);
@@ -59,7 +59,7 @@ function doAction(player: Player, msg: any) {
             game.startDuel(player, msg.combatId || null);
             break;
         case 'info':
-            player.ws.send(`Боев сыграно ${game.combatsEnded} 
+            player.send('note', `Боев сыграно ${game.combatsEnded} 
                 В данный момент идет ${game.combatsCount - game.combatsEnded} боев`);
             break;
         case 'auth':
@@ -71,7 +71,7 @@ function doAction(player: Player, msg: any) {
 app.ws('/ws', (ws, req) => {
     const player = game.addPlayer(Math.random().toString());
 
-    player.ws = ws;
+    player.setWS(ws);
 
     ws.on('message', msg => {
         try {

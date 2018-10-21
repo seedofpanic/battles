@@ -32,8 +32,8 @@ export class Game {
 
             this.combatsInvites[newCombatId] = combat;
 
-            player.ws.send('Дуэль создана, передайте ссылку своему оппоненту:');
-            player.ws.send(`https://battles.mobmind.ru?start=${newCombatId}`);
+            player.send('note', 'Дуэль создана, передайте ссылку своему оппоненту:');
+            player.send('note', `https://battles.mobmind.ru?start=${newCombatId}`);
         } else {
             combat = this.combatsInvites[combatId];
 
@@ -41,7 +41,7 @@ export class Game {
         }
 
         if (!combat) {
-            player.ws.send('Ваша дуэль уже закончилась или была отменена, бросте новый вызов /вызов');
+            player.send('note', 'Ваша дуэль уже закончилась или была отменена, бросте новый вызов /вызов');
 
             return;
         }
@@ -62,7 +62,7 @@ export class Game {
     }
 
     showCharacters(player: Player) {
-        player.send({msg: 'выберите персонажа', actions: this.getCharacters()});
+        player.send('select_character', this.getCharacters());
     }
 
     isAllowedCharacter(character: string) {
@@ -98,7 +98,7 @@ export class Game {
         if (combat.isReadyToStart()) {
             combat.start();
         } else {
-            player.ws.send('Ожидаем противника');
+            player.send('note','Ожидаем противника');
         }
     }
 
@@ -115,7 +115,7 @@ export class Game {
 
     private start(player: Player, combat: Combat) {
         if (player.currentCombat) {
-            player.ws.send('Вы уже ожидаете противника, напишите /стоп для выхода из очереди');
+            player.send('error', 'Вы уже ожидаете противника, напишите /стоп для выхода из очереди');
 
             return;
         }

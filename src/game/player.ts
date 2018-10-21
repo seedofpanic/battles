@@ -21,9 +21,13 @@ export class Player {
     resists: {[name: string]: number};
     effects: Effect[] = [];
     character: Character;
-    ws: WebSocket;
+    private ws: WebSocket;
 
     constructor(public chatId: string) {
+    }
+
+    setWS(ws: WebSocket) {
+        this.ws = ws;
     }
 
     setAction(action: string) {
@@ -104,7 +108,10 @@ export class Player {
         this.resists = this.character.getResists();
     }
 
-    send(msg: any) {
-        this.ws.send(JSON.stringify(msg));
+    send(action: string, payload: any) {
+        this.ws.send(JSON.stringify({
+            action,
+            payload
+        }));
     }
 }
