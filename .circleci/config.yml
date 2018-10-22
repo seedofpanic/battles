@@ -37,7 +37,7 @@ jobs:
       - run: yarn run lint
 
       # run tests!
-      - run: yarn run testci
+      # - run: yarn run testci
 
       - deploy:
                 name: Staging Deploy
