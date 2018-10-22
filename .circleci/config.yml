@@ -42,7 +42,7 @@ jobs:
       - deploy:
                 name: Staging Deploy
                 command: |
-                    if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                    if [ "${CIRCLE_BRANCH}" == "release/0.3.0" ]; then
                       echo "${HOST_KEY}" >> ~/.ssh/known_hosts
 
                       ssh ${HOST_NAME} "cd ${HOST_DIR};git pull"
