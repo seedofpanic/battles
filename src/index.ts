@@ -28,7 +28,7 @@ function doAction(player: Player, action: any) {
 
             player.send('note', 'Вы покинули очередь');
             break;
-        case 'act':
+        case 'select_skill':
             const combat = player.currentCombat;
 
             try {
@@ -38,15 +38,15 @@ function doAction(player: Player, action: any) {
                     return;
                 }
 
-                if (player.actions[action.payload] && player.actions[action.action].isAvailable()) {
-                    player.send('note', 'Вы собрались ударить ' + action.action);
+                if (player.actions[action.payload] && player.actions[action.payload].isAvailable()) {
+                    player.send('note', 'Вы собрались ударить ' + player.actions[action.payload].name);
                 } else {
                     player.send('error', `Действие ${action.action} сейчас не доступно`);
 
                     return;
                 }
 
-                player.setAction(action.action);
+                player.setAction(action.payload);
 
                 if (combat.allReady()) {
                     combat.perform();

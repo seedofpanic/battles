@@ -35,8 +35,8 @@ export class Combat {
 
                 this.players[id].currentCombat = undefined;
             } else {
-                this.players[id].send('note',
-                    {result: this.getRoundResult(id), actions: this.getActions(this.players[id])});
+                this.players[id].send('note', this.getRoundResult(id));
+                this.players[id].send('select_skill', this.getActions(this.players[id]));
             }
         });
 
@@ -79,22 +79,15 @@ export class Combat {
             return {};
         }
 
-        return {reply_markup: {
-                keyboard: [
-                    Object.keys(player.actions)
+        return Object.keys(player.actions)
                         .filter(action => player.actions[action].isAvailable())
-                        .map(action => ({text: '/act ' + action}))
-                ],
-                one_time_keyboard: true
-            }};
+                        .map(action => ({id: action, name: player.actions[action].name}));
     }
 
     start() {
         Object.keys(this.players).forEach(chatId => {
-            this.players[chatId].send('note', {
-                msg: 'Противник найден\n' + this.getVsMessage(),
-                actions: this.getActions(this.players[chatId])
-            });
+            this.players[chatId].send('note', 'Противник найден\n' + this.getVsMessage());
+            this.players[chatId].send('select_skill', this.getActions(this.players[chatId]));
         });
     }
 
