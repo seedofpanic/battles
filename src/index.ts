@@ -86,6 +86,8 @@ app.ws('/ws', (ws, req) => {
     });
 });
 
+app.use(express.static('public'));
+
 app.listen('3003', () => {
     console.log('Listening...');
 });
