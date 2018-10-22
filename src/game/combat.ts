@@ -1,5 +1,4 @@
 import {Player} from './player';
-import {bot} from './bot';
 
 export class Combat {
     players: {[name: string]: Player} = {};
@@ -29,14 +28,15 @@ export class Combat {
 
     showResult() {
         Object.keys(this.players).forEach(id => {
-            bot.sendMessage(id, this.battleLog.join('\n'));
+            this.players[id].send('note', this.battleLog.join('\n'));
 
             if (this.isEnded) {
-                bot.sendMessage(id, this.getDeadResult(id));
+                this.players[id].send('note', this.getDeadResult(id));
 
                 this.players[id].currentCombat = undefined;
             } else {
-                bot.sendMessage(id, this.getRoundResult(id), this.getActions(this.players[id]));
+                this.players[id].send('note', this.getRoundResult(id));
+                this.players[id].send('select_skill', this.getActions(this.players[id]));
             }
         });
 
@@ -79,20 +79,15 @@ export class Combat {
             return {};
         }
 
-        return {reply_markup: {
-                keyboard: [
-                    Object.keys(player.actions)
+        return Object.keys(player.actions)
                         .filter(action => player.actions[action].isAvailable())
-                        .map(action => ({text: '/act ' + action}))
-                ],
-                one_time_keyboard: true
-            }};
+                        .map(action => ({id: action, name: player.actions[action].name}));
     }
 
     start() {
         Object.keys(this.players).forEach(chatId => {
-            bot.sendMessage(chatId, 'Противник найден\n' + this.getVsMessage(),
-                this.getActions(this.players[chatId]));
+            this.players[chatId].send('note', 'Противник найден\n' + this.getVsMessage());
+            this.players[chatId].send('select_skill', this.getActions(this.players[chatId]));
         });
     }
 

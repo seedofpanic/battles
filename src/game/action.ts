@@ -2,6 +2,7 @@ import {Player} from './player';
 import {DamageTypes} from './models/damageTypes';
 import {Combat} from './combat';
 
+// TODO: rename to Skill
 export abstract class Action {
     charges: number;
     recharge = 0;
