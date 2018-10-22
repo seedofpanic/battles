@@ -1,13 +1,20 @@
 import {Player} from './player';
 import {Combat} from './combat';
-import {capitalize} from '../../utils/capitalize';
 import {randomBytes} from 'crypto';
 
-export const allowedCharacters: {[name: string]: boolean} = {
-    'варвар': true,
-    'воин': true,
-    'маг': true,
-    'вампир': true,
+export const allowedCharacters: {[name: string]: {name: string}} = {
+    'barbarian': {
+        name: 'Варвар'
+    },
+    'warrior': {
+        name: 'Воин'
+    },
+    'mage': {
+        name: 'Маг'
+    },
+    'vampire': {
+        name: 'Вампир'
+    },
 };
 
 export class Game {
@@ -33,7 +40,7 @@ export class Game {
             this.combatsInvites[newCombatId] = combat;
 
             player.send('note', 'Дуэль создана, передайте ссылку своему оппоненту:');
-            player.send('note', `https://battles.mobmind.ru?start=${newCombatId}`);
+            player.send('note', `https://localhost?start=${newCombatId}`);
         } else {
             combat = this.combatsInvites[combatId];
 
@@ -66,7 +73,7 @@ export class Game {
     }
 
     isAllowedCharacter(character: string) {
-        return allowedCharacters[character.toLowerCase()];
+        return !!allowedCharacters[character];
     }
 
     getPlayer(chatId: string) {
@@ -103,8 +110,8 @@ export class Game {
     }
 
     private getCharacters() {
-        return Object.keys(allowedCharacters).map(character => {
-                        return {name: character};
+        return Object.keys(allowedCharacters).map((id) => {
+                        return {name: allowedCharacters[id].name, id};
                     });
     }
 

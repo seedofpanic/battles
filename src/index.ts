@@ -7,13 +7,20 @@ const game = new Game();
 
 export const app = expressWs(express()).app;
 
-function doAction(player: Player, msg: any) {
-    switch (msg.action) {
+function doAction(player: Player, action: any) {
+    switch (action.type) {
+        case 'select_character':
         case 'ready':
-            game.selectCharacter(player, msg.characterId);
+            game.selectCharacter(player, action.payload);
+            break;
+        case 'start':
+            game.startCombat(player);
             break;
         case 'invite':
             game.startDuel(player, null);
+            break;
+        case 'join':
+            game.startDuel(player, action.combatId || null);
             break;
         case 'stop':
             game.combatsQueue.splice(game.combatsQueue.indexOf(player.currentCombat), 1);
@@ -31,15 +38,15 @@ function doAction(player: Player, msg: any) {
                     return;
                 }
 
-                if (player.actions[msg.action] && player.actions[msg.action].isAvailable()) {
-                    player.send('note', 'Вы собрались ударить ' + msg.action);
+                if (player.actions[action.payload] && player.actions[action.action].isAvailable()) {
+                    player.send('note', 'Вы собрались ударить ' + action.action);
                 } else {
-                    player.send('error', `Действие ${msg.action} сейчас не доступно`);
+                    player.send('error', `Действие ${action.action} сейчас не доступно`);
 
                     return;
                 }
 
-                player.setAction(msg.action);
+                player.setAction(action.action);
 
                 if (combat.allReady()) {
                     combat.perform();
@@ -54,9 +61,6 @@ function doAction(player: Player, msg: any) {
             } catch (e) {
                 console.log(e);
             }
-            break;
-        case 'start':
-            game.startDuel(player, msg.combatId || null);
             break;
         case 'info':
             player.send('note', `Боев сыграно ${game.combatsEnded} 

@@ -86,16 +86,16 @@ export class Player {
 
     setCharacter(characterName: string) {
         switch (characterName.toLowerCase()) {
-            case 'варвар':
+            case 'barbarian':
                 this.character = new Barbarian();
                 break;
-            case 'воин':
+            case 'warrior':
                 this.character = new Warrior();
                 break;
-            case 'маг':
+            case 'mage':
                 this.character = new Mage();
                 break;
-            case 'вампир':
+            case 'vampire':
                 this.character = new Vampire();
                 break;
             default:

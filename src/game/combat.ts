@@ -28,14 +28,15 @@ export class Combat {
 
     showResult() {
         Object.keys(this.players).forEach(id => {
-            this.players[id].ws.send(this.battleLog.join('\n'));
+            this.players[id].send('note', this.battleLog.join('\n'));
 
             if (this.isEnded) {
-                this.players[id].ws.send(this.getDeadResult(id));
+                this.players[id].send('note', this.getDeadResult(id));
 
                 this.players[id].currentCombat = undefined;
             } else {
-                this.players[id].ws.send({result: this.getRoundResult(id), actions: this.getActions(this.players[id])});
+                this.players[id].send('note',
+                    {result: this.getRoundResult(id), actions: this.getActions(this.players[id])});
             }
         });
 
@@ -90,7 +91,7 @@ export class Combat {
 
     start() {
         Object.keys(this.players).forEach(chatId => {
-            this.players[chatId].ws.send({
+            this.players[chatId].send('note', {
                 msg: 'Противник найден\n' + this.getVsMessage(),
                 actions: this.getActions(this.players[chatId])
             });
