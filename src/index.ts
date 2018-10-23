@@ -72,8 +72,10 @@ function doAction(player: Player, action: any) {
     }
 }
 
+let id = 1;
+
 app.ws('/ws', (ws, req) => {
-    const player = game.addPlayer(Math.random().toString());
+    const player = game.addPlayer((id++).toString());
 
     player.setWS(ws);
 

@@ -102,6 +102,17 @@ export class Game {
 
         const combat = player.currentCombat;
 
+        Object.keys(combat.players).forEach(id => {
+            combat.players[id].send('character_update', {
+                id: player.chatId,
+                data: {
+                    name: player.getName(),
+                    healthMax: player.healthMax,
+                    health: player.health
+                }
+            });
+        });
+
         if (combat.isReadyToStart()) {
             combat.start();
         } else {

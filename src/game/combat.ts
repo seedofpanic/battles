@@ -28,15 +28,26 @@ export class Combat {
 
     showResult() {
         Object.keys(this.players).forEach(id => {
-            this.players[id].send('note', this.battleLog.join('\n'));
+            const player = this.players[id];
+
+            Object.keys(this.players).forEach(sendId => {
+                this.players[sendId].send('character_update', {
+                    id,
+                    data: {
+                        health: player.health
+                    }
+                });
+            });
+
+            player.send('note', this.battleLog.join('\n'));
 
             if (this.isEnded) {
-                this.players[id].send('note', this.getDeadResult(id));
+                player.send('note', this.getDeadResult(id));
 
-                this.players[id].currentCombat = undefined;
+                player.currentCombat = undefined;
             } else {
-                this.players[id].send('note', this.getRoundResult(id));
-                this.players[id].send('select_skill', this.getActions(this.players[id]));
+                player.send('note', this.getRoundResult(id));
+                player.send('select_skill', this.getActions(player));
             }
         });
 
@@ -93,6 +104,28 @@ export class Combat {
 
     addPlayer(player: Player) {
         this.players[player.chatId] = player;
+
+        Object.keys(this.players).forEach(id => {
+            const playerTo = this.players[id];
+
+            if (playerTo.character) {
+                player.send('character_update', {
+                    id: playerTo.chatId,
+                    data: {
+                        name: playerTo.getName(),
+                        healthMax: playerTo.healthMax,
+                        health: playerTo.health
+                    }
+                });
+            }
+
+            if (player.chatId === playerTo.chatId) {
+                player.send('set_my_id', playerTo.chatId);
+            } else {
+                player.send('set_opponent_id', playerTo.chatId);
+                playerTo.send('set_opponent_id', player.chatId);
+            }
+        });
     }
 
     isFull() {
