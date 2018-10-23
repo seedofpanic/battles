@@ -86,6 +86,23 @@ app.ws('/ws', (ws, req) => {
             console.error(e);
         }
     });
+
+    ws.on('close', () => {
+        if (player.currentCombat) {
+            Object.keys(player.currentCombat.players).forEach(id => {
+                const playerTo = player.currentCombat.players[id];
+
+                if (player === playerTo) {
+                     return;
+                }
+
+                playerTo.send('note', 'Opponent left, you won!');
+                playerTo.currentCombat = undefined;
+            });
+
+            game.combatsEnded++;
+        }
+    });
 });
 
 app.use(express.static('public'));

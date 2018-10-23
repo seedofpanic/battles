@@ -38,6 +38,7 @@ export class Game {
             combat = new Combat();
 
             this.combatsInvites[newCombatId] = combat;
+            this.combatsCount++;
 
             player.send('note', 'Дуэль создана, передайте ссылку своему оппоненту:');
             player.send('note', `https://localhost?start=${newCombatId}`);
@@ -135,7 +136,6 @@ export class Game {
 
         player.currentCombat = combat;
         combat.addPlayer(player);
-        this.combatsCount++;
     }
 
     private getCombatFromQueue(): Combat {
@@ -145,6 +145,7 @@ export class Game {
             const combat = new Combat();
 
             this.combatsQueue.push(combat);
+            this.combatsCount++;
 
             return combat;
         }
