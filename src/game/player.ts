@@ -109,6 +109,10 @@ export class Player {
     }
 
     send(type: string, payload: any) {
+        if (this.ws.readyState !== this.ws.OPEN) {
+            return;
+        }
+
         this.ws.send(JSON.stringify({
             type,
             payload

@@ -53,7 +53,7 @@ function doAction(player: Player, action: any) {
                     combat.showResult();
 
                     if (combat.isEnded) {
-                        game.combatsEnded++;
+                        game.endCombat();
                     }
                 } else {
                     player.send('note', 'ожидаем противника');
@@ -100,7 +100,7 @@ app.ws('/ws', (ws, req) => {
                 playerTo.currentCombat = undefined;
             });
 
-            game.combatsEnded++;
+            game.endCombat(player.currentCombat);
         }
     });
 });

@@ -121,6 +121,14 @@ export class Game {
         }
     }
 
+    endCombat(combat: Combat) {
+        this.combatsQueue.splice(this.combatsQueue.findIndex(c => c === combat));
+        this.combatsEnded++;
+        Object.keys(combat.players).forEach(id => {
+            combat.players[id].send('set_in_battle', false);
+        });
+    }
+
     private getCharacters() {
         return Object.keys(allowedCharacters).map((id) => {
                         return {name: allowedCharacters[id].name, id};
@@ -128,6 +136,8 @@ export class Game {
     }
 
     private start(player: Player, combat: Combat) {
+        player.send('set_in_battle', true);
+
         if (player.currentCombat) {
             player.send('error', 'Вы уже ожидаете противника, напишите /стоп для выхода из очереди');
 
