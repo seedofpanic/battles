@@ -53,7 +53,7 @@ function doAction(player: Player, action: any) {
                     combat.showResult();
 
                     if (combat.isEnded) {
-                        game.endCombat();
+                        game.endCombat(combat);
                     }
                 } else {
                     player.send('note', 'ожидаем противника');
