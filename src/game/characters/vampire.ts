@@ -19,7 +19,7 @@ export class Vampire extends Character {
         return {
             'ударить мечем': new SwordAction(),
             'укус': new VampireBiteAction(),
-            'уход в тень': new RemoveEffectsAction(),
+            'уход в тень': new RemoveEffectsAction('уход в тень'),
             'поток тьмы': new ShadowBoltAction()
         };
     }
