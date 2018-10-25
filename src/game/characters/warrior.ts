@@ -7,7 +7,7 @@ import {SwordAction} from '../actions/swordAction';
 
 export class Warrior extends Character {
     getName(): string {
-        return 'Воин';
+        return 'Warrior';
     }
 
     getHealthMax(): number {
@@ -16,9 +16,9 @@ export class Warrior extends Character {
 
     getActions(): { [p: string]: Action } {
         return {
-            'рассечь': new SwordCuttingAction(),
-            'ударить мечем': new SwordAction(),
-            'ударить щитом': new ShieldAction(),
+            'bleeding_wound': new SwordCuttingAction(),
+            'slash': new SwordAction(),
+            'shield_strike': new ShieldAction(),
         };
     }
 

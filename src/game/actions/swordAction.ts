@@ -1,7 +1,7 @@
 import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from './hitAction';
 
-const NAME = 'Удар мечем';
+const NAME = 'Slash';
 const MIN_DAMAGE = 5;
 const MAX_DAMAGE = 7;
 const CRIT_CHANCE = 0.2;

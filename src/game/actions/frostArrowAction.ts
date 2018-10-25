@@ -4,7 +4,7 @@ import {BurningDotEffect} from '../effects/burningDotEffect';
 import {DamageTypes} from '../models/damageTypes';
 import {Combat} from '../combat';
 
-const NAME = 'Ледяная стрела';
+const NAME = 'Frost arrow';
 const MIN_DAMAGE = 3;
 const MAX_DAMAGE = 9;
 const CRIT_CHANCE = 0.1;

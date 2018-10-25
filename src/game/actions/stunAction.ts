@@ -2,7 +2,7 @@ import {Action} from '../action';
 import {Player} from '../player';
 import {Combat} from '../combat';
 
-const NAME = 'Оглушение';
+const NAME = 'Stun';
 
 export class StunAction extends Action {
     constructor() {

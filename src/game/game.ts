@@ -4,16 +4,16 @@ import {randomBytes} from 'crypto';
 
 export const allowedCharacters: {[name: string]: {name: string}} = {
     'barbarian': {
-        name: 'Варвар'
+        name: 'Barbarian'
     },
     'warrior': {
-        name: 'Воин'
+        name: 'Warrior'
     },
     'mage': {
-        name: 'Маг'
+        name: 'Mage'
     },
     'vampire': {
-        name: 'Вампир'
+        name: 'Vampire'
     },
 };
 
@@ -40,7 +40,7 @@ export class Game {
             this.combatsInvites[newCombatId] = combat;
             this.combatsCount++;
 
-            player.send('note', 'Дуэль создана, передайте ссылку своему оппоненту:');
+            player.send('note', 'Duel created, give this link to your opponent:');
             player.send('note', `https://localhost?start=${newCombatId}`);
         } else {
             combat = this.combatsInvites[combatId];
@@ -49,7 +49,7 @@ export class Game {
         }
 
         if (!combat) {
-            player.send('note', 'Ваша дуэль уже закончилась или была отменена, бросте новый вызов /вызов');
+            player.send('note', 'Your duel has ended or were canceled');
 
             return;
         }
@@ -117,7 +117,7 @@ export class Game {
         if (combat.isReadyToStart()) {
             combat.start();
         } else {
-            player.send('note','Ожидаем противника');
+            player.send('note','Waiting for opponent to join');
         }
     }
 
@@ -139,7 +139,7 @@ export class Game {
         player.send('set_in_battle', true);
 
         if (player.currentCombat) {
-            player.send('error', 'Вы уже ожидаете противника, напишите /стоп для выхода из очереди');
+            player.send('error', 'You are already in queue');
 
             return;
         }

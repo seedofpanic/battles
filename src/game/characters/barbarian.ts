@@ -5,7 +5,7 @@ import {DamageTypes} from '../models/damageTypes';
 
 export class Barbarian extends Character {
     getName(): string {
-        return 'Варвар';
+        return 'Barbarian';
     }
 
     getHealthMax(): number {
@@ -14,8 +14,8 @@ export class Barbarian extends Character {
 
     getActions(): { [p: string]: Action } {
         return {
-            'ударить рукой': new HitAction('Удар рукой', 5, 7, DamageTypes.BLUNT, 0.1, 1.5),
-            'ударить ногой': new HitAction('Удар ногой', 3, 9, DamageTypes.BLUNT, 0.2, 3),
+            'bare_hand_strike': new HitAction('Bare hand strike', 5, 7, DamageTypes.BLUNT, 0.1, 1.5),
+            'bare_feet_strike': new HitAction('Bare feet strike', 3, 9, DamageTypes.BLUNT, 0.2, 3),
         };
     }
 

@@ -4,7 +4,7 @@ import {HitAction} from './hitAction';
 import {CuttingEffect} from '../effects/cuttingEffect';
 import {Combat} from '../combat';
 
-const NAME = 'Рассечение';
+const NAME = 'Bleeding wound';
 const MIN_DAMAGE = 5;
 const MAX_DAMAGE = 7;
 const CRIT_CHANCE = 0.1;

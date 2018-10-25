@@ -8,7 +8,7 @@ import {ShadowBoltAction} from '../actions/shadowBoltAction';
 
 export class Vampire extends Character {
     getName(): string {
-        return 'Вампир';
+        return 'Vampire';
     }
 
     getHealthMax(): number {
@@ -17,10 +17,10 @@ export class Vampire extends Character {
 
     getActions(): { [p: string]: Action } {
         return {
-            'ударить мечем': new SwordAction(),
-            'укус': new VampireBiteAction(),
-            'уход в тень': new RemoveEffectsAction('уход в тень'),
-            'поток тьмы': new ShadowBoltAction()
+            'slash': new SwordAction(),
+            'bite': new VampireBiteAction(),
+            'shadow_step': new RemoveEffectsAction('Shadow step'),
+            'shadow_bolt': new ShadowBoltAction()
         };
     }
 

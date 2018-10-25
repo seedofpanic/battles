@@ -6,7 +6,7 @@ import {Action} from '../action';
 
 export class Mage extends Character {
     getName(): string {
-        return 'Маг';
+        return 'Mage';
     }
 
     getHealthMax(): number {
@@ -15,8 +15,8 @@ export class Mage extends Character {
 
     getActions(): { [p: string]: Action } {
         return {
-            'огненный шар': new FireBallAction(),
-            'ледяная стрела': new FrostArrowAction(),
+            'fire_ball': new FireBallAction(),
+            'frost_arrow': new FrostArrowAction(),
         };
     }
 

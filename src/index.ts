@@ -26,22 +26,22 @@ function doAction(player: Player, action: any) {
             game.combatsQueue.splice(game.combatsQueue.indexOf(player.currentCombat), 1);
             player.currentCombat = undefined;
 
-            player.send('note', 'Вы покинули очередь');
+            player.send('note', 'You left the queue');
             break;
         case 'select_skill':
             const combat = player.currentCombat;
 
             try {
                 if (player.action) {
-                    player.send('error', 'Действие уже выбрано');
+                    player.send('error', 'Skill already selected');
 
                     return;
                 }
 
                 if (player.actions[action.payload] && player.actions[action.payload].isAvailable()) {
-                    player.send('note', 'Вы собрались ударить ' + player.actions[action.payload].name);
+                    player.send('note', `You will use ${player.actions[action.payload].name} skill`);
                 } else {
-                    player.send('error', `Действие ${action.action} сейчас не доступно`);
+                    player.send('error', `Skill ${action.action} is not available now`);
 
                     return;
                 }
@@ -56,15 +56,15 @@ function doAction(player: Player, action: any) {
                         game.endCombat(combat);
                     }
                 } else {
-                    player.send('note', 'ожидаем противника');
+                    player.send('note', 'Waiting for opponent...');
                 }
             } catch (e) {
                 console.log(e);
             }
             break;
         case 'info':
-            player.send('note', `Боев сыграно ${game.combatsEnded} 
-                В данный момент идет ${game.combatsCount - game.combatsEnded} боев`);
+            player.send('note', `Played duels: ${game.combatsEnded}`);
+            player.send('note', `Active duels: ${game.combatsCount - game.combatsEnded}`);
             break;
         case 'auth':
             break;

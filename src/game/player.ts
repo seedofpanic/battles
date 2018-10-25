@@ -42,7 +42,7 @@ export class Player {
             this.isDead = true;
         }
 
-        this.currentCombat.battleLog.push(`${action.name} наносит ${Math.ceil(damage)} урона`);
+        this.currentCombat.battleLog.push(`${action.name} do ${Math.ceil(damage)} damage`);
     }
 
     increaseHp(action: Action | Effect, heal: number) {
@@ -52,7 +52,7 @@ export class Player {
             this.health += heal;
         }
 
-        this.currentCombat.battleLog.push(`${action.name} восстанавливает ${Math.ceil(heal)} здоровья`);
+        this.currentCombat.battleLog.push(`${action.name} heals ${Math.ceil(heal)} hp`);
     }
 
     getResist(type: DamageTypes): number {
@@ -61,7 +61,7 @@ export class Player {
 
     addEffect(action: Action | Effect, effect: Effect) {
         this.effects.push(effect);
-        this.currentCombat.battleLog.push(`${action.name} накладывает эффек ${effect.name}`);
+        this.currentCombat.battleLog.push(`${action.name} adds ${effect.name} effect`);
     }
 
     getName() {

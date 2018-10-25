@@ -1,7 +1,7 @@
 import {DotEffect} from './dotEffect';
 import {DamageTypes} from '../models/damageTypes';
 
-const NAME = 'Горение';
+const NAME = 'Burning';
 
 export class BurningDotEffect extends DotEffect {
     constructor(minDamage: number,

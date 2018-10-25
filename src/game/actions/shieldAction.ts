@@ -5,7 +5,7 @@ import {StunEffect} from '../effects/stunEffect';
 import {CuttingEffect} from '../effects/cuttingEffect';
 import {Combat} from '../combat';
 
-const NAME = 'Удар щитом';
+const NAME = 'Shield strike';
 const MIN_DAMAGE = 3;
 const MAX_DAMAGE = 9;
 const CRIT_CHANCE = 0;

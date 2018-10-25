@@ -2,7 +2,7 @@ import {Effect} from '../effect';
 import {Player} from '../player';
 import {StunAction} from '../actions/stunAction';
 
-const NAME = 'Оглушение';
+const NAME = 'Stun';
 
 export class StunEffect extends Effect {
     constructor(roundsCount: number) {

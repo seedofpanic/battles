@@ -46,7 +46,6 @@ export class Combat {
 
                 player.currentCombat = undefined;
             } else {
-                player.send('note', this.getRoundResult(id));
                 player.send('select_skill', this.getActions(player));
             }
         });
@@ -54,26 +53,14 @@ export class Combat {
         this.battleLog.length = 0;
     }
 
-    getRoundResult(myId: string): string {
-        return Object.keys(this.players).map(key => {
-            const player = this.players[key];
-
-            if (myId === player.chatId.toString()) {
-                return `у вас осталось ${Math.ceil(player.health)}/${Math.ceil(player.healthMax)} здоровья`;
-            } else {
-                return `у противника ${Math.ceil(player.health)}/${Math.ceil(player.healthMax)} здоровья`;
-            }
-        }).join('\n');
-    }
-
     getDeadResult(myId: string): string {
         return Object.keys(this.players)
             .map(id => {
                 if (this.players[id].isDead) {
                     if (myId === id) {
-                        return 'Вы побеждены, игра окончена';
+                        return 'You died, the duel is over';
                     } else {
-                        return 'Ваш противник побежден, игра окончена';
+                        return 'Your opponent is dead, the duel is over';
                     }
                 }
             }).join('');
@@ -97,7 +84,7 @@ export class Combat {
 
     start() {
         Object.keys(this.players).forEach(chatId => {
-            this.players[chatId].send('note', 'Противник найден\n' + this.getVsMessage());
+            this.players[chatId].send('note', 'Opponent found: ' + this.getVsMessage());
             this.players[chatId].send('select_skill', this.getActions(this.players[chatId]));
         });
     }

@@ -1,7 +1,7 @@
 import {HitAction} from './hitAction';
 import {DamageTypes} from '../models/damageTypes';
 
-const NAME = 'Стрела тьмы';
+const NAME = 'Shadow bolt';
 const MIN_DAMAGE = 20;
 const MAX_DAMAGE = 30;
 const CRIT_CHANCE = 0;
