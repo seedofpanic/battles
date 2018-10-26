@@ -1,56 +1,50 @@
 import {Game} from './game';
-import {bot} from './bot';
+import {Player} from './player';
+import objectContaining = jasmine.objectContaining;
 
 describe('Game', () => {
     let game: Game;
+    let player: Player;
 
     beforeEach(() => {
         game  = new Game();
+        player = new Player('1');
 
-        spyOn(bot, 'sendMessage');
+        spyOn(player, 'send');
     });
 
     it('showCharacters показывает доступных персонажей', () => {
-        game.showCharacters('1');
+        game.showCharacters(player);
 
-        expect(bot.sendMessage).toBeCalledWith('1', 'выберите персонажа',
-            {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/готов Варвар'},
-                        {'text': '/готов Воин'},
-                        {'text': '/готов Маг'},
-                        {'text': '/готов Вампир'},
-                    ]],
-                    'one_time_keyboard': true
-                }
-            });
+        expect(player.send).toBeCalledWith('select_character', [
+                objectContaining({'id': 'barbarian'}),
+                objectContaining({'id': 'warrior'}),
+                objectContaining({'id': 'mage'}),
+                objectContaining({'id': 'vampire'})
+            ]);
     });
 
     describe('isAllowedCharacter проверяет доступность персонажей по названию', () => {
         it('Варвар доступен', () => {
-            expect(game.isAllowedCharacter('Варвар')).toBe(true);
-            expect(game.isAllowedCharacter('варвар')).toBe(true);
+            expect(game.isAllowedCharacter('barbarian')).toBe(true);
         });
 
         it('Воин доступен', () => {
-            expect(game.isAllowedCharacter('Воин')).toBe(true);
-            expect(game.isAllowedCharacter('воин')).toBe(true);
+            expect(game.isAllowedCharacter('warrior')).toBe(true);
         });
 
         it('Маг доступен', () => {
-            expect(game.isAllowedCharacter('Маг')).toBe(true);
-            expect(game.isAllowedCharacter('маг')).toBe(true);
+            expect(game.isAllowedCharacter('mage')).toBe(true);
         });
 
         it('Ёжик не доступен', () => {
             expect(game.isAllowedCharacter('Ёжик')).toBeFalsy();
-            expect(game.isAllowedCharacter('ёжик')).toBeFalsy();
         });
     });
 
     describe('addPlayer', () => {
         it('Верно добавляет пользователя в игру', () => {
-            const player = game.addPlayer('1', 'test');
+            const player = game.addPlayer('1');
 
             expect(game.players['1']).toBe(player);
         });
@@ -58,7 +52,7 @@ describe('Game', () => {
 
     describe('getPlayer', () => {
         it('Если пользователь есть в игре, возвращает его', () => {
-            const player = game.addPlayer('1', 'test');
+            const player = game.addPlayer('1');
 
             expect(game.getPlayer('1')).toBe(player);
         });

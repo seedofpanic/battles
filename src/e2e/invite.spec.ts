@@ -1,56 +1,34 @@
-import '../index';
-import {bot} from '../game/bot';
-import * as TelegramBot from 'node-telegram-bot-api';
-import {getMessage} from './helpers';
+import {doAction} from '../index';
 import * as crypto from 'crypto';
+import {Player} from '../game/player';
 
-bot.stopPolling();
+xdescribe('bot', () => {
 
-describe('bot', () => {
-
-    const results: {
-        chatId: number;
-        text: string;
-        options: TelegramBot.SendMessageOptions;
-    }[] = [];
-    let chat1: TelegramBot.Chat;
-    let chat2: TelegramBot.Chat;
+    const results: string[] = [];
+    let player1: Player;
+    let player2: Player;
 
     beforeAll(() => {
         spyOn(console, 'log').and.callFake(msg => results.push(msg));
-        spyOn(bot, 'sendMessage').and.callFake((chatId, text, options) => {
-            results.push({
-                chatId,
-                text,
-                options,
-            });
-        });
         spyOn(Math, 'random').and.returnValue(0.5);
     });
 
     beforeEach(() => {
-        chat1 = {
-            id: 1,
-            username: 'user 1',
-            type: 'test',
-        };
-        chat2 = {
-            id: 2,
-            username: 'user 2',
-            type: 'test',
-        };
+        player1 = new Player('1');
+        player2 = new Player('2');
         results.length = 0;
+
+        spyOn(player1, 'send').and.callFake((action, payload) => {
+            results.push(`${action} ${payload}`);
+        });
+        spyOn(player2, 'send').and.callFake((action, payload) => {
+            results.push(`${action} ${payload}`);
+        });
     });
 
     it('Первый игрок запрашивает приватный бой', () => {
         spyOn(crypto, 'randomBytes').and.returnValue('testhash');
-        bot.me = {
-            id: 1,
-            is_bot: true,
-            first_name: 'Bot',
-            username: '@testbot'
-        };
-        bot.processUpdate(getMessage(1, '/invite'));
+        doAction(player1, 'invite');
 
         expect(results).toEqual([
             {'chatId': '1', 'options': undefined, 'text': 'Дуэль создана, передайте ссылку своему оппоненту:'},
@@ -71,7 +49,7 @@ describe('bot', () => {
     });
 
     it('Второй игрок перешел по кривой ссылке', () => {
-        bot.processUpdate(getMessage(2, '/start duel10'));
+        doAction(2, '/start duel10');
 
         expect(results).toEqual([{
             'chatId': '2',
@@ -81,7 +59,7 @@ describe('bot', () => {
     });
 
     it('Второй игрок перешел по ссылке', () => {
-        bot.processUpdate(getMessage(2, '/start testhash'));
+        doAction(2, '/start testhash');
 
         expect(results).toEqual([{
             'chatId': '2',
@@ -100,7 +78,7 @@ describe('bot', () => {
     });
 
     it('Ссылка на дуэль более не доступна', () => {
-        bot.processUpdate(getMessage(2, '/start duel0'));
+        doAction(2, '/start duel0');
 
         expect(results).toEqual([{
             'chatId': '2',
@@ -110,7 +88,7 @@ describe('bot', () => {
     });
 
     it('Первый игрок сообщил что готов играть за Воина', () => {
-        bot.processUpdate(getMessage(1,'/готов Воин'));
+        doAction(1,'/готов Воин');
 
         expect(results).toEqual([{
             'chatId': '1', 'options': undefined, 'text': 'Ожидаем противника'
@@ -118,7 +96,7 @@ describe('bot', () => {
     });
 
     it('Второй игрок сообщил что готов играть за Мага', () => {
-        bot.processUpdate(getMessage(2, '/готов Маг'));
+        doAction(2, '/готов Маг');
         expect(results).toEqual([{
             'chatId': '1',
             'options': {
@@ -142,23 +120,23 @@ describe('bot', () => {
     });
 
     it('Несколько раундов ударов', () => {
-        bot.processUpdate(getMessage(1, '/act ударить мечем'));
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
-        bot.processUpdate(getMessage(1, '/act ударить мечем'));
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
-        bot.processUpdate(getMessage(1, '/act ударить мечем'));
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
-        bot.processUpdate(getMessage(1, '/act ударить мечем'));
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
-        bot.processUpdate(getMessage(1, '/act ударить мечем'));
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
-        bot.processUpdate(getMessage(1, '/act ударить мечем'));
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
+        doAction(1, '/act ударить мечем');
+        doAction(2, '/act огненный шар');
+        doAction(1, '/act ударить мечем');
+        doAction(2, '/act огненный шар');
+        doAction(1, '/act ударить мечем');
+        doAction(2, '/act огненный шар');
+        doAction(1, '/act ударить мечем');
+        doAction(2, '/act огненный шар');
+        doAction(1, '/act ударить мечем');
+        doAction(2, '/act огненный шар');
+        doAction(1, '/act ударить мечем');
+        doAction(2, '/act огненный шар');
     });
 
     it('Бой завершается успешно', () => {
-        bot.processUpdate(getMessage(1, '/act ударить мечем'));
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
+        doAction(1, '/act ударить мечем');
+        doAction(2, '/act огненный шар');
 
         expect(results).toEqual([
             {'chatId': '1', 'options': undefined, 'text': 'Вы собрались ударить ударить мечем'},

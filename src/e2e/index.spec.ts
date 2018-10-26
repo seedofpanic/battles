@@ -1,249 +1,229 @@
-import '../index';
-import {bot} from '../game/bot';
-import * as TelegramBot from 'node-telegram-bot-api';
-import {getMessage} from './helpers';
-
-bot.stopPolling();
+import {doAction} from '../index';
+import {Player} from '../game/player';
+import objectContaining = jasmine.objectContaining;
 
 describe('bot', () => {
 
-    const results: {
-        chatId: number;
-        text: string;
-        options: TelegramBot.SendMessageOptions;
-    }[] = [];
-    let chat1: TelegramBot.Chat;
-    let chat2: TelegramBot.Chat;
+    const player1 = new Player('1');
+    const player2 = new Player('2');
+
+    const results: any[] = [];
 
     beforeAll(() => {
         spyOn(console, 'log').and.callFake(msg => results.push(msg));
-        spyOn(bot, 'sendMessage').and.callFake((chatId, text, options) => {
-            results.push({
-                chatId,
-                text,
-                options,
-            });
-        });
         spyOn(Math, 'random').and.returnValue(0.5);
+        spyOn(player1, 'send').and.callFake((type, payload) => {
+            results.push({[type]: payload});
+        });
+        spyOn(player2, 'send').and.callFake((type, payload) => {
+            results.push({[type]: payload});
+        });
     });
 
     beforeEach(() => {
-        chat1 = {
-            id: 1,
-            username: 'user 1',
-            type: 'test',
-        };
-        chat2 = {
-            id: 2,
-            username: 'user 2',
-            type: 'test',
-        };
         results.length = 0;
     });
 
     it('Первый игрок сообщил что готов', () => {
-        bot.processUpdate(getMessage(1, '/готов'));
+        doAction(player1, {type: 'start'});
 
-        expect(results).toEqual([{
-            'chatId': '1',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/готов Варвар'},
-                        {'text': '/готов Воин'},
-                        {'text': '/готов Маг'},
-                        {'text': '/готов Вампир'},
-                    ]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'выберите персонажа'
-        }]);
+        expect(results).toEqual([
+            {set_in_battle: true},
+            {set_my_id: '1'},
+            {
+                'select_character': [
+                    objectContaining({'id': 'barbarian'}),
+                    objectContaining({'id': 'warrior'}),
+                    objectContaining({'id': 'mage'}),
+                    objectContaining({'id': 'vampire'})
+                ]
+            }
+        ]);
     });
 
     it('Первый игрок сообщил что готов играть за Воина', () => {
-        bot.processUpdate(getMessage(1,'/готов Воин'));
+        doAction(player1, {type: 'select_character', payload: 'warrior'});
 
         expect(results).toEqual([{
-            'chatId': '1', 'options': undefined, 'text': 'Ожидаем противника'
-        }]);
+            character_update: {
+                data: {
+                    health: 100,
+                    healthMax: 100,
+                    name: 'Warrior'
+                },
+                id: '1'
+            },
+        },
+            {note: 'Waiting for opponent to join'}
+        ]);
     });
 
     it('Второй игрок сообщил что готов', () => {
-        bot.processUpdate(getMessage(2, '/готов'));
-        expect(results).toEqual([{
-            'chatId': '2',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/готов Варвар'},
-                            {'text': '/готов Воин'},
-                            {'text': '/готов Маг'},
-                            {'text': '/готов Вампир'}
-                        ]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'выберите персонажа'
+        doAction(player2, {type: 'start'});
+        expect(results).toEqual([{"set_in_battle": true}, {
+            "character_update": {
+                "data": {
+                    "health": 100,
+                    "healthMax": 100,
+                    "name": "Warrior"
+                }, "id": "1"
+            }
+        }, {"set_opponent_id": "1"}, {"set_opponent_id": "2"}, {"set_my_id": "2"}, {
+            "select_character": [{
+                "id": "barbarian",
+                "name": "Barbarian"
+            }, {"id": "warrior", "name": "Warrior"}, {"id": "mage", "name": "Mage"}, {
+                "id": "vampire",
+                "name": "Vampire"
+            }]
         }]);
     });
 
     it('Второй игрок сообщил что готов играть за Мага', () => {
-        bot.processUpdate(getMessage(2, '/готов Маг'));
+        doAction(player2, {type: 'select_character', payload: 'mage'});
         expect(results).toEqual([{
-            'chatId': '1',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act рассечь'},
-                        {'text': '/act ударить мечем'}, {'text': '/act ударить щитом'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'Противник найден\nВоин vs Маг'
+            "character_update": {
+                "data": {"health": 70, "healthMax": 70, "name": "Mage"},
+                "id": "2"
+            }
         }, {
-            'chatId': '2',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act огненный шар'}, {'text': '/act ледяная стрела'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'Противник найден\nВоин vs Маг'
+            "character_update": {
+                "data": {"health": 70, "healthMax": 70, "name": "Mage"},
+                "id": "2"
+            }
+        }, {"note": "Opponent found: Warrior vs Mage"}, {
+            "select_skill": [{
+                "id": "bleeding_wound",
+                "name": "Bleeding wound"
+            }, {"id": "slash", "name": "Slash"}, {"id": "shield_strike", "name": "Shield strike"}]
+        }, {"note": "Opponent found: Warrior vs Mage"}, {
+            "select_skill": [{
+                "id": "fire_ball",
+                "name": "Fire ball"
+            }, {"id": "frost_arrow", "name": "Frost arrow"}]
         }]);
     });
 
     it('Первый игрок выбирает рассечь', () => {
-        bot.processUpdate(getMessage(1, '/act рассечь'));
+        doAction(player1, {type: 'select_skill', payload: 'bleeding_wound'});
 
-        expect(results).toEqual([{
-            'chatId': '1', 'options': undefined, 'text': 'Вы собрались ударить рассечь'
-        }, {
-            'chatId': '1', 'options': undefined, 'text': 'ожидаем противника'
-        }]);
+        expect(results).toEqual([{"note": "You will use Bleeding wound skill"},
+            {"note": "Waiting for opponent..."}]);
     });
 
     it('Второй игрок выбирает огненный шар', () => {
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
+        doAction(player2, {type: 'select_skill', payload: 'fire_ball'});
 
-        expect(results).toEqual([{
-            'chatId': '2', 'options': undefined, 'text': 'Вы собрались ударить огненный шар'
-        }, {'chatId': '1', 'options': undefined, 'text': 'Рассечение наносит 11 урона' +
-            '\nРассечение накладывает эффек Кровотечение' +
-            '\nОгненный шар наносит 8 урона' +
-            '\nОгненный шар накладывает эффек Горение' +
-            '\nГорение наносит 4 урона' +
-            '\nКровотечение наносит 6 урона'
+        expect(results).toEqual([{"note": "You will use Fire ball skill"}, {
+            "character_update": {
+                "data": {"health": 89.2},
+                "id": "1"
+            }
+        }, {"character_update": {"data": {"health": 89.2}, "id": "1"}}, {
+            "note": 'Bleeding wound do 11 damage\n' +
+                'Bleeding wound adds Кровотечение effect\n' +
+                'Fire ball do 8 damage\n' +
+                'Fire ball adds Burning effect\n' +
+                'Burning do 4 damage\n' +
+                'Кровотечение do 6 damage'
         }, {
-            'chatId': '1',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act ударить мечем'}, {'text': '/act ударить щитом'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'у вас осталось 90/100 здоровья\nу противника 55/70 здоровья'
-        }, {'chatId': '2', 'options': undefined, 'text': 'Рассечение наносит 11 урона' +
-            '\nРассечение накладывает эффек Кровотечение' +
-            '\nОгненный шар наносит 8 урона' +
-            '\nОгненный шар накладывает эффек Горение' +
-            '\nГорение наносит 4 урона' +
-            '\nКровотечение наносит 6 урона'
+            "select_skill": [{"id": "slash", "name": "Slash"}, {
+                "id": "shield_strike",
+                "name": "Shield strike"
+            }]
         }, {
-            'chatId': '2',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act огненный шар'}, {'text': '/act ледяная стрела'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'у противника 90/100 здоровья\nу вас осталось 55/70 здоровья'
-        }]);
+            "character_update": {
+                "data": {"health": 54.699999999999996},
+                "id": "2"
+            }
+        }, {"character_update": {"data": {"health": 54.699999999999996}, "id": "2"}}, {
+            "note": 'Bleeding wound do 11 damage\n' +
+                'Bleeding wound adds Кровотечение effect\n' +
+                'Fire ball do 8 damage\n' +
+                'Fire ball adds Burning effect\n' +
+                'Burning do 4 damage\n' +
+                'Кровотечение do 6 damage'
+        }, {"select_skill": [{"id": "fire_ball", "name": "Fire ball"}, {"id": "frost_arrow", "name": "Frost arrow"}]}]);
     });
 
-    it('Второй игрок выбирает огненный шар', () => {
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
+    it('Второй игрок выбирает огненный шар еще раз', () => {
+        doAction(player2, {type: 'select_skill', payload: 'fire_ball'});
 
-        expect(results).toEqual([{
-            'chatId': '2', 'options': undefined, 'text': 'Вы собрались ударить огненный шар'
-        }, {
-            'chatId': '2', 'options': undefined, 'text': 'ожидаем противника'
-        }]);
+        expect(results).toEqual([{"note": "You will use Fire ball skill"},
+            {"note": "Waiting for opponent..."}]);
     });
 
     it('Первый игрок выбирает ударить щитом', () => {
-        bot.processUpdate(getMessage(1, '/act ударить щитом'));
+        doAction(player1, {type: 'select_skill', payload: 'shield_strike'});
 
-        expect(results).toEqual([{
-            'chatId': '1', 'options': undefined, 'text': 'Вы собрались ударить ударить щитом'
-        }, {'chatId': '1', 'options': undefined, 'text': 'Удар щитом наносит 9 урона' +
-            '\nУдар щитом накладывает эффек Оглушение' +
-            '\nОгненный шар наносит 8 урона' +
-            '\nОгненный шар накладывает эффек Горение' +
-            '\nГорение наносит 4 урона' +
-            '\nГорение наносит 4 урона'
+        expect(results).toEqual([{"note": "You will use Shield strike skill"}, {
+            "character_update": {
+                "data": {"health": 74.80000000000001},
+                "id": "1"
+            }
+        }, {"character_update": {"data": {"health": 74.80000000000001}, "id": "1"}}, {
+            "note": "Shield strike do 9 damage\n" +
+                'Shield strike adds Stun effect\n' +
+                'Fire ball do 8 damage\n' +
+                'Fire ball adds Burning effect\n' +
+                'Burning do 4 damage\n' +
+                'Burning do 4 damage'
         }, {
-            'chatId': '1',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act рассечь'}, {'text': '/act ударить мечем'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'у вас осталось 75/100 здоровья\nу противника 46/70 здоровья'
-        }, {'chatId': '2', 'options': undefined, 'text': 'Удар щитом наносит 9 урона' +
-            '\nУдар щитом накладывает эффек Оглушение' +
-            '\nОгненный шар наносит 8 урона' +
-            '\nОгненный шар накладывает эффек Горение' +
-            '\nГорение наносит 4 урона' +
-            '\nГорение наносит 4 урона'
+            "select_skill": [{"id": "bleeding_wound", "name": "Bleeding wound"}, {
+                "id": "slash",
+                "name": "Slash"
+            }]
         }, {
-            'chatId': '2',
-            'options': {},
-            'text': 'у противника 75/100 здоровья\nу вас осталось 46/70 здоровья'
-        }]);
+            "character_update": {
+                "data": {"health": 45.699999999999996},
+                "id": "2"
+            }
+        }, {"character_update": {"data": {"health": 45.699999999999996}, "id": "2"}}, {
+            "note": 'Shield strike do 9 damage\n' +
+                'Shield strike adds Stun effect\n' +
+                'Fire ball do 8 damage\n' +
+                'Fire ball adds Burning effect\n' +
+                'Burning do 4 damage\n' +
+                'Burning do 4 damage'
+        }, {"select_skill": {}}]);
     });
 
     it('Второй игрок выбирает ледяную стрелу', () => {
-        bot.processUpdate(getMessage(2, '/act ледяная стрела'));
+        doAction(player2, {type: 'select_skill', payload: 'frost_arrow'});
 
-        expect(results).toEqual([{
-            'chatId': '2', 'options': undefined, 'text': 'Действие уже выбрано'
-        }]);
+        expect(results).toEqual([{"error": "Skill already selected"}]);
     });
 
     it('Первый игрок выбирает ударить щитом, но это действие не доступно', () => {
-        bot.processUpdate(getMessage(1, '/act ударить щитом'));
+        doAction(player1, {type: 'select_skill', payload: 'shield_strike'});
 
-        expect(results).toEqual([{
-            'chatId': '1', 'options': undefined, 'text': 'Действие ударить щитом сейчас не доступно'
-        }]);
+        expect(results).toEqual([{"error": "Skill shield_strike is not available now"}]);
     });
 
     it('Первый игрок выбирает ударить мечем второй раз', () => {
-        bot.processUpdate(getMessage(1, '/act ударить мечем'));
+        doAction(player1, {type: 'select_skill', payload: 'slash'});
 
-        expect(results).toEqual([{
-            'chatId': '1', 'options': undefined, 'text': 'Вы собрались ударить ударить мечем'
-        }, {'chatId': '1', 'options': undefined, 'text': 'Удар мечем наносит 11 урона' +
-            '\nГорение наносит 4 урона'
+        expect(results).toEqual([{"note": "You will use Slash skill"}, {
+            "character_update": {
+                "data": {"health": 71.20000000000002},
+                "id": "1"
+            }
+        }, {"character_update": {"data": {"health": 71.20000000000002}, "id": "1"}}, {
+            "note": "Slash do 11 damage\n" +
+                'Burning do 4 damage'
         }, {
-            'chatId': '1',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act рассечь'}, {'text': '/act ударить мечем'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'у вас осталось 72/100 здоровья\nу противника 36/70 здоровья'
-        }, {'chatId': '2', 'options': undefined, 'text': 'Удар мечем наносит 11 урона' +
-            '\nГорение наносит 4 урона'
+            "select_skill": [{"id": "bleeding_wound", "name": "Bleeding wound"}, {
+                "id": "slash",
+                "name": "Slash"
+            }]
+        }, {"character_update": {"data": {"health": 35.5}, "id": "2"}}, {
+            "character_update": {
+                "data": {"health": 35.5},
+                "id": "2"
+            }
         }, {
-            'chatId': '2',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act огненный шар'}, {'text': '/act ледяная стрела'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'у противника 72/100 здоровья\nу вас осталось 36/70 здоровья'
-        }]);
+            "note": 'Slash do 11 damage\n' +
+                'Burning do 4 damage'
+        }, {"select_skill": [{"id": "fire_ball", "name": "Fire ball"}, {"id": "frost_arrow", "name": "Frost arrow"}]}]);
     });
 });

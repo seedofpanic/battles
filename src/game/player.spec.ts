@@ -5,11 +5,15 @@ import {Combat} from './combat';
 
 describe('Player', () => {
     let player: Player;
+    const results: any[] = [];
     const action = new HitAction('', 0, 0, DamageTypes.CUTTING);
 
     beforeEach(() => {
-        player = new Player('1', 'testname');
-        player.setCharacter('воин');
+        player = new Player('1');
+        spyOn(player, 'send').and.callFake((action, payload) => {
+            results.push(`${action} ${payload}`);
+        });
+        player.setCharacter('warrior');
         player.currentCombat = new Combat();
     });
 

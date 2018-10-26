@@ -7,7 +7,7 @@ const game = new Game();
 
 export const app = expressWs(express()).app;
 
-function doAction(player: Player, action: any) {
+export function doAction(player: Player, action: any) {
     switch (action.type) {
         case 'select_character':
         case 'ready':
@@ -41,7 +41,8 @@ function doAction(player: Player, action: any) {
                 if (player.actions[action.payload] && player.actions[action.payload].isAvailable()) {
                     player.send('note', `You will use ${player.actions[action.payload].name} skill`);
                 } else {
-                    player.send('error', `Skill ${action.action} is not available now`);
+                    player.send('error',
+                        `Skill ${action.payload} is not available now`);
 
                     return;
                 }
@@ -107,6 +108,8 @@ app.ws('/ws', (ws, req) => {
 
 app.use(express.static('public'));
 
-app.listen('3003', () => {
-    console.log('Listening...');
-});
+if (process.env.MODE !== 'test') {
+    app.listen('3003', () => {
+        console.log('Listening...');
+    });
+}

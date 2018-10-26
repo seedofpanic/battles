@@ -99,7 +99,7 @@ export class Player {
                 this.character = new Vampire();
                 break;
             default:
-                throw new Error('Unexpected character name');
+                this.send('error', 'Unexpected character name');
         }
 
         this.healthMax = this.character.getHealthMax();
