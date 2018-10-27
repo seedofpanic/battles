@@ -15,6 +15,36 @@ export const allowedCharacters: {[name: string]: {name: string}} = {
     'vampire': {
         name: 'Vampire'
     },
+    'druid': {
+        name: 'Druid'
+    },
+    'monk': {
+        name: 'Monk'
+    },
+    'priest': {
+        name: 'Priest'
+    },
+    'ranger': {
+        name: 'Ranger'
+    },
+    'draconite': {
+        name: 'Draconite'
+    },
+    'bard': {
+        name: 'Bard'
+    },
+    'rogue': {
+        name: 'Rogue'
+    },
+    'dwarf': {
+        name: 'Dwarf'
+    },
+    'pirate': {
+        name: 'Pirate'
+    },
+    'devil': {
+        name: 'Devil'
+    }
 };
 
 export class Game {

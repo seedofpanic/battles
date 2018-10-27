@@ -9,6 +9,16 @@ import {Barbarian} from './characters/barbarian';
 import {Vampire} from './characters/vampire';
 import {HitAction} from './actions/hitAction';
 import * as WebSocket from 'ws';
+import {Druid} from "./characters/druid";
+import {Monk} from "./characters/monk";
+import {Priest} from "./characters/priest";
+import {Ranger} from "./characters/ranger";
+import {Draconite} from "./characters/draconite";
+import {Bard} from "./characters/bard";
+import {Rogue} from "./characters/rogue";
+import {Dwarf} from "./characters/dwarf";
+import {Pirate} from "./characters/pirate";
+import {Devil} from "./characters/devil";
 
 export class Player {
     username: string;
@@ -97,6 +107,36 @@ export class Player {
                 break;
             case 'vampire':
                 this.character = new Vampire();
+                break;
+            case 'druid':
+                this.character = new Druid();
+                break;
+            case 'monk':
+                this.character = new Monk();
+                break;
+            case 'priest':
+                this.character = new Priest();
+                break;
+            case 'ranger':
+                this.character = new Ranger();
+                break;
+            case 'draconite':
+                this.character = new Draconite();
+                break;
+            case 'bard':
+                this.character = new Bard();
+                break;
+            case 'rogue':
+                this.character = new Rogue();
+                break;
+            case 'dwarf':
+                this.character = new Dwarf();
+                break;
+            case 'pirate':
+                this.character = new Pirate();
+                break;
+            case 'devil':
+                this.character = new Devil();
                 break;
             default:
                 this.send('error', 'Unexpected character name');

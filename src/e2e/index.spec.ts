@@ -1,6 +1,7 @@
 import {doAction} from '../index';
 import {Player} from '../game/player';
 import objectContaining = jasmine.objectContaining;
+import arrayContaining = jasmine.arrayContaining;
 
 describe('bot', () => {
 
@@ -31,12 +32,12 @@ describe('bot', () => {
             {set_in_battle: true},
             {set_my_id: '1'},
             {
-                'select_character': [
+                'select_character': arrayContaining([
                     objectContaining({'id': 'barbarian'}),
                     objectContaining({'id': 'warrior'}),
                     objectContaining({'id': 'mage'}),
                     objectContaining({'id': 'vampire'})
-                ]
+                ])
             }
         ]);
     });
@@ -69,13 +70,13 @@ describe('bot', () => {
                 }, "id": "1"
             }
         }, {"set_opponent_id": "1"}, {"set_opponent_id": "2"}, {"set_my_id": "2"}, {
-            "select_character": [{
+            "select_character": arrayContaining([{
                 "id": "barbarian",
                 "name": "Barbarian"
             }, {"id": "warrior", "name": "Warrior"}, {"id": "mage", "name": "Mage"}, {
                 "id": "vampire",
                 "name": "Vampire"
-            }]
+            }])
         }]);
     });
 

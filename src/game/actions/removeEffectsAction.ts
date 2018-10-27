@@ -10,6 +10,7 @@ export class RemoveEffectsAction extends Action {
 
     perform(combat: Combat, player?: Player, target?: Player) {
         player.effects.length = 0;
+        super.perform(combat);
     }
 
     modifyIncomeDamage(damage: number, type: DamageTypes) {

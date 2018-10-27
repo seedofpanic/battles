@@ -15,7 +15,7 @@ export abstract class Action {
         return this.charges > 0;
     }
 
-    perform(combat: Combat, player?: Player, target?: Player) {
+    perform(combat?: Combat, player?: Player, target?: Player) {
         this.charges--;
     }
 

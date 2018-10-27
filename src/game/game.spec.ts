@@ -1,6 +1,7 @@
 import {Game} from './game';
 import {Player} from './player';
 import objectContaining = jasmine.objectContaining;
+import arrayContaining = jasmine.arrayContaining;
 
 describe('Game', () => {
     let game: Game;
@@ -16,12 +17,12 @@ describe('Game', () => {
     it('showCharacters показывает доступных персонажей', () => {
         game.showCharacters(player);
 
-        expect(player.send).toBeCalledWith('select_character', [
+        expect(player.send).toBeCalledWith('select_character', arrayContaining([
                 objectContaining({'id': 'barbarian'}),
                 objectContaining({'id': 'warrior'}),
                 objectContaining({'id': 'mage'}),
                 objectContaining({'id': 'vampire'})
-            ]);
+            ]));
     });
 
     describe('isAllowedCharacter проверяет доступность персонажей по названию', () => {
