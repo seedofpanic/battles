@@ -7,9 +7,8 @@
     "start": "ts-node src/index.ts",
     "start:prod": "forever start node_modules/.bin/ts-node src/index.ts",
     "stop:prod": "forever stop node_modules/.bin/ts-node",
-    "test": "export MODE=test && jest",
-    "wintest": "set MODE=test && jest",
-    "testci": "export MODE=test && jest --runInBand",
+    "test": "cross-env MODE=\"test\" jest",
+    "testci": "cross-env MODE=\"test\" jest --runInBand",
     "lint": "tslint \"src/**/*.ts\""
   },
   "author": "",
@@ -17,6 +16,7 @@
   "dependencies": {
     "@types/express": "^4.16.0",
     "@types/express-ws": "^3.0.0",
+    "cross-env": "^5.2.0",
     "express": "^4.16.3",
     "express-ws": "^4.0.0",
     "node-telegram-bot-api": "0.30.0",
