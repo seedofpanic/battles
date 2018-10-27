@@ -35,6 +35,7 @@ export class FrostArrowAction extends HitAction {
     }
 
     protected calcDamage(): number {
-        return super.calcDamage() * this.mod;
+        const modifier = this.mod === 0 ? 0.5 : this.mod;
+        return super.calcDamage() * modifier;
     }
 }
