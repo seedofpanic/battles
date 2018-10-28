@@ -33,10 +33,10 @@ describe('bot', () => {
             {set_my_id: '1'},
             {
                 'select_character': arrayContaining([
-                    objectContaining({'id': 'barbarian'}),
-                    objectContaining({'id': 'warrior'}),
-                    objectContaining({'id': 'mage'}),
-                    objectContaining({'id': 'vampire'})
+                    objectContaining({'id': 'barbarian', skills: jasmine.anything()}),
+                    objectContaining({'id': 'warrior', skills: jasmine.anything()}),
+                    objectContaining({'id': 'mage', skills: jasmine.anything()}),
+                    objectContaining({'id': 'vampire', skills: jasmine.anything()})
                 ])
             }
         ]);
@@ -70,13 +70,12 @@ describe('bot', () => {
                 }, "id": "1"
             }
         }, {"set_opponent_id": "1"}, {"set_opponent_id": "2"}, {"set_my_id": "2"}, {
-            "select_character": arrayContaining([{
-                "id": "barbarian",
-                "name": "Barbarian"
-            }, {"id": "warrior", "name": "Warrior"}, {"id": "mage", "name": "Mage"}, {
-                "id": "vampire",
-                "name": "Vampire"
-            }])
+            "select_character": arrayContaining([
+                objectContaining({'id': 'barbarian', skills: jasmine.anything()}),
+                objectContaining({'id': 'warrior', skills: jasmine.anything()}),
+                objectContaining({'id': 'mage', skills: jasmine.anything()}),
+                objectContaining({'id': 'vampire', skills: jasmine.anything()})
+            ])
         }]);
     });
 
