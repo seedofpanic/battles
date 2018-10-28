@@ -1,49 +1,78 @@
 import {Player} from './player';
 import {Combat} from './combat';
 import {randomBytes} from 'crypto';
+import {Barbarian} from './characters/barbarian';
+import {Warrior} from './characters/warrior';
+import {Mage} from './characters/mage';
+import {Vampire} from './characters/vampire';
+import {Druid} from './characters/druid';
+import {Monk} from './characters/monk';
+import {Priest} from './characters/priest';
+import {Ranger} from './characters/ranger';
+import {Draconite} from './characters/draconite';
+import {Bard} from './characters/bard';
+import {Rogue} from './characters/rogue';
+import {Dwarf} from './characters/dwarf';
+import {Pirate} from './characters/pirate';
+import {Devil} from './characters/devil';
+import {Character} from './character';
 
-export const allowedCharacters: {[name: string]: {name: string}} = {
+export const allowedCharacters: {[name: string]: {name: string, create: {new (): Character}}} = {
     'barbarian': {
-        name: 'Barbarian'
+        name: 'Barbarian',
+        create: Barbarian
     },
     'warrior': {
-        name: 'Warrior'
+        name: 'Warrior',
+        create: Warrior
     },
     'mage': {
-        name: 'Mage'
+        name: 'Mage',
+        create: Mage
     },
     'vampire': {
-        name: 'Vampire'
+        name: 'Vampire',
+        create: Vampire
     },
     'druid': {
-        name: 'Druid'
+        name: 'Druid',
+        create: Druid
     },
     'monk': {
-        name: 'Monk'
+        name: 'Monk',
+        create: Monk
     },
     'priest': {
-        name: 'Priest'
+        name: 'Priest',
+        create: Priest
     },
     'ranger': {
-        name: 'Ranger'
+        name: 'Ranger',
+        create: Ranger
     },
     'draconite': {
-        name: 'Draconite'
+        name: 'Draconite',
+        create: Draconite
     },
     'bard': {
-        name: 'Bard'
+        name: 'Bard',
+        create: Bard
     },
     'rogue': {
-        name: 'Rogue'
+        name: 'Rogue',
+        create: Rogue
     },
     'dwarf': {
-        name: 'Dwarf'
+        name: 'Dwarf',
+        create: Dwarf
     },
     'pirate': {
-        name: 'Pirate'
+        name: 'Pirate',
+        create: Pirate
     },
     'devil': {
-        name: 'Devil'
+        name: 'Devil',
+        create: Devil
     }
 };
 
@@ -161,8 +190,20 @@ export class Game {
 
     private getCharacters() {
         return Object.keys(allowedCharacters).map((id) => {
-                        return {name: allowedCharacters[id].name, id};
+                        return {name: allowedCharacters[id].name, id,
+                            skills: this.getActionsWithDescriptions(id)
+                        };
                     });
+    }
+
+    private getActionsWithDescriptions(id: string) {
+        const actions = new (allowedCharacters[id].create)().getActions();
+
+        return Object.keys(actions).map(keys => {
+            return {
+                name: actions[keys].name
+            };
+        });
     }
 
     private start(player: Player, combat: Combat) {

@@ -1,5 +1,4 @@
 import {Character} from '../character';
-import {FrostArrowAction} from '../actions/frostArrowAction';
 import {DamageTypes} from '../models/damageTypes';
 import {Action} from '../action';
 import {HitAction} from "../actions/hitAction";
