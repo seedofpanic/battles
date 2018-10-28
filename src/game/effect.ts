@@ -1,7 +1,7 @@
 import {Player} from './player';
 
 export abstract class Effect {
-    constructor(public name: string, private roundsCount: number) {
+    constructor(public name: string, public roundsCount: number) {
     }
 
     tick(player: Player): boolean {

@@ -2,6 +2,7 @@ import {doAction} from '../index';
 import {Player} from '../game/player';
 import objectContaining = jasmine.objectContaining;
 import arrayContaining = jasmine.arrayContaining;
+import anything = jasmine.anything;
 
 describe('bot', () => {
 
@@ -116,10 +117,20 @@ describe('bot', () => {
 
         expect(results).toEqual([{"note": "You will use Fire ball skill"}, {
             "character_update": {
-                "data": {"health": 89.2},
+                "data": {
+                    "health": 89.2,
+                    "effects": anything()
+                },
                 "id": "1"
             }
-        }, {"character_update": {"data": {"health": 89.2}, "id": "1"}}, {
+        }, {
+            "character_update": {
+                "data": {
+                    "health": 89.2,
+                    "effects": anything()
+                }, "id": "1"
+            }
+        }, {
             "note": 'Bleeding wound do 11 damage\n' +
                 'Bleeding wound adds Кровотечение effect\n' +
                 'Fire ball do 8 damage\n' +
@@ -133,10 +144,20 @@ describe('bot', () => {
             }]
         }, {
             "character_update": {
-                "data": {"health": 54.699999999999996},
+                "data": {
+                    "health": 54.699999999999996,
+                    "effects": anything()
+                },
                 "id": "2"
             }
-        }, {"character_update": {"data": {"health": 54.699999999999996}, "id": "2"}}, {
+        }, {
+            "character_update": {
+                "data": {
+                    "health": 54.699999999999996,
+                    "effects": anything()
+                }, "id": "2"
+            }
+        }, {
             "note": 'Bleeding wound do 11 damage\n' +
                 'Bleeding wound adds Кровотечение effect\n' +
                 'Fire ball do 8 damage\n' +
@@ -158,10 +179,20 @@ describe('bot', () => {
 
         expect(results).toEqual([{"note": "You will use Shield strike skill"}, {
             "character_update": {
-                "data": {"health": 74.80000000000001},
+                "data": {
+                    "health": 74.80000000000001,
+                    "effects": anything()
+                },
                 "id": "1"
             }
-        }, {"character_update": {"data": {"health": 74.80000000000001}, "id": "1"}}, {
+        }, {
+            "character_update": {
+                "data": {
+                    "health": 74.80000000000001,
+                    "effects": anything()
+                }, "id": "1"
+            }
+        }, {
             "note": "Shield strike do 9 damage\n" +
                 'Shield strike adds Stun effect\n' +
                 'Fire ball do 8 damage\n' +
@@ -175,10 +206,20 @@ describe('bot', () => {
             }]
         }, {
             "character_update": {
-                "data": {"health": 45.699999999999996},
+                "data": {
+                    "health": 45.699999999999996,
+                    "effects": anything()
+                },
                 "id": "2"
             }
-        }, {"character_update": {"data": {"health": 45.699999999999996}, "id": "2"}}, {
+        }, {
+            "character_update": {
+                "data": {
+                    "health": 45.699999999999996,
+                    "effects": anything()
+                }, "id": "2"
+            }
+        }, {
             "note": 'Shield strike do 9 damage\n' +
                 'Shield strike adds Stun effect\n' +
                 'Fire ball do 8 damage\n' +
@@ -205,10 +246,20 @@ describe('bot', () => {
 
         expect(results).toEqual([{"note": "You will use Slash skill"}, {
             "character_update": {
-                "data": {"health": 71.20000000000002},
+                "data": {
+                    "health": 71.20000000000002,
+                    "effects": anything()
+                },
                 "id": "1"
             }
-        }, {"character_update": {"data": {"health": 71.20000000000002}, "id": "1"}}, {
+        }, {
+            "character_update": {
+                "data": {
+                    "health": 71.20000000000002,
+                    "effects": anything()
+                }, "id": "1"
+            }
+        }, {
             "note": "Slash do 11 damage\n" +
                 'Burning do 4 damage'
         }, {
@@ -216,9 +267,19 @@ describe('bot', () => {
                 "id": "slash",
                 "name": "Slash"
             }]
-        }, {"character_update": {"data": {"health": 35.5}, "id": "2"}}, {
+        }, {
             "character_update": {
-                "data": {"health": 35.5},
+                "data": {
+                    "health": 35.5,
+                    "effects": anything()
+                }, "id": "2"
+            }
+        }, {
+            "character_update": {
+                "data": {
+                    "health": 35.5,
+                    "effects": anything()
+                },
                 "id": "2"
             }
         }, {

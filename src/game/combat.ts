@@ -34,7 +34,11 @@ export class Combat {
                 this.players[sendId].send('character_update', {
                     id,
                     data: {
-                        health: player.character.health
+                        health: player.character.health,
+                        effects: player.character.effects.map(effect => ({
+                            name: effect.name,
+                            ticks: effect.roundsCount
+                        }))
                     }
                 });
             });
@@ -45,9 +49,11 @@ export class Combat {
                 player.send('note', this.getDeadResult(id));
 
                 player.currentCombat = undefined;
-            } else {
-                player.send('select_skill', this.getActions(player));
+
+                return;
             }
+
+            player.send('select_skill', this.getActions(player));
         });
 
         this.battleLog.length = 0;
