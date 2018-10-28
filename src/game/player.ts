@@ -10,13 +10,6 @@ import {allowedCharacters} from './game';
 export class Player {
     username: string;
     currentCombat: Combat;
-    healthMax: number;
-    health: number;
-    action: Action;
-    isDead: boolean;
-    actions: {[name: string]: Action};
-    resists: {[name: string]: number};
-    effects: Effect[] = [];
     character: Character;
     private ws: WebSocket;
 
@@ -28,55 +21,55 @@ export class Player {
     }
 
     setAction(action: string) {
-        this.action = this.actions[action];
+        this.character.action = this.character.actions[action];
     }
 
     decreaseHp(action: HitAction | Effect, damage: number) {
-        if (this.health > damage) {
-            this.health -= damage;
+        if (this.character.health > damage) {
+            this.character.health -= damage;
         } else {
-            this.health = 0;
-            this.isDead = true;
+            this.character.health = 0;
+            this.character.isDead = true;
         }
 
         this.currentCombat.battleLog.push(`${action.name} do ${Math.ceil(damage)} damage`);
     }
 
     increaseHp(action: Action | Effect, heal: number) {
-        if (this.health + heal > this.healthMax) {
-            this.health = this.healthMax;
+        if (this.character.health + heal > this.character.healthMax) {
+            this.character.health = this.character.healthMax;
         } else {
-            this.health += heal;
+            this.character.health += heal;
         }
 
         this.currentCombat.battleLog.push(`${action.name} heals ${Math.ceil(heal)} hp`);
     }
 
     getResist(type: DamageTypes): number {
-        return this.resists[type] || 1;
+        return this.character.resists[type] || 1;
     }
 
     addEffect(action: Action | Effect, effect: Effect) {
-        this.effects.push(effect);
+        this.character.effects.push(effect);
         this.currentCombat.battleLog.push(`${action.name} adds ${effect.name} effect`);
     }
 
     getName() {
-        return this.character.getName();
+        return this.character.name;
     }
 
     perform(target: Player) {
-        this.action.perform(this.currentCombat, this, target);
+        this.character.action.perform(this.currentCombat, this, target);
 
-        Object.keys(this.actions).forEach(key => {
-            this.actions[key].tick();
+        Object.keys(this.character.actions).forEach(key => {
+            this.character.actions[key].tick();
         });
 
-        this.action = undefined;
+        this.character.action = undefined;
     }
 
     tick() {
-        this.effects.forEach(effect => {
+        this.character.effects.forEach(effect => {
             effect.tick(this);
         });
     }
@@ -87,11 +80,6 @@ export class Player {
         } else {
             this.send('error', 'Unexpected character name');
         }
-
-        this.healthMax = this.character.getHealthMax();
-        this.health = this.healthMax;
-        this.actions = this.character.getActions();
-        this.resists = this.character.getResists();
     }
 
     send(type: string, payload: any) {

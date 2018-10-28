@@ -8,7 +8,7 @@ export abstract class Effect {
         this.roundsCount--;
 
         if (this.roundsCount <= 0) {
-            player.effects.splice(player.effects.indexOf(this));
+            player.character.effects.splice(player.character.effects.indexOf(this));
         }
 
         return this.roundsCount > 0;

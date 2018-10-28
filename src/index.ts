@@ -31,36 +31,33 @@ export function doAction(player: Player, action: any) {
         case 'select_skill':
             const combat = player.currentCombat;
 
-            try {
-                if (player.action) {
-                    player.send('error', 'Skill already selected');
+            if (player.character.action) {
+                player.send('error', 'Skill already selected');
 
-                    return;
+                return;
+            }
+
+            if (player.character.actions[action.payload]
+                && player.character.actions[action.payload].isAvailable()) {
+                player.send('note', `You will use ${player.character.actions[action.payload].name} skill`);
+            } else {
+                player.send('error',
+                    `Skill ${action.payload} is not available now`);
+
+                return;
+            }
+
+            player.setAction(action.payload);
+
+            if (combat.allReady()) {
+                combat.perform();
+                combat.showResult();
+
+                if (combat.isEnded) {
+                    game.endCombat(combat);
                 }
-
-                if (player.actions[action.payload] && player.actions[action.payload].isAvailable()) {
-                    player.send('note', `You will use ${player.actions[action.payload].name} skill`);
-                } else {
-                    player.send('error',
-                        `Skill ${action.payload} is not available now`);
-
-                    return;
-                }
-
-                player.setAction(action.payload);
-
-                if (combat.allReady()) {
-                    combat.perform();
-                    combat.showResult();
-
-                    if (combat.isEnded) {
-                        game.endCombat(combat);
-                    }
-                } else {
-                    player.send('note', 'Waiting for opponent...');
-                }
-            } catch (e) {
-                console.log(e);
+            } else {
+                player.send('note', 'Waiting for opponent...');
             }
             break;
         case 'info':

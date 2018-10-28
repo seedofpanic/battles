@@ -9,7 +9,7 @@ export class RemoveEffectsAction extends Action {
     }
 
     perform(combat: Combat, player?: Player, target?: Player) {
-        player.effects.length = 0;
+        player.character.effects.length = 0;
         super.perform(combat);
     }
 

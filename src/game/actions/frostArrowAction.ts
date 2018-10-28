@@ -25,11 +25,11 @@ export class FrostArrowAction extends HitAction {
     }
 
     perform(combat: Combat, player?: Player, target?: Player) {
-        const oldEffects = target.effects;
+        const oldEffects = target.character.effects;
 
-        target.effects = oldEffects.filter(effect => !(effect instanceof BurningDotEffect));
+        target.character.effects = oldEffects.filter(effect => !(effect instanceof BurningDotEffect));
 
-        this.mod = oldEffects.length - target.effects.length;
+        this.mod = oldEffects.length - target.character.effects.length;
 
         super.perform(combat, player, target);
     }

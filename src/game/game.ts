@@ -167,8 +167,8 @@ export class Game {
                 id: player.chatId,
                 data: {
                     name: player.getName(),
-                    healthMax: player.healthMax,
-                    health: player.health
+                    healthMax: player.character.healthMax,
+                    health: player.character.health
                 }
             });
         });
@@ -197,7 +197,7 @@ export class Game {
     }
 
     private getActionsWithDescriptions(id: string) {
-        const actions = new (allowedCharacters[id].create)().getActions();
+        const actions = new (allowedCharacters[id].create)().actions;
 
         return Object.keys(actions).map(keys => {
             return {

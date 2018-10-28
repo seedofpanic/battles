@@ -1,8 +1,13 @@
 import {Action} from './action';
+import {Effect} from './effect';
 
 export abstract class Character {
-    abstract getHealthMax(): number;
-    abstract getActions(): {[name: string]: Action};
-    abstract getResists(): {[name: string]: number};
-    abstract getName(): string;
+    abstract name: string;
+    abstract healthMax: number;
+    abstract health: number;
+    action: Action;
+    isDead: boolean;
+    abstract actions: {[name: string]: Action};
+    abstract resists: {[name: string]: number};
+    effects: Effect[] = [];
 }

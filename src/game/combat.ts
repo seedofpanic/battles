@@ -11,7 +11,7 @@ export class Combat {
 
     allReady(): boolean {
         return Object.keys(this.players).every(id => {
-            return !!this.players[id].action;
+            return !!this.players[id].character.action;
         });
     }
 
@@ -23,7 +23,7 @@ export class Combat {
         this.players[ids[0]].tick();
         this.players[ids[1]].tick();
 
-        this.isEnded = Object.keys(this.players).some(key => this.players[key].isDead);
+        this.isEnded = Object.keys(this.players).some(key => this.players[key].character.isDead);
     }
 
     showResult() {
@@ -34,7 +34,7 @@ export class Combat {
                 this.players[sendId].send('character_update', {
                     id,
                     data: {
-                        health: player.health
+                        health: player.character.health
                     }
                 });
             });
@@ -56,7 +56,7 @@ export class Combat {
     getDeadResult(myId: string): string {
         return Object.keys(this.players)
             .map(id => {
-                if (this.players[id].isDead) {
+                if (this.players[id].character.isDead) {
                     if (myId === id) {
                         return 'You died, the duel is over';
                     } else {
@@ -73,13 +73,13 @@ export class Combat {
     }
 
     getActions(player: Player) {
-        if (player.action) {
+        if (player.character.action) {
             return {};
         }
 
-        return Object.keys(player.actions)
-                        .filter(action => player.actions[action].isAvailable())
-                        .map(action => ({id: action, name: player.actions[action].name}));
+        return Object.keys(player.character.actions)
+                        .filter(action => player.character.actions[action].isAvailable())
+                        .map(action => ({id: action, name: player.character.actions[action].name}));
     }
 
     start() {
@@ -100,8 +100,8 @@ export class Combat {
                     id: playerTo.chatId,
                     data: {
                         name: playerTo.getName(),
-                        healthMax: playerTo.healthMax,
-                        health: playerTo.health
+                        healthMax: playerTo.character.healthMax,
+                        health: playerTo.character.health
                     }
                 });
             }
