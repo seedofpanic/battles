@@ -6,6 +6,7 @@ import {ShieldAction} from '../actions/shieldAction';
 import {SwordAction} from '../actions/swordAction';
 
 export class Warrior extends Character {
+    id = 'warrior';
     actions = {
         'bleeding_wound': new SwordCuttingAction(),
         'slash': new SwordAction(),

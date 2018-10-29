@@ -3,6 +3,7 @@ import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from "../actions/hitAction";
 
 export class Monk extends Character {
+    id = 'monk';
     actions = {
         'fist_strike': new HitAction('Fist strike', 10, 15, DamageTypes.BLUNT),
         'monkey hook': new HitAction('Monkey hook', 20, 30, DamageTypes.BLUNT),

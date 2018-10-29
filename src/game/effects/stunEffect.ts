@@ -5,6 +5,8 @@ import {StunAction} from '../actions/stunAction';
 const NAME = 'Stun';
 
 export class StunEffect extends Effect {
+    id = 'stun';
+
     constructor(roundsCount: number) {
         super(NAME, roundsCount);
     }

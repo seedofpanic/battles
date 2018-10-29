@@ -4,6 +4,8 @@ import {DamageTypes} from '../models/damageTypes';
 import {Game} from '../game';
 
 export class HotEffect extends Effect {
+    id = 'hot';
+
     constructor(name: string,
                 private minHeal: number,
                 private maxHeal: number,

@@ -7,6 +7,7 @@ import {RemoveEffectsAction} from '../actions/removeEffectsAction';
 import {ShadowBoltAction} from '../actions/shadowBoltAction';
 
 export class Vampire extends Character {
+    id = 'vampire';
     actions = {
         'slash': new SwordAction(),
         'bite': new VampireBiteAction(),

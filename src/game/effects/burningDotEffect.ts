@@ -4,6 +4,8 @@ import {DamageTypes} from '../models/damageTypes';
 const NAME = 'Burning';
 
 export class BurningDotEffect extends DotEffect {
+    id = 'burning';
+
     constructor(minDamage: number,
                 maxDamage: number,
                 roundsCount: number) {

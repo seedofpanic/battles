@@ -166,6 +166,7 @@ export class Game {
             combat.players[id].send('character_update', {
                 id: player.chatId,
                 data: {
+                    id: player.character.id,
                     name: player.getName(),
                     healthMax: player.character.healthMax,
                     health: player.character.health

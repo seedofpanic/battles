@@ -3,6 +3,7 @@ import {HitAction} from '../actions/hitAction';
 import {DamageTypes} from '../models/damageTypes';
 
 export class Barbarian extends Character {
+    id = 'barbarian';
     name = 'Barbarian';
     actions = {
         'bare_hand_strike': new HitAction('Bare hand strike', 5, 7, DamageTypes.BLUNT, 0.1, 1.5),

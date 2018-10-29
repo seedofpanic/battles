@@ -4,6 +4,7 @@ import {HitAction} from "../actions/hitAction";
 import {HealAction} from "../actions/healAction";
 
 export class Priest extends Character {
+    id = 'priest';
     actions = {
         'fist_strike': new HitAction('Fist strike', 10, 15, DamageTypes.BLUNT),
         'Heal': new HealAction('Heal', 20),

@@ -36,6 +36,7 @@ export class Combat {
                     data: {
                         health: player.character.health,
                         effects: player.character.effects.map(effect => ({
+                            id: effect.id,
                             name: effect.name,
                             ticks: effect.roundsCount
                         }))
@@ -105,6 +106,7 @@ export class Combat {
                 player.send('character_update', {
                     id: playerTo.chatId,
                     data: {
+                        id: playerTo.character.id,
                         name: playerTo.getName(),
                         healthMax: playerTo.character.healthMax,
                         health: playerTo.character.health

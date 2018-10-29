@@ -1,6 +1,8 @@
 import {Player} from './player';
 
 export abstract class Effect {
+    abstract id: string;
+
     constructor(public name: string, public roundsCount: number) {
     }
 

@@ -1,9 +1,11 @@
 import {DotEffect} from './dotEffect';
 import {DamageTypes} from '../models/damageTypes';
 
-const NAME = 'Кровотечение';
+const NAME = 'Bleeding';
 
 export class CuttingEffect extends DotEffect {
+    id = 'bleeding';
+
     constructor(minDamage: number,
                 maxDamage: number,
                 type: DamageTypes,

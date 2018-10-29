@@ -2,6 +2,7 @@ import {Action} from './action';
 import {Effect} from './effect';
 
 export abstract class Character {
+    abstract id: string;
     abstract name: string;
     abstract healthMax: number;
     abstract health: number;

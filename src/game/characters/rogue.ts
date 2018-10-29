@@ -1,26 +1,10 @@
 import {Character} from '../character';
-import {Action} from '../action';
 import {SwordCuttingAction} from '../actions/swordCuttingAction';
 import {DamageTypes} from '../models/damageTypes';
 import {SwordAction} from '../actions/swordAction';
 
 export class Rogue extends Character {
-    getName(): string {
-        return '';
-    }
-
-    getHealthMax(): number {
-        return ;
-    }
-
-    getActions(): { [p: string]: Action } {
-        return ;
-    }
-
-    getResists(): { [p: string]: number } {
-        return ;
-    }
-
+    id = 'rogue';
     actions = {
         'bleeding_wound': new SwordCuttingAction(),
         'slash': new SwordAction(),
