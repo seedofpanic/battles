@@ -15,8 +15,8 @@ export class HotEffect extends Effect {
         super(name, roundsCount);
     }
 
-    tick(player: Player): boolean {
+    preTick(player: Player): boolean {
         player.increaseHp(this, Game.calcDamage(this.minHeal, this.maxHeal));
-        return super.tick(player);
+        return super.preTick(player);
     }
 }

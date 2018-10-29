@@ -15,11 +15,11 @@ export class DotEffect extends Effect {
         super(name, roundsCount);
     }
 
-    tick(player: Player) {
+    preTick(player: Player) {
 
         player.decreaseHp(this, Game.calcDamage(this.minDamage, this.maxDamage)
             * player.getResist(this.type));
 
-        return super.tick(player);
+        return super.preTick(player);
     }
 }

@@ -11,9 +11,7 @@ export class StunEffect extends Effect {
         super(NAME, roundsCount);
     }
 
-    tick(player: Player): boolean {
-        player.character.action = new StunAction();
-
-        return super.tick(player);
+    postTick(player: Player) {
+        player.isStunned = true;
     }
 }

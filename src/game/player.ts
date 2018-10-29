@@ -6,11 +6,13 @@ import {Character} from './character';
 import {HitAction} from './actions/hitAction';
 import * as WebSocket from 'ws';
 import {allowedCharacters} from './game';
+import {StunAction} from './actions/stunAction';
 
 export class Player {
     username: string;
     currentCombat: Combat;
     character: Character;
+    isStunned: boolean;
     private ws: WebSocket;
 
     constructor(public chatId: string) {
@@ -68,9 +70,19 @@ export class Player {
         this.character.action = undefined;
     }
 
-    tick() {
+    resetStats() {
+        this.isStunned = false;
+    }
+
+    preTick() {
         this.character.effects.forEach(effect => {
-            effect.tick(this);
+            effect.preTick(this);
+        });
+    }
+
+    postTick() {
+        this.character.effects.forEach(effect => {
+            effect.postTick(this);
         });
     }
 
@@ -91,5 +103,25 @@ export class Player {
             type,
             payload
         }));
+    }
+
+    isActionAvailable(action: string) {
+        return this.character.actions[action].isAvailable() && !this.isStunned;
+    }
+
+    sendSkills() {
+        this.send('select_skill', this.getActions());
+    }
+
+    getActions() {
+        const actions = Object.keys(this.character.actions)
+            .filter(action => this.isActionAvailable(action))
+            .map(action => ({id: action, name: this.character.actions[action].name}));
+
+        if (actions.length === 0) {
+            this.character.action = new StunAction();
+        }
+
+        return actions;
     }
 }

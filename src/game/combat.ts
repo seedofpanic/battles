@@ -18,10 +18,19 @@ export class Combat {
     perform() {
         const ids = Object.keys(this.players);
 
+        this.players[ids[0]].resetStats();
+        this.players[ids[1]].resetStats();
+        this.players[ids[0]].preTick();
+        this.players[ids[1]].preTick();
         this.players[ids[0]].perform(this.players[ids[1]]);
         this.players[ids[1]].perform(this.players[ids[0]]);
-        this.players[ids[0]].tick();
-        this.players[ids[1]].tick();
+        this.players[ids[0]].postTick();
+        this.players[ids[1]].postTick();
+
+        this.players[ids[0]].character.effects =
+            this.players[ids[0]].character.effects.filter(effect => !effect.getIsEnded());
+        this.players[ids[1]].character.effects =
+            this.players[ids[1]].character.effects.filter(effect => !effect.getIsEnded());
 
         this.isEnded = Object.keys(this.players).some(key => this.players[key].character.isDead);
     }
@@ -54,7 +63,7 @@ export class Combat {
                 return;
             }
 
-            player.send('select_skill', this.getActions(player));
+            player.sendSkills();
         });
 
         this.battleLog.length = 0;
@@ -79,20 +88,10 @@ export class Combat {
         return `${players[0].getName()} vs ${players[1].getName()}`;
     }
 
-    getActions(player: Player) {
-        if (player.character.action) {
-            return {};
-        }
-
-        return Object.keys(player.character.actions)
-                        .filter(action => player.character.actions[action].isAvailable())
-                        .map(action => ({id: action, name: player.character.actions[action].name}));
-    }
-
     start() {
         Object.keys(this.players).forEach(chatId => {
             this.players[chatId].send('note', 'Opponent found: ' + this.getVsMessage());
-            this.players[chatId].send('select_skill', this.getActions(this.players[chatId]));
+            this.players[chatId].sendSkills();
         });
     }
 

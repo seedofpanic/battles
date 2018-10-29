@@ -6,13 +6,14 @@ export abstract class Effect {
     constructor(public name: string, public roundsCount: number) {
     }
 
-    tick(player: Player): boolean {
+    preTick(player: Player) {
         this.roundsCount--;
+    }
 
-        if (this.roundsCount <= 0) {
-            player.character.effects.splice(player.character.effects.indexOf(this));
-        }
+    postTick(player: Player) {
+    }
 
-        return this.roundsCount > 0;
+    getIsEnded(): boolean {
+        return this.roundsCount <= 0;
     }
 }
