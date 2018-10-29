@@ -49,6 +49,7 @@ describe('bot', () => {
         expect(results).toEqual([{
             character_update: {
                 data: {
+                    id: 'warrior',
                     health: 100,
                     healthMax: 100,
                     name: 'Warrior'
@@ -65,6 +66,7 @@ describe('bot', () => {
         expect(results).toEqual([{"set_in_battle": true}, {
             "character_update": {
                 "data": {
+                    id: 'warrior',
                     "health": 100,
                     "healthMax": 100,
                     "name": "Warrior"
@@ -84,12 +86,12 @@ describe('bot', () => {
         doAction(player2, {type: 'select_character', payload: 'mage'});
         expect(results).toEqual([{
             "character_update": {
-                "data": {"health": 70, "healthMax": 70, "name": "Mage"},
+                "data": {"health": 70, "healthMax": 70, "name": "Mage", id: 'mage'},
                 "id": "2"
             }
         }, {
             "character_update": {
-                "data": {"health": 70, "healthMax": 70, "name": "Mage"},
+                "data": {"health": 70, "healthMax": 70, "name": "Mage", id: 'mage'},
                 "id": "2"
             }
         }, {"note": "Opponent found: Warrior vs Mage"}, {
@@ -132,11 +134,11 @@ describe('bot', () => {
             }
         }, {
             "note": 'Bleeding wound do 11 damage\n' +
-                'Bleeding wound adds Кровотечение effect\n' +
+                'Bleeding wound adds Bleeding effect\n' +
                 'Fire ball do 8 damage\n' +
                 'Fire ball adds Burning effect\n' +
                 'Burning do 4 damage\n' +
-                'Кровотечение do 6 damage'
+                'Bleeding do 6 damage'
         }, {
             "select_skill": [{"id": "slash", "name": "Slash"}, {
                 "id": "shield_strike",
@@ -159,11 +161,11 @@ describe('bot', () => {
             }
         }, {
             "note": 'Bleeding wound do 11 damage\n' +
-                'Bleeding wound adds Кровотечение effect\n' +
+                'Bleeding wound adds Bleeding effect\n' +
                 'Fire ball do 8 damage\n' +
                 'Fire ball adds Burning effect\n' +
                 'Burning do 4 damage\n' +
-                'Кровотечение do 6 damage'
+                'Bleeding do 6 damage'
         }, {"select_skill": [{"id": "fire_ball", "name": "Fire ball"}, {"id": "frost_arrow", "name": "Frost arrow"}]}]);
     });
 
