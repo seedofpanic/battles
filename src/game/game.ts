@@ -178,6 +178,7 @@ export class Game {
             combat.start();
         } else {
             player.send('note','Waiting for opponent to join');
+
         }
     }
 

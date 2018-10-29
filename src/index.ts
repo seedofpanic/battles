@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as expressWs from 'express-ws';
 import {Game} from './game/game';
 import {Player} from './game/player';
+import {Bot} from './game/bot';
 
 const game = new Game();
 
@@ -12,9 +13,15 @@ export function doAction(player: Player, action: any) {
         case 'select_character':
         case 'ready':
             game.selectCharacter(player, action.payload);
+
             break;
         case 'start':
             game.startCombat(player);
+
+            if (action.payload.withBot) {
+                const bot = new Bot(game);
+            }
+
             break;
         case 'invite':
             game.startDuel(player, null);

@@ -27,7 +27,7 @@ describe('bot', () => {
     });
 
     it('Первый игрок сообщил что готов', () => {
-        doAction(player1, {type: 'start'});
+        doAction(player1, {type: 'start', payload: {}});
 
         expect(results).toEqual([
             {set_in_battle: true},
@@ -62,7 +62,7 @@ describe('bot', () => {
     });
 
     it('Второй игрок сообщил что готов', () => {
-        doAction(player2, {type: 'start'});
+        doAction(player2, {type: 'start', payload: {}});
         expect(results).toEqual([{"set_in_battle": true}, {
             "character_update": {
                 "data": {
