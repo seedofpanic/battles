@@ -22,4 +22,8 @@ export abstract class Effect {
     damageMod(value: number, type: DamageTypes): number {
         return value;
     }
+
+    resistMod(value: number): number {
+        return value;
+    }
 }

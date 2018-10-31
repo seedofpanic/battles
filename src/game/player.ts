@@ -53,7 +53,9 @@ export class Player {
     }
 
     getResist(type: DamageTypes): number {
-        return this.character.resists[type] || 1;
+        const baseResist = this.character.resists[type] || 1;
+
+        return this.character.effects.reduce((result, effect) => effect.resistMod(result), baseResist);
     }
 
     addEffect(action: Action | Effect, effect: Effect) {
