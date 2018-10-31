@@ -6,14 +6,14 @@ import {Combat} from '../combat';
 
 const NAME = 'Bleeding wound';
 const MIN_DAMAGE = 5;
-const MAX_DAMAGE = 7;
+const MAX_DAMAGE = 9;
 const CRIT_CHANCE = 0.1;
 const CRIT_MULTIPLIER = 1;
 const COOLDOWN = 1;
 const MAX_CHARGES = 1;
 
-const CUTTING_EFFECT_MIN_DAMAGE = 2;
-const CUTTING_EFFECT_MAX_DAMAGE = 3;
+const CUTTING_EFFECT_MIN_DAMAGE = 1.66;
+const CUTTING_EFFECT_MAX_DAMAGE = 1.66;
 const CUTTING_EFFECT_ROUNDS_COUNT = 3;
 
 export class SwordCuttingAction extends HitAction {

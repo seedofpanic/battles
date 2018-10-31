@@ -6,8 +6,8 @@ import {Combat} from '../combat';
 
 export class HitAction extends Action {
     constructor(name: string,
-                private minDamage: number,
-                private maxDamage: number,
+                protected minDamage: number,
+                protected maxDamage: number,
                 private type: DamageTypes,
                 private critChance = 0,
                 private critMultipier = 1,
@@ -19,15 +19,19 @@ export class HitAction extends Action {
     perform(combat: Combat, player?: Player, target?: Player) {
         const targetResist = target.getResist(this.type);
 
-        target.decreaseHp(this, this.calcDamage()
+        target.decreaseHp(this, this.calcDamage(player)
             * targetResist
             * this.getCrit(this.critChance * targetResist));
 
         super.perform(combat);
     }
 
-    protected calcDamage(): number {
-        return Game.calcDamage(this.minDamage, this.maxDamage);
+    protected calcDamage(player: Player): number {
+        const damage = Game.calcDamage(this.minDamage, this.maxDamage);
+
+        return player.character.effects.reduce((result, effect) => {
+            return effect.damageMod(result, this.type);
+        }, damage);
     }
 
     private getCrit(critChance: number): number {

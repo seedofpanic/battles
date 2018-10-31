@@ -57,6 +57,10 @@ export class Player {
     }
 
     addEffect(action: Action | Effect, effect: Effect) {
+        if (!effect.canStack) {
+            this.character.effects = this.character.effects.filter(eff => eff.id !== effect.id);
+        }
+
         this.character.effects.push(effect);
         this.currentCombat.battleLog.push(`${action.name} adds ${effect.name} effect`);
     }

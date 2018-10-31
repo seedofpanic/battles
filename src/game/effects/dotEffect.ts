@@ -16,10 +16,9 @@ export class DotEffect extends Effect {
     }
 
     preTick(player: Player) {
-
         player.decreaseHp(this, Game.calcDamage(this.minDamage, this.maxDamage)
             * player.getResist(this.type));
 
-        return super.preTick(player);
+        super.preTick(player);
     }
 }
