@@ -4,7 +4,7 @@ import objectContaining = jasmine.objectContaining;
 import arrayContaining = jasmine.arrayContaining;
 import anything = jasmine.anything;
 
-describe('bot', () => {
+xdescribe('bot', () => {
 
     const player1 = new Player('1');
     const player2 = new Player('2');
