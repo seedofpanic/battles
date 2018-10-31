@@ -26,6 +26,11 @@ export class Player {
         this.character.action = this.character.actions[action];
     }
 
+    kill() {
+        this.character.health = 0;
+        this.character.isDead = true;
+    }
+
     decreaseHp(action: HitAction | Effect, damage: number) {
         if (this.character.health > damage) {
             this.character.health -= damage;
