@@ -70,7 +70,6 @@ export function doAction(player: Player, action: any) {
         case 'cancel_fight':
             player.kill();
             game.endCombat(player.currentCombat);
-            player.currentCombat = undefined;
             break;
         case 'info':
             player.send('note', `Played duels: ${game.combatsEnded}`);

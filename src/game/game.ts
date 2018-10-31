@@ -187,6 +187,7 @@ export class Game {
         this.combatsEnded++;
         Object.keys(combat.players).forEach(id => {
             combat.players[id].send('set_in_battle', false);
+            combat.players[id].currentCombat = undefined;
         });
     }
 
