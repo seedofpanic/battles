@@ -8,11 +8,24 @@ const game = new Game();
 
 export const app = expressWs(express()).app;
 
-export function doAction(player: Player, action: any) {
+let nextSessionId = 1;
+
+interface Session {
+    player: Player;
+    token: string;
+    played: number;
+}
+
+const sessions: {
+    [name: string]: Session;
+} = {};
+
+export function doAction(session: Session, player: Player, action: any) {
     switch (action.type) {
         case 'select_character':
         case 'ready':
             game.selectCharacter(player, action.payload);
+            session.played++;
 
             break;
         case 'start':
@@ -72,6 +85,7 @@ export function doAction(player: Player, action: any) {
             game.endCombat(player.currentCombat);
             break;
         case 'info':
+            player.send('note', `You already has played: ${session.played}`);
             player.send('note', `Played duels: ${game.combatsEnded}`);
             player.send('note', `Active duels: ${game.combatsCount - game.combatsEnded}`);
             break;
@@ -83,20 +97,53 @@ export function doAction(player: Player, action: any) {
 
 let id = 1;
 
+function extractCookies(req: express.Request): {[name: string]: string} {
+    return (req.headers.cookie as string).split('; ')
+        .reduce((result, cookie) => {
+            const [key, value] = cookie.split('=');
+
+            result[key] = value;
+
+            return result;
+        }, {} as {[name: string]: string});
+}
+
 app.ws('/ws', (ws, req) => {
-    const player = game.addPlayer((id++).toString());
+    let player: Player;
+    const cookies = extractCookies(req) || {};
+    let sessionId = cookies.sessionId;
+
+    if (!sessions[sessionId] || sessions[sessionId].token !== cookies.token) {
+        player = game.addPlayer((id++).toString());
+        sessionId = (nextSessionId++).toString();
+
+        sessions[sessionId] = {
+            player,
+            token: getRandomKey(),
+            played: 0
+        };
+    } else {
+        player = sessions[sessionId].player;
+    }
 
     player.setWS(ws);
 
+    player.send('cookies', [
+        {key: 'sessionId', value: sessionId},
+        {key: 'token', value: sessions[sessionId].token}
+    ]);
+
     ws.on('message', msg => {
         try {
-            doAction(player, JSON.parse(msg.toString()));
+            doAction(sessions[sessionId], player, JSON.parse(msg.toString()));
         } catch (e) {
             console.error(e);
         }
     });
 
     ws.on('close', () => {
+
+
         if (player.currentCombat) {
             Object.keys(player.currentCombat.players).forEach(id => {
                 const playerTo = player.currentCombat.players[id];
@@ -120,4 +167,8 @@ if (process.env.MODE !== 'test') {
     app.listen('3003', () => {
         console.log('Listening...');
     });
+}
+
+function getRandomKey(): string {
+    return Math.random().toString(36).substr(2, 9);
 }
