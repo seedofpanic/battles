@@ -67,6 +67,11 @@ export function doAction(player: Player, action: any) {
                 player.send('note', 'Waiting for opponent...');
             }
             break;
+        case 'cancel_fight':
+            player.kill();
+            game.endCombat(player.currentCombat);
+            player.currentCombat = undefined;
+            break;
         case 'info':
             player.send('note', `Played duels: ${game.combatsEnded}`);
             player.send('note', `Active duels: ${game.combatsCount - game.combatsEnded}`);
