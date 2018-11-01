@@ -71,6 +71,10 @@ export class Player {
         return this.character.name;
     }
 
+    beforeResolve(target: Player) {
+        this.character.action.beforeResolve(this.currentCombat, this, target);
+    }
+
     perform(target: Player) {
         this.character.action.perform(this.currentCombat, this, target);
 
