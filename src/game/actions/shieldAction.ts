@@ -28,14 +28,6 @@ export class ShieldAction extends HitAction {
     perform(combat: Combat, player?: Player, target?: Player) {
         super.perform(combat, player, target);
 
-        const oldEffects = target.character.effects;
-
-        target.character.effects = oldEffects.filter(effect => !(effect instanceof CuttingEffect));
-
-        const mod = oldEffects.length - target.character.effects.length;
-
-        if (mod > 0) {
-            target.addEffect(this, new StunEffect(mod));
-        }
+        target.addEffect(this, new StunEffect(1));
     }
 }

@@ -8,9 +8,7 @@ export class BuffAction extends Action {
         super(name, cooldown, maxCharges);
     }
 
-    perform(combat?: Combat, player?: Player, target?: Player) {
+    beforeResolve(combat?: Combat, player?: Player, target?: Player) {
         player.addEffect(this, this.buffEffect);
-
-        super.perform();
     }
 }

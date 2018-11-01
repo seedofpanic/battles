@@ -18,6 +18,8 @@ export class Combat {
     perform() {
         const ids = Object.keys(this.players);
 
+        this.players[ids[0]].beforeResolve(this.players[ids[1]]);
+        this.players[ids[1]].beforeResolve(this.players[ids[0]]);
         this.players[ids[0]].resetStats();
         this.players[ids[1]].resetStats();
         this.players[ids[0]].preTick();

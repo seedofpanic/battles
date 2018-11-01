@@ -8,9 +8,7 @@ export class DeBuffAction extends Action {
         super(name, cooldown, maxCharges);
     }
 
-    perform(combat?: Combat, player?: Player, target?: Player) {
+    beforeResolve(combat?: Combat, player?: Player, target?: Player) {
         target.addEffect(this, this.deBuffEffect);
-
-        super.perform();
     }
 }

@@ -32,6 +32,9 @@ export abstract class Action {
         }
     }
 
+    beforeResolve(combat?: Combat, player?: Player, target?: Player) {
+    }
+
     modifyIncomeDamage(damage: number, type: DamageTypes) {
         return damage;
     }
