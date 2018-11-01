@@ -97,7 +97,7 @@ export function doAction(session: Session, player: Player, action: any) {
 
 let id = 1;
 
-function extractCookies(req: express.Request): {[name: string]: string} {
+export function extractCookies(req: express.Request): {[name: string]: string} {
     if (!req.headers.cookie) {
         return;
     }
