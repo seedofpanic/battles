@@ -98,6 +98,10 @@ export function doAction(session: Session, player: Player, action: any) {
 let id = 1;
 
 function extractCookies(req: express.Request): {[name: string]: string} {
+    if (!req.headers.cookie) {
+        return;
+    }
+
     return (req.headers.cookie as string).split('; ')
         .reduce((result, cookie) => {
             const [key, value] = cookie.split('=');
