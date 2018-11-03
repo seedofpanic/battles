@@ -4,7 +4,6 @@ import {FireBallAction} from '../actions/fireBallAction';
 import {DamageTypes} from '../models/damageTypes';
 
 export class Mage extends Character {
-    id = 'mage';
     actions = {
         'fire_ball': new FireBallAction(),
         'frost_arrow': new FrostArrowAction(),

@@ -2,7 +2,6 @@ import {Action} from './action';
 import {Effect} from './effect';
 
 export abstract class Character {
-    abstract id: string;
     abstract name: string;
     abstract healthMax: number;
     abstract health: number;
@@ -11,4 +10,8 @@ export abstract class Character {
     abstract actions: {[name: string]: Action};
     abstract resists: {[name: string]: number};
     effects: Effect[] = [];
+
+    constructor(public id: string) {
+
+    }
 }

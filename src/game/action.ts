@@ -1,6 +1,6 @@
-import {Player} from './player';
 import {DamageTypes} from './models/damageTypes';
 import {Combat} from './combat';
+import {Unit} from './unit';
 
 // TODO: rename to Skill
 export abstract class Action {
@@ -15,7 +15,7 @@ export abstract class Action {
         return this.charges > 0;
     }
 
-    perform(combat?: Combat, player?: Player, target?: Player) {
+    perform(combat?: Combat, self?: Unit, target?: Unit) {
         this.charges--;
     }
 
@@ -32,7 +32,7 @@ export abstract class Action {
         }
     }
 
-    beforeResolve(combat?: Combat, player?: Player, target?: Player) {
+    beforeResolve(combat?: Combat, self?: Unit, target?: Unit) {
     }
 
     modifyIncomeDamage(damage: number, type: DamageTypes) {

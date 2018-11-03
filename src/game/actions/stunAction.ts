@@ -1,6 +1,6 @@
 import {Action} from '../action';
-import {Player} from '../player';
 import {Combat} from '../combat';
+import {Unit} from '../unit';
 
 const NAME = 'Stun';
 
@@ -9,6 +9,6 @@ export class StunAction extends Action {
         super(NAME);
     }
 
-    perform(combat: Combat, player?: Player, target?: Player) {
+    perform(combat: Combat, self?: Unit, target?: Unit) {
     }
 }

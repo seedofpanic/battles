@@ -1,5 +1,5 @@
-import {Player} from './player';
 import {DamageTypes} from './models/damageTypes';
+import {Unit} from './unit';
 
 export abstract class Effect {
     canStack = true;
@@ -8,11 +8,11 @@ export abstract class Effect {
     constructor(public name: string, public roundsCount: number) {
     }
 
-    preTick(player: Player) {
+    preTick(unit: Unit) {
         this.roundsCount--;
     }
 
-    postTick(player: Player) {
+    postTick(unit: Unit) {
     }
 
     getIsEnded(): boolean {

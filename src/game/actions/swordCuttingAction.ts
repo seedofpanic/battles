@@ -1,8 +1,8 @@
-import {Player} from '../player';
 import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from './hitAction';
 import {CuttingEffect} from '../effects/cuttingEffect';
 import {Combat} from '../combat';
+import {Unit} from '../unit';
 
 const NAME = 'Bleeding wound';
 const MIN_DAMAGE = 5;
@@ -21,8 +21,8 @@ export class SwordCuttingAction extends HitAction {
         super(NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.CUTTING, CRIT_CHANCE, CRIT_MULTIPLIER, COOLDOWN, MAX_CHARGES);
     }
 
-    perform(combat: Combat, player?: Player, target?: Player) {
-        super.perform(combat, player, target);
+    perform(combat: Combat, self?: Unit, target?: Unit) {
+        super.perform(combat, self, target);
 
         target.addEffect(this, new CuttingEffect(
             CUTTING_EFFECT_MIN_DAMAGE,

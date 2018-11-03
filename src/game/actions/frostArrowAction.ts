@@ -1,8 +1,8 @@
 import {HitAction} from './hitAction';
-import {Player} from '../player';
 import {BurningDotEffect} from '../effects/burningDotEffect';
 import {DamageTypes} from '../models/damageTypes';
 import {Combat} from '../combat';
+import {Unit} from '../unit';
 
 const NAME = 'Frost arrow';
 const MIN_DAMAGE = 3;
@@ -24,19 +24,19 @@ export class FrostArrowAction extends HitAction {
         );
     }
 
-    perform(combat: Combat, player?: Player, target?: Player) {
+    perform(combat: Combat, self?: Unit, target?: Unit) {
         const oldEffects = target.character.effects;
 
         target.character.effects = oldEffects.filter(effect => !(effect instanceof BurningDotEffect));
 
         this.mod = oldEffects.length - target.character.effects.length;
 
-        super.perform(combat, player, target);
+        super.perform(combat, self, target);
     }
 
-    protected calcDamage(player: Player): number {
+    protected calcDamage(unit: Unit): number {
         const modifier = 1 + this.mod * 3;
 
-        return super.calcDamage(player) * modifier;
+        return super.calcDamage(unit) * modifier;
     }
 }

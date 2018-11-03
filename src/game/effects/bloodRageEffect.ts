@@ -1,5 +1,5 @@
 import {DamageModEffect} from './damageModEffect';
-import {Player} from '../player';
+import {Unit} from '../unit';
 
 export class BloodRageEffect extends DamageModEffect {
     id = 'blood_rage';
@@ -8,7 +8,7 @@ export class BloodRageEffect extends DamageModEffect {
         super('Blood rage', 3);
     }
 
-    preTick(player: Player) {
-        player.decreaseHp(this, 1);
+    preTick(self: Unit) {
+        self.decreaseHp(this, 1);
     }
 }

@@ -3,7 +3,6 @@ import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from "../actions/hitAction";
 
 export class Devil extends Character {
-    id = 'devil';
     actions = {
         'fire_breath': new HitAction('Fire breath', 10, 15, DamageTypes.FIRE),
         'claw strike': new HitAction('Claw strike', 20, 30, DamageTypes.CUTTING),

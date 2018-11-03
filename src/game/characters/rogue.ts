@@ -4,7 +4,6 @@ import {DamageTypes} from '../models/damageTypes';
 import {SwordAction} from '../actions/swordAction';
 
 export class Rogue extends Character {
-    id = 'rogue';
     actions = {
         'bleeding_wound': new SwordCuttingAction(),
         'slash': new SwordAction(),

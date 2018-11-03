@@ -1,6 +1,6 @@
 import {doAction} from '../index';
 import * as crypto from 'crypto';
-import {Player} from '../game/player';
+import {Player} from '../game/units/player';
 
 xdescribe('bot', () => {
 

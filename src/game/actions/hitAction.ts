@@ -1,8 +1,9 @@
 import {Action} from '../action';
-import {Player} from '../player';
 import {DamageTypes} from '../models/damageTypes';
 import {Game} from '../game';
 import {Combat} from '../combat';
+import {Unit} from '../unit';
+import {calcDamage} from '../../utils/calcDamage';
 
 export class HitAction extends Action {
     constructor(name: string,
@@ -16,20 +17,20 @@ export class HitAction extends Action {
         super(name, cooldown, maxCharges);
     }
 
-    perform(combat: Combat, player?: Player, target?: Player) {
+    perform(combat: Combat, self?: Unit, target?: Unit) {
         const targetResist = target.getResist(this.type);
 
-        target.decreaseHp(this, this.calcDamage(player)
+        target.decreaseHp(this, this.calcDamage(self)
             * targetResist
             * this.getCrit(this.critChance * targetResist));
 
         super.perform(combat);
     }
 
-    protected calcDamage(player: Player): number {
-        const damage = Game.calcDamage(this.minDamage, this.maxDamage);
+    protected calcDamage(self: Unit): number {
+        const damage = calcDamage(this.minDamage, this.maxDamage);
 
-        return player.character.effects.reduce((result, effect) => {
+        return self.character.effects.reduce((result, effect) => {
             return effect.damageMod(result, this.type);
         }, damage);
     }

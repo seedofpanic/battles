@@ -3,7 +3,6 @@ import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from "../actions/hitAction";
 
 export class Ranger extends Character {
-    id = 'ranger';
     actions = {
         'bow_shot': new HitAction('Bow shot', 10, 15, DamageTypes.PIERCING),
         'precision_shot': new HitAction('Precision shot', 20, 30, DamageTypes.PIERCING),

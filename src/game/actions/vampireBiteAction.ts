@@ -1,7 +1,7 @@
 import {HitAction} from './hitAction';
 import {DamageTypes} from '../models/damageTypes';
-import {Player} from '../player';
 import {Combat} from '../combat';
+import {Unit} from '../unit';
 
 const NAME = 'Vampiric touch';
 const MIN_DAMAGE = 5;
@@ -16,10 +16,10 @@ export class VampireBiteAction extends HitAction {
         super(NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.PIERCING, CRIT_CHANCE, CRIT_MULTIPLIER);
     }
 
-    perform(combat: Combat, player?: Player, target?: Player) {
-        super.perform(combat, player, target);
+    perform(combat: Combat, self?: Unit, target?: Unit) {
+        super.perform(combat, self, target);
 
-        player.increaseHp(this, HEAL_AMOUNT);
+        self.increaseHp(this, HEAL_AMOUNT);
     }
 
     modifyIncomeDamage(damage: number, type: DamageTypes) {

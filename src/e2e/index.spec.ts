@@ -1,5 +1,5 @@
 import {doAction} from '../index';
-import {Player} from '../game/player';
+import {Player} from '../game/units/player';
 import objectContaining = jasmine.objectContaining;
 import arrayContaining = jasmine.arrayContaining;
 import anything = jasmine.anything;
