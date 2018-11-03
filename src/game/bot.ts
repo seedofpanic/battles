@@ -1,5 +1,6 @@
 import {Player} from './player';
-import {allowedCharacters, Game} from './game';
+import {Game} from './game';
+import {allowedCharacters} from './allowedCharacters';
 
 export function fairRandom(max: number): number {
     return Math.floor((Math.random() * (max - 0.000001)));

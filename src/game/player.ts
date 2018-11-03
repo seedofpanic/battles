@@ -5,7 +5,7 @@ import {Effect} from './effect';
 import {Character} from './character';
 import {HitAction} from './actions/hitAction';
 import * as WebSocket from 'ws';
-import {allowedCharacters} from './game';
+import {allowedCharacters} from './allowedCharacters';
 import {StunAction} from './actions/stunAction';
 
 export class Player {
