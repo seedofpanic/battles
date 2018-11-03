@@ -1,8 +1,6 @@
 import {Character} from '../character';
-import {SwordCuttingAction} from '../actions/swordCuttingAction';
 import {DamageTypes} from '../models/damageTypes';
 import {ShieldAction} from '../actions/shieldAction';
-import {SwordAction} from '../actions/swordAction';
 import {BuffAction} from '../actions/buffAction';
 import {ResistsModEffect} from '../effects/resistsModEffect';
 import {PiercingStrikeAction} from '../actions/piercingStrikeAction';
@@ -10,7 +8,6 @@ import {MultipleStrikeAction} from '../actions/multipleStrikeAction';
 import {ShieldOfAngerEffect} from '../effects/shieldOfAngerEffect';
 
 export class Warrior extends Character {
-    id = 'warrior';
     actions = {
         'piercing_strike': new PiercingStrikeAction(),
         'shield_block': new BuffAction(new ResistsModEffect(0.5, 'Shield block', 1), 'Shield block'),

@@ -10,7 +10,6 @@ import {BloodSacrificeAction} from '../actions/bloodSacrificeAction';
 import {SwordCuttingAction} from '../actions/swordCuttingAction';
 
 export class Barbarian extends Character {
-    id = 'barbarian';
     name = 'Barbarian';
     actions = {
         'axe_strike': new HitAction('Axe strike', 5, 7, DamageTypes.CUTTING, 0.1, 1.5),

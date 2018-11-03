@@ -17,7 +17,7 @@ import {Pirate} from './characters/pirate';
 import {Devil} from './characters/devil';
 import {Character} from './character';
 
-export const allowedCharacters: {[name: string]: {name: string, create: {new (): Character}}} = {
+export const allowedCharacters: {[name: string]: {name: string, create: {new (id: string): Character}}} = {
     'barbarian': {
         name: 'Barbarian',
         create: Barbarian
@@ -200,7 +200,7 @@ export class Game {
     }
 
     private getActionsWithDescriptions(id: string) {
-        const actions = new (allowedCharacters[id].create)().actions;
+        const actions = new (allowedCharacters[id].create)(id).actions;
 
         return Object.keys(actions).map(keys => {
             return {

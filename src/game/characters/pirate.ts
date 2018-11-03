@@ -3,7 +3,6 @@ import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from "../actions/hitAction";
 
 export class Pirate extends Character {
-    id = 'pirate';
     actions = {
         'fire_breath': new HitAction('Hearting song', 10, 15, DamageTypes.PIERCING),
         'guitar_strike': new HitAction('Guitar strike', 20, 30, DamageTypes.BLUNT),

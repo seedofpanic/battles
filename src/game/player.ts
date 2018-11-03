@@ -103,7 +103,7 @@ export class Player {
 
     setCharacter(characterName: string) {
         if (allowedCharacters[characterName]) {
-            this.character = new (allowedCharacters[characterName].create)();
+            this.character = new (allowedCharacters[characterName].create)(characterName);
         } else {
             this.send('error', 'Unexpected character name');
         }
