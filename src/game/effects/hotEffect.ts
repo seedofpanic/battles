@@ -1,7 +1,7 @@
 import {Effect} from '../effect';
 import {DamageTypes} from '../models/damageTypes';
-import {Game} from '../game';
 import {Unit} from '../unit';
+import {calcDamage} from '../../utils/calcDamage';
 
 export class HotEffect extends Effect {
     id = 'hot';
@@ -16,7 +16,7 @@ export class HotEffect extends Effect {
     }
 
     preTick(self: Unit) {
-        self.increaseHp(this, Game.calcDamage(this.minHeal, this.maxHeal));
+        self.increaseHp(this, calcDamage(this.minHeal, this.maxHeal));
         super.preTick(self);
     }
 }

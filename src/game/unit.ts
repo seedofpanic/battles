@@ -1,6 +1,5 @@
 import {Combat} from './combat';
 import {Character} from './character';
-import {HitAction} from './actions/hitAction';
 import {Effect} from './effect';
 import {Action} from './action';
 import {DamageTypes} from './models/damageTypes';
@@ -26,7 +25,7 @@ export class Unit {
         this.character.isDead = true;
     }
 
-    decreaseHp(action: HitAction | Effect, damage: number) {
+    decreaseHp(action: Action | Effect, damage: number) {
         if (this.character.health > damage) {
             this.character.health -= damage;
         } else {

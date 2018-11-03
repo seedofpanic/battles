@@ -13,10 +13,6 @@ export class Game {
     combatsCount = 0;
     combatsEnded = 0;
 
-    static calcDamage(minDamage: number, maxDamage: number) {
-        return Math.ceil(Math.random() * (maxDamage - minDamage)) + minDamage;
-    }
-
     startDuel(player: Player, combatId: string | null) {
         let combat: Combat;
 

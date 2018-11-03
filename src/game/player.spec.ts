@@ -1,49 +1,49 @@
-import {Player} from './units/player';
 import {DamageTypes} from './models/damageTypes';
-import {HitAction} from './actions/hitAction';
+import {Unit} from './unit';
 import {Combat} from './combat';
+import {HitAction} from './actions/hitAction';
 
-describe('Player', () => {
-    let player: Player;
+describe('Unit', () => {
+    let unit: Unit;
     const results: any[] = [];
     const action = new HitAction('', 0, 0, DamageTypes.CUTTING);
 
     beforeEach(() => {
-        player = new Player('1');
-        spyOn(player, 'send').and.callFake((action, payload) => {
+        unit = new Unit('1');
+        spyOn(unit, 'send').and.callFake((action, payload) => {
             results.push(`${action} ${payload}`);
         });
-        player.setCharacter('warrior');
-        player.currentCombat = new Combat();
+        unit.setCharacter('warrior');
+        unit.currentCombat = new Combat();
     });
 
     describe('decreaseHp', () => {
         it('normal damage', () => {
-            player.character.health = 30;
-            player.character.resists[DamageTypes.CUTTING] = 1;
+            unit.character.health = 30;
+            unit.character.resists[DamageTypes.CUTTING] = 1;
 
-            player.decreaseHp(action, 10);
+            unit.decreaseHp(action, 10);
 
-            expect(player.character.health).toBe(20);
+            expect(unit.character.health).toBe(20);
         });
 
         it('health never goes lower than 0', () => {
-            player.character.health = 5;
-            player.character.resists[DamageTypes.CUTTING] = 1;
+            unit.character.health = 5;
+            unit.character.resists[DamageTypes.CUTTING] = 1;
 
-            player.decreaseHp(action, 10);
+            unit.decreaseHp(action, 10);
 
-            expect(player.character.health).toBe(0);
+            expect(unit.character.health).toBe(0);
         });
 
-        it('when health goes to 0, player isDead', () => {
-            player.character.health = 5;
-            player.character.resists[DamageTypes.CUTTING] = 1;
-            player.character.isDead = false;
+        it('when health goes to 0, unit isDead', () => {
+            unit.character.health = 5;
+            unit.character.resists[DamageTypes.CUTTING] = 1;
+            unit.character.isDead = false;
 
-            player.decreaseHp(action, 10);
+            unit.decreaseHp(action, 10);
 
-            expect(player.character.isDead).toBe(true);
+            expect(unit.character.isDead).toBe(true);
         });
     });
 });
