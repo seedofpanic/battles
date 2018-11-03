@@ -1,7 +1,7 @@
 import {Effect} from '../effect';
-import {Player} from '../player';
 import {DamageTypes} from '../models/damageTypes';
 import {Game} from '../game';
+import {Unit} from '../unit';
 
 export class DotEffect extends Effect {
     id = 'dot';
@@ -15,10 +15,10 @@ export class DotEffect extends Effect {
         super(name, roundsCount);
     }
 
-    preTick(player: Player) {
-        player.decreaseHp(this, Game.calcDamage(this.minDamage, this.maxDamage)
-            * player.getResist(this.type));
+    preTick(self: Unit) {
+        self.decreaseHp(this, Game.calcDamage(this.minDamage, this.maxDamage)
+            * self.getResist(this.type));
 
-        super.preTick(player);
+        super.preTick(self);
     }
 }

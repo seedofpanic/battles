@@ -1,9 +1,8 @@
 import {HitAction} from './hitAction';
 import {DamageTypes} from '../models/damageTypes';
-import {Player} from '../player';
 import {StunEffect} from '../effects/stunEffect';
-import {CuttingEffect} from '../effects/cuttingEffect';
 import {Combat} from '../combat';
+import {Unit} from '../unit';
 
 const NAME = 'Shield strike';
 const MIN_DAMAGE = 3;
@@ -25,8 +24,8 @@ export class ShieldAction extends HitAction {
         );
     }
 
-    perform(combat: Combat, player?: Player, target?: Player) {
-        super.perform(combat, player, target);
+    perform(combat: Combat, self?: Unit, target?: Unit) {
+        super.perform(combat, self, target);
 
         target.addEffect(this, new StunEffect(1));
     }

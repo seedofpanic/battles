@@ -1,7 +1,9 @@
-import {Player} from './player';
+import {Player} from './units/player';
 import {Combat} from './combat';
 import {randomBytes} from 'crypto';
 import {allowedCharacters} from './allowedCharacters';
+import {Unit} from './unit';
+import {Bot} from './units/bot';
 
 export class Game {
 
@@ -44,7 +46,7 @@ export class Game {
         this.showCharacters(player);
     }
 
-    startCombat(player: Player) {
+    startCombat(player: Unit) {
         const combat = this.getCombatFromQueue();
 
         if (combat.isFull()) {
@@ -55,7 +57,7 @@ export class Game {
         this.showCharacters(player);
     }
 
-    showCharacters(player: Player) {
+    showCharacters(player: Unit) {
         player.send('select_character', this.getCharacters());
     }
 
@@ -67,44 +69,28 @@ export class Game {
         return this.players[chatId];
     }
 
-    addPlayer(chatId: string): Player {
-        this.players[chatId] = new Player(chatId);
+    addPlayer(id: string): Player {
+        this.players[id] = new Player(id);
 
-        return this.players[chatId];
+        return this.players[id];
     }
 
-    selectCharacter(player: Player, character: string) {
+    selectCharacter(unit: Unit, character: string) {
 
         if (!this.isAllowedCharacter(character)) {
             return;
         }
 
-        if (!player.currentCombat) {
-            this.startCombat(player);
+        unit.setCharacter(character);
 
-            return;
-        }
+        const combat = unit.currentCombat;
 
-        player.setCharacter(character);
-
-        const combat = player.currentCombat;
-
-        Object.keys(combat.players).forEach(id => {
-            combat.players[id].send('character_update', {
-                id: player.chatId,
-                data: {
-                    id: player.character.id,
-                    name: player.getName(),
-                    healthMax: player.character.healthMax,
-                    health: player.character.health
-                }
-            });
-        });
+        unit.broadcastUpdate();
 
         if (combat.isReadyToStart()) {
             combat.start();
         } else {
-            player.send('note','Waiting for opponent to join');
+            unit.send('note','Waiting for opponent to join');
 
         }
     }
@@ -112,9 +98,9 @@ export class Game {
     endCombat(combat: Combat) {
         this.combatsQueue.splice(this.combatsQueue.findIndex(c => c === combat));
         this.combatsEnded++;
-        Object.keys(combat.players).forEach(id => {
-            combat.players[id].send('set_in_battle', false);
-            combat.players[id].currentCombat = undefined;
+        Object.keys(combat.units).forEach(id => {
+            combat.units[id].send('set_in_battle', false);
+            combat.units[id].currentCombat = undefined;
         });
     }
 
@@ -136,17 +122,17 @@ export class Game {
         });
     }
 
-    private start(player: Player, combat: Combat) {
+    private start(player: Unit, combat: Combat) {
         player.send('set_in_battle', true);
 
         if (player.currentCombat) {
-            player.send('error', 'You are already in queue');
+            player.kill();
 
             return;
         }
 
         player.currentCombat = combat;
-        combat.addPlayer(player);
+        combat.addUnit(player);
     }
 
     private getCombatFromQueue(): Combat {
@@ -160,5 +146,12 @@ export class Game {
 
             return combat;
         }
+    }
+
+    addBot() {
+        const bot = new Bot();
+
+        this.startCombat(bot);
+        this.selectCharacter(bot, bot.selectCharacter());
     }
 }

@@ -1,4 +1,4 @@
-import {Player} from './player';
+import {Player} from './units/player';
 import {DamageTypes} from './models/damageTypes';
 import {HitAction} from './actions/hitAction';
 import {Combat} from './combat';

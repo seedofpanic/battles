@@ -1,25 +1,20 @@
-import {Action} from './action';
-import {DamageTypes} from './models/damageTypes';
 import {Combat} from './combat';
-import {Effect} from './effect';
 import {Character} from './character';
 import {HitAction} from './actions/hitAction';
-import * as WebSocket from 'ws';
+import {Effect} from './effect';
+import {Action} from './action';
+import {DamageTypes} from './models/damageTypes';
 import {allowedCharacters} from './allowedCharacters';
 import {StunAction} from './actions/stunAction';
 
-export class Player {
+export class Unit {
     username: string;
     currentCombat: Combat;
     character: Character;
     isStunned: boolean;
-    private ws: WebSocket;
+    targetId: string;
 
-    constructor(public chatId: string) {
-    }
-
-    setWS(ws: WebSocket) {
-        this.ws = ws;
+    constructor(public id: string) {
     }
 
     setAction(action: string) {
@@ -71,18 +66,22 @@ export class Player {
         return this.character.name;
     }
 
-    beforeResolve(target: Player) {
-        this.character.action.beforeResolve(this.currentCombat, this, target);
+    beforeResolve(target: Unit) {
+        this.character.action.beforeResolve(this.currentCombat, this, target || this.getDefaultTarget());
     }
 
-    perform(target: Player) {
-        this.character.action.perform(this.currentCombat, this, target);
+    perform(target: Unit) {
+        this.character.action.perform(this.currentCombat, this, target || this.getDefaultTarget());
 
         Object.keys(this.character.actions).forEach(key => {
             this.character.actions[key].tick();
         });
 
         this.character.action = undefined;
+    }
+
+    getDefaultTarget(): Unit {
+        return this.currentCombat.unitsArr.filter(unit => unit.id !== this.id)[0];
     }
 
     resetStats() {
@@ -110,14 +109,6 @@ export class Player {
     }
 
     send(type: string, payload: any) {
-        if (this.ws.readyState !== this.ws.OPEN) {
-            return;
-        }
-
-        this.ws.send(JSON.stringify({
-            type,
-            payload
-        }));
     }
 
     isActionAvailable(action: string) {
@@ -138,5 +129,40 @@ export class Player {
         }
 
         return actions;
+    }
+
+    broadcastUpdate() {
+        Object.keys(this.currentCombat.units).forEach(id => {
+            this.sendUpdateToPlayer(this.currentCombat.units[id]);
+        });
+    }
+
+    consumeUpdate() {
+        Object.keys(this.currentCombat.units).forEach(id => {
+            if (this.currentCombat.units[id].character) {
+                this.currentCombat.units[id].sendUpdateToPlayer(this);
+            }
+        });
+    }
+
+    sendUpdateToPlayer(target: Unit) {
+        target.send('character_update', {
+            id: this.id,
+            data: {
+                id: this.character.id,
+                name: this.getName(),
+                healthMax: this.character.healthMax,
+                health: this.character.health,
+                effects: this.character.effects.map(effect => ({
+                    id: effect.id,
+                    name: effect.name,
+                    ticks: effect.roundsCount
+                }))
+            }
+        });
+    }
+
+    isReady(): boolean {
+        return !!this.character.action;
     }
 }

@@ -1,8 +1,7 @@
 import * as express from 'express';
 import * as expressWs from 'express-ws';
 import {Game} from './game/game';
-import {Player} from './game/player';
-import {Bot} from './game/bot';
+import {Player} from './game/units/player';
 
 const game = new Game();
 
@@ -32,7 +31,7 @@ export function doAction(session: Session, player: Player, action: any) {
             game.startCombat(player);
 
             if (action.payload.withBot) {
-                const bot = new Bot(game);
+                game.addBot();
             }
 
             break;
@@ -132,6 +131,8 @@ app.ws('/ws', (ws, req) => {
 
     player.setWS(ws);
 
+    player.send('set_my_id', player.id);
+
     player.send('cookies', [
         {key: 'sessionId', value: sessionId},
         {key: 'token', value: sessions[sessionId].token}
@@ -149,8 +150,8 @@ app.ws('/ws', (ws, req) => {
 
 
         if (player.currentCombat) {
-            Object.keys(player.currentCombat.players).forEach(id => {
-                const playerTo = player.currentCombat.players[id];
+            Object.keys(player.currentCombat.units).forEach(id => {
+                const playerTo = player.currentCombat.units[id];
 
                 if (player === playerTo) {
                      return;

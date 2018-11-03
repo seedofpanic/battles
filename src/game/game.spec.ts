@@ -1,5 +1,5 @@
 import {Game} from './game';
-import {Player} from './player';
+import {Player} from './units/player';
 import objectContaining = jasmine.objectContaining;
 import arrayContaining = jasmine.arrayContaining;
 
@@ -43,7 +43,7 @@ describe('Game', () => {
         });
     });
 
-    describe('addPlayer', () => {
+    describe('addUnit', () => {
         it('Верно добавляет пользователя в игру', () => {
             const player = game.addPlayer('1');
 

@@ -1,8 +1,8 @@
 import {HitAction} from './hitAction';
-import {Player} from '../player';
 import {BurningDotEffect} from '../effects/burningDotEffect';
 import {DamageTypes} from '../models/damageTypes';
 import {Combat} from '../combat';
+import {Unit} from '../unit';
 
 const NAME = 'Fire ball';
 const MIN_DAMAGE = 5;
@@ -22,8 +22,8 @@ export class FireBallAction extends HitAction {
         );
     }
 
-    perform(combat: Combat, player?: Player, target?: Player) {
-        super.perform(combat, player, target);
+    perform(combat: Combat, self?: Unit, target?: Unit) {
+        super.perform(combat, self, target);
         target.addEffect(this, new BurningDotEffect(2, 3, 3));
     }
 }
