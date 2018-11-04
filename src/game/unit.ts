@@ -13,6 +13,7 @@ export class Unit {
     isStunned: boolean;
     targetId: string;
     team: string;
+    isValuable = false;
 
     constructor(public id: string) {
     }
@@ -67,6 +68,7 @@ export class Unit {
     }
 
     beforeResolve(target: Unit) {
+        this.updateTarget();
         this.character.action.beforeResolve(this.currentCombat, this, target || this.getDefaultTarget());
     }
 
@@ -175,5 +177,11 @@ export class Unit {
         }
 
         this.team = '';
+    }
+
+    private updateTarget() {
+        if (!this.targetId || !this.currentCombat.units[this.targetId]) {
+            this.targetId = this.currentCombat.unitsArr.filter(unit => unit.team !== this.team)[0].id;
+        }
     }
 }

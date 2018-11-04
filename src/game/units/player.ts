@@ -3,6 +3,7 @@ import * as WebSocket from 'ws';
 
 export class Player extends Unit {
     private ws: WebSocket;
+    isValuable = true;
 
     setWS(ws: WebSocket) {
         this.ws = ws;

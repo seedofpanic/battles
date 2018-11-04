@@ -16,7 +16,7 @@ export class Warrior extends Character {
         'double_strike': new MultipleStrikeAction('Double strike', new PiercingStrikeAction(), 2, 0.3),
         'shield_of_anger': new BuffAction(new ShieldOfAngerEffect(),'Shield of anger', 3),
         'shield_strike': new ShieldAction(),
-        'summon_dog': new SummonAction('Summon dog', new Dog('dog'))
+        'summon_dog': new SummonAction('Summon dog', 'dog', Dog)
     };
     health = 100;
     healthMax = 100;

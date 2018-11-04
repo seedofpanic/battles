@@ -1,8 +1,10 @@
 import {allowedCharacters} from '../allowedCharacters';
-import {Unit} from '../unit';
 import {fairRandom} from '../../utils/fairRandom';
+import {Player} from './player';
 
-export class Bot extends Unit {
+export class Bot extends Player {
+    isValuable = true;
+
     constructor() {
         super('bot');
     }

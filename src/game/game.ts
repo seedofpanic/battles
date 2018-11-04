@@ -42,7 +42,7 @@ export class Game {
         this.showCharacters(player);
     }
 
-    startCombat(player: Unit) {
+    startCombat(player: Player) {
         const combat = this.getCombatFromQueue();
 
         if (combat.isFull()) {
@@ -118,11 +118,11 @@ export class Game {
         });
     }
 
-    private start(player: Unit, combat: Combat) {
+    private start(player: Player, combat: Combat) {
         player.send('set_in_battle', true);
 
         player.clearCombat();
-        combat.addUnit(player);
+        combat.addPlayer(player);
     }
 
     private getCombatFromQueue(): Combat {
