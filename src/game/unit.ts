@@ -12,6 +12,8 @@ export class Unit {
     character: Character;
     isStunned: boolean;
     targetId: string;
+    team: string;
+    isValuable = false;
 
     constructor(public id: string) {
     }
@@ -66,6 +68,7 @@ export class Unit {
     }
 
     beforeResolve(target: Unit) {
+        this.updateTarget();
         this.character.action.beforeResolve(this.currentCombat, this, target || this.getDefaultTarget());
     }
 
@@ -147,6 +150,7 @@ export class Unit {
     sendUpdateToPlayer(target: Unit) {
         target.send('character_update', {
             id: this.id,
+            team: this.team,
             data: {
                 id: this.character.id,
                 name: this.getName(),
@@ -163,5 +167,21 @@ export class Unit {
 
     isReady(): boolean {
         return !!this.character.action;
+    }
+
+    clearCombat() {
+        if (this.currentCombat) {
+            this.kill();
+
+            return;
+        }
+
+        this.team = '';
+    }
+
+    private updateTarget() {
+        if (!this.targetId || !this.currentCombat.units[this.targetId]) {
+            this.targetId = this.currentCombat.unitsArr.filter(unit => unit.team !== this.team)[0].id;
+        }
     }
 }

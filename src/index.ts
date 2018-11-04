@@ -90,6 +90,14 @@ export function doAction(session: Session, player: Player, action: any) {
             break;
         case 'auth':
             break;
+        case 'select_target':
+            const unit = player.currentCombat.units[action.payload.unitId];
+
+            if (unit.team === player.team) {
+                unit.targetId = action.payload.targetId;
+            }
+
+            break;
         default:
     }
 }

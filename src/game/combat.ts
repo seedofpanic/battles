@@ -1,11 +1,22 @@
 import {Unit} from './unit';
 import {Ai} from './units/ai';
 import {Character} from './character';
+import {Player} from './units/player';
+
+let nextSummonId = 1;
 
 export class Combat {
     units: {[name: string]: Unit} = {};
     isEnded = false;
     battleLog: string[] = [];
+    teams: string[];
+
+    constructor() {
+        this.teams = [
+            'team1',
+            'team2'
+        ];
+    }
 
     get unitsArr(): Unit[] {
         return Object.keys(this.units).map(key => this.units[key]);
@@ -31,16 +42,25 @@ export class Combat {
                 unit.character.effects.filter(effect => !effect.getIsEnded());
         });
 
-        this.isEnded = Object.keys(this.units).some(key => this.units[key].character.isDead);
+        const team1IsDead = Object.keys(this.units).every(key => {
+            return (this.units[key].team === this.teams[0]) ||
+                (!this.units[key].isValuable ||
+                    this.units[key].character.isDead);
+        });
+        const team2IsDead = Object.keys(this.units).every(key => {
+            return (this.units[key].team === this.teams[1]) ||
+                (!this.units[key].isValuable ||
+                    this.units[key].character.isDead);
+        });
+
+        this.isEnded = team1IsDead || team2IsDead;
     }
 
     showResult() {
         Object.keys(this.units).forEach(id => {
             const unit = this.units[id];
 
-            Object.keys(this.units).forEach(sendId => {
-                this.units[sendId].broadcastUpdate();
-            });
+            unit.broadcastUpdate();
 
             unit.send('note', this.battleLog.join('\n'));
 
@@ -84,10 +104,32 @@ export class Combat {
         });
     }
 
-    addUnit(player: Unit) {
-        this.units[player.id] = player;
-
+    addPlayer(player: Player) {
+        this.addUnit(player);
+        this.setTeamToPlayer(player);
         player.consumeUpdate();
+    }
+
+    addUnit(player: Unit) {
+        player.currentCombat = this;
+
+        this.units[player.id] = player;
+    }
+
+    setTeamToPlayer(player: Player) {
+        const units = this.unitsArr;
+
+        for (let i = 0; i < this.teams.length; i++) {
+            if (!units.some(unit => unit.team === this.teams[i])) {
+                player.team = this.teams[i];
+                break;
+            }
+        }
+
+        player.send('set_teams', {
+            myTeam: player.team,
+            opponentTeam: this.teams.filter(team => player.team !== team)[0]
+        });
     }
 
     isFull() {
@@ -101,9 +143,24 @@ export class Combat {
             });
     }
 
-    addSummon(summon: Character) {
-        const unit = new Ai(summon.id, summon, this);
+    addSummon(summon: Character, team: string) {
+        const unit = new Ai(`${summon.id}_${nextSummonId++}`, team, summon, this);
 
         this.addUnit(unit);
+    }
+
+    removeUnit(unit: Unit) {
+        delete this.units[unit.id];
+
+        this.broadcast('remove_unit', {
+            id: unit.id,
+            team: unit.team
+        });
+    }
+
+    broadcast(type: string, payload: any) {
+        Object.keys(this.units).forEach(key => {
+            this.units[key].send(type, payload);
+        });
     }
 }
