@@ -102,6 +102,11 @@ export class Combat {
                     break;
                 }
             }
+
+            player.send('set_teams', {
+                myTeam: player.team,
+                opponentTeam: this.teams.filter(team => player.team !== team)[0]
+            });
         }
 
         this.units[player.id] = player;
