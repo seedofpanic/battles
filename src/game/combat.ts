@@ -6,6 +6,14 @@ export class Combat {
     units: {[name: string]: Unit} = {};
     isEnded = false;
     battleLog: string[] = [];
+    teams: string[];
+
+    constructor() {
+        this.teams = [
+            'team1',
+            'team2'
+        ];
+    }
 
     get unitsArr(): Unit[] {
         return Object.keys(this.units).map(key => this.units[key]);
@@ -38,9 +46,7 @@ export class Combat {
         Object.keys(this.units).forEach(id => {
             const unit = this.units[id];
 
-            Object.keys(this.units).forEach(sendId => {
-                this.units[sendId].broadcastUpdate();
-            });
+            unit.broadcastUpdate();
 
             unit.send('note', this.battleLog.join('\n'));
 
@@ -85,6 +91,19 @@ export class Combat {
     }
 
     addUnit(player: Unit) {
+        player.currentCombat = this;
+
+        if (!player.team) {
+            const units = this.unitsArr;
+
+            for (let i = 0; i < this.teams.length; i++) {
+                if (!units.some(unit => unit.team === this.teams[i])) {
+                    player.team = this.teams[i];
+                    break;
+                }
+            }
+        }
+
         this.units[player.id] = player;
 
         player.consumeUpdate();
@@ -101,8 +120,8 @@ export class Combat {
             });
     }
 
-    addSummon(summon: Character) {
-        const unit = new Ai(summon.id, summon, this);
+    addSummon(summon: Character, team: string) {
+        const unit = new Ai(summon.id, team, summon, this);
 
         this.addUnit(unit);
     }

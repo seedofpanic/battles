@@ -4,16 +4,15 @@ import {Character} from '../character';
 import {Combat} from '../combat';
 
 export class Ai extends Unit {
-    constructor(id: string, public character: Character, combat: Combat) {
+    constructor(id: string, team: string, public character: Character, combat: Combat) {
         super(id);
 
         this.currentCombat = combat;
+        this.team = team;
     }
 
     selectAction() {
         const actionsKeys = Object.keys(this.character.actions);
-
-        console.log(actionsKeys);
 
         this.setAction(
             actionsKeys[fairRandom(actionsKeys.length)]

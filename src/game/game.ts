@@ -121,13 +121,7 @@ export class Game {
     private start(player: Unit, combat: Combat) {
         player.send('set_in_battle', true);
 
-        if (player.currentCombat) {
-            player.kill();
-
-            return;
-        }
-
-        player.currentCombat = combat;
+        player.clearCombat();
         combat.addUnit(player);
     }
 

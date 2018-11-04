@@ -12,6 +12,7 @@ export class Unit {
     character: Character;
     isStunned: boolean;
     targetId: string;
+    team: string;
 
     constructor(public id: string) {
     }
@@ -147,6 +148,7 @@ export class Unit {
     sendUpdateToPlayer(target: Unit) {
         target.send('character_update', {
             id: this.id,
+            team: this.team,
             data: {
                 id: this.character.id,
                 name: this.getName(),
@@ -163,5 +165,15 @@ export class Unit {
 
     isReady(): boolean {
         return !!this.character.action;
+    }
+
+    clearCombat() {
+        if (this.currentCombat) {
+            this.kill();
+
+            return;
+        }
+
+        this.team = '';
     }
 }
