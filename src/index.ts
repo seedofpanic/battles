@@ -9,7 +9,7 @@ export const app = expressWs(express()).app;
 
 let nextSessionId = 1;
 
-interface Session {
+export interface Session {
     player: Player;
     token: string;
     played: number;
@@ -19,7 +19,9 @@ const sessions: {
     [name: string]: Session;
 } = {};
 
-export function doAction(session: Session, player: Player, action: any) {
+export function doAction(session: Session, action: any) {
+    const player = session.player;
+
     switch (action.type) {
         case 'select_character':
         case 'ready':
@@ -148,7 +150,7 @@ app.ws('/ws', (ws, req) => {
 
     ws.on('message', msg => {
         try {
-            doAction(sessions[sessionId], player, JSON.parse(msg.toString()));
+            doAction(sessions[sessionId], JSON.parse(msg.toString()));
         } catch (e) {
             console.error(e);
         }
