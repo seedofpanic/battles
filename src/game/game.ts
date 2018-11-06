@@ -100,6 +100,13 @@ export class Game {
         });
     }
 
+    addBot() {
+        const bot = new Bot();
+
+        this.startCombat(bot);
+        this.selectCharacter(bot, bot.selectCharacter());
+    }
+
     private getCharacters() {
         return Object.keys(allowedCharacters).map((id) => {
                         return {name: allowedCharacters[id].name, id,
@@ -136,12 +143,5 @@ export class Game {
 
             return combat;
         }
-    }
-
-    addBot() {
-        const bot = new Bot();
-
-        this.startCombat(bot);
-        this.selectCharacter(bot, bot.selectCharacter());
     }
 }
