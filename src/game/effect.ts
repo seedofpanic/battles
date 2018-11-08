@@ -19,11 +19,15 @@ export abstract class Effect {
         return this.roundsCount <= 0;
     }
 
-    damageMod(value: number, type: DamageTypes): number {
+    damageMod(value: number, type: DamageTypes, self: Unit, target: Unit): number {
         return value;
     }
 
-    resistMod(value: number): number {
+    resistMod(value: number, type: DamageTypes): number {
+        return value;
+    }
+
+    effectResistMod(value: number, effectId: string) {
         return value;
     }
 }

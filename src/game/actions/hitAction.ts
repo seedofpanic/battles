@@ -17,21 +17,21 @@ export class HitAction extends Action {
         super(name, cooldown, maxCharges);
     }
 
-    perform(combat: Combat, self?: Unit, target?: Unit) {
+    perform(combat: Combat, self: Unit, target: Unit) {
         const targetResist = target.getResist(this.type);
 
-        target.decreaseHp(this, this.calcDamage(self)
+        target.decreaseHp(this, this.calcDamage(self, target)
             * targetResist
             * this.getCrit(this.critChance * targetResist));
 
         super.perform(combat);
     }
 
-    protected calcDamage(self: Unit): number {
+    protected calcDamage(self: Unit, target?: Unit): number {
         const damage = calcDamage(this.minDamage, this.maxDamage);
 
         return self.character.effects.reduce((result, effect) => {
-            return effect.damageMod(result, this.type);
+            return effect.damageMod(result, this.type, self, target);
         }, damage);
     }
 
