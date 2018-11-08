@@ -2,7 +2,6 @@ import {doAction, Session} from '../index';
 import {Player} from '../game/units/player';
 import objectContaining = jasmine.objectContaining;
 import arrayContaining = jasmine.arrayContaining;
-import anything = jasmine.anything;
 
 describe('bot', () => {
 

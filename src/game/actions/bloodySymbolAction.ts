@@ -4,19 +4,19 @@ import {Combat} from '../combat';
 import {Unit} from '../unit';
 
 const NAME = 'Blood leach';
-const MIN_DAMAGE = 2;
-const MAX_DAMAGE = 4;
+const MIN_DAMAGE = 1;
+const MAX_DAMAGE = 10;
 const CRIT_CHANCE = 0;
 const CRIT_MULTIPLIER = 1;
 
-const HEAL_AMOUNT = 2;
+const HEAL_AMOUNT = 5;
 
-export class VampireBiteAction extends HitAction {
+export class BloodySymbolAction extends HitAction {
     constructor() {
         super(NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.PIERCING, CRIT_CHANCE, CRIT_MULTIPLIER);
     }
 
-    perform(combat: Combat, self?: Unit, target?: Unit) {
+    perform(combat: Combat, self: Unit, target: Unit) {
         super.perform(combat, self, target);
 
         self.increaseHp(this, HEAL_AMOUNT);
