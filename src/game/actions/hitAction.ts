@@ -9,7 +9,7 @@ export class HitAction extends Action {
     constructor(name: string,
                 protected minDamage: number,
                 protected maxDamage: number,
-                private type: DamageTypes,
+                protected type: DamageTypes,
                 private critChance = 0,
                 private critMultipier = 1,
                 cooldown = 0,

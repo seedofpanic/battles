@@ -5,12 +5,12 @@ import {Combat} from '../combat';
 import {Unit} from '../unit';
 
 const NAME = 'Fireball';
-const MIN_DAMAGE = 3;
-const MAX_DAMAGE = 6;
-const CRIT_CHANCE = 0.12;
-const CRIT_MULTIPLIER = 1.3;
+const MIN_DAMAGE = 4;
+const MAX_DAMAGE = 7;
+const CRIT_CHANCE = 0.15;
+const CRIT_MULTIPLIER = 1.4;
 
-export class FireBallAction extends HitAction {
+export class FireBeamAction extends HitAction {
     constructor() {
         super(
             NAME,

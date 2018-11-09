@@ -13,7 +13,7 @@ const HEAL_AMOUNT = 5;
 
 export class BloodySymbolAction extends HitAction {
     constructor() {
-        super(NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.PIERCING, CRIT_CHANCE, CRIT_MULTIPLIER);
+        super(NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.PIERCING, CRIT_CHANCE, CRIT_MULTIPLIER, 3);
     }
 
     perform(combat: Combat, self: Unit, target: Unit) {
