@@ -10,10 +10,13 @@ export class Unit {
     username: string;
     currentCombat: Combat;
     character: Character;
-    isStunned: boolean;
     targetId: string;
     team: string;
     isValuable = false;
+
+    get isStunned() {
+        return this.character.effects.reduce((result, effect) => effect.isStunned(result), false);
+    }
 
     constructor(public id: string) {
     }
@@ -91,10 +94,6 @@ export class Unit {
 
     getDefaultTarget(): Unit {
         return this.currentCombat.unitsArr.filter(unit => unit.id !== this.id)[0];
-    }
-
-    resetStats() {
-        this.isStunned = false;
     }
 
     preTick() {

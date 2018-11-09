@@ -70,14 +70,7 @@ export function doAction(session: Session, action: any) {
 
             player.setAction(action.payload);
 
-            if (combat.allReady()) {
-                combat.perform();
-                combat.showResult();
-
-                if (combat.isEnded) {
-                    game.endCombat(combat);
-                }
-            } else {
+            if (!game.update(combat)) {
                 player.send('note', 'Waiting for opponent...');
             }
             break;

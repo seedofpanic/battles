@@ -32,7 +32,6 @@ export class Combat {
         const units = this.unitsArr;
 
         units.forEach(unit => unit.beforeResolve(this.units[unit.targetId]));
-        units.forEach(unit => unit.resetStats());
         units.forEach(unit => unit.preTick());
         units.forEach(unit => unit.perform(this.units[unit.targetId]));
         units.forEach(unit => unit.postTick());

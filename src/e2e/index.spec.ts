@@ -3,7 +3,7 @@ import {Player} from '../game/units/player';
 import objectContaining = jasmine.objectContaining;
 import arrayContaining = jasmine.arrayContaining;
 
-describe('bot', () => {
+describe('pvp Warrior vs Mage', () => {
 
     const results: any[] = [];
     const sessions: Session[] = [
@@ -412,6 +412,8 @@ describe('bot', () => {
             "note": 'Burning do 4 damage\n' +
                 'Burning do 4 damage\n' +
                 'Piercing strike do 5 damage'
-        }, {"select_skill": []}]);
+        }, {"select_skill": jasmine.arrayContaining([
+                {id: 'frost_arrow', name: 'Frost arrow'}
+            ])}]);
     });
 });

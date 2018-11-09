@@ -4,6 +4,7 @@ import {Character} from '../character';
 import {Combat} from '../combat';
 import {Action} from '../action';
 import {Effect} from '../effect';
+import {StunAction} from '../actions/stunAction';
 
 export class Ai extends Unit {
     constructor(id: string, team: string, public character: Character, combat: Combat) {
@@ -14,7 +15,11 @@ export class Ai extends Unit {
     }
 
     beforeResolve(target: Unit) {
-        this.selectAction();
+        if (this.isStunned) {
+            this.character.action = new StunAction();
+        } else {
+            this.selectAction();
+        }
 
         super.beforeResolve(target);
     }

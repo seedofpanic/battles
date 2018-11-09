@@ -107,6 +107,25 @@ export class Game {
         this.selectCharacter(bot, bot.selectCharacter());
     }
 
+    update(combat: Combat): boolean {
+        if (combat.allReady()) {
+            combat.perform();
+            combat.showResult();
+
+            if (combat.isEnded) {
+                this.endCombat(combat);
+            } else {
+                setTimeout(() => {
+                    this.update(combat);
+                }, 0);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     private getCharacters() {
         return Object.keys(allowedCharacters).map((id) => {
                         return {name: allowedCharacters[id].name, id,
