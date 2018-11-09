@@ -1,12 +1,24 @@
 import {allowedCharacters} from '../allowedCharacters';
 import {fairRandom} from '../../utils/fairRandom';
 import {Player} from './player';
+import {Unit} from '../unit';
+import {StunAction} from '../actions/stunAction';
 
 export class Bot extends Player {
     isValuable = true;
 
     constructor() {
         super('bot');
+    }
+
+    beforeResolve(target: Unit) {
+        if (this.isStunned) {
+            this.character.action = new StunAction();
+        } else {
+            this.selectAction();
+        }
+
+        super.beforeResolve(target);
     }
 
     selectCharacter() {
@@ -27,8 +39,6 @@ export class Bot extends Player {
     }
 
     isReady(): boolean {
-        this.selectAction();
-
-        return super.isReady();
+        return true;
     }
 }

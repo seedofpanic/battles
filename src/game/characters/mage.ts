@@ -2,11 +2,26 @@ import {Character} from '../character';
 import {FrostArrowAction} from '../actions/frostArrowAction';
 import {FireBallAction} from '../actions/fireBallAction';
 import {DamageTypes} from '../models/damageTypes';
+import {BuffAction} from '../actions/buffAction';
+import {MagicShieldEffect} from '../effects/magicShieldEffect';
+import {DazzleAction} from '../actions/dazzleAction';
+import {FireBeamAction} from '../actions/fireBeamAction';
+import {StoneSkinEffect} from '../effects/stoneSkinEffect';
+import {MagicalBurnAction} from '../actions/magicalBurnAction';
+import {DeBuffAction} from '../actions/deBuffAction';
+import {FireBurstEffect} from '../effects/fireBurstEffect';
+import {BurnicideAction} from '../actions/burnicideAction';
 
 export class Mage extends Character {
     actions = {
-        'fire_ball': new FireBallAction(),
-        'frost_arrow': new FrostArrowAction(),
+        'fireball': new FireBallAction(),
+        'magic_shield': new BuffAction(MagicShieldEffect, 'Magic shield'),
+        'dazzle': new DazzleAction(),
+        'fire_beam': new FireBeamAction(),
+        'stone_skin': new BuffAction(StoneSkinEffect, 'Stone skin', 4),
+        'magical_burn': new MagicalBurnAction(),
+        'fire_burst': new DeBuffAction(FireBurstEffect, 'Fire burst', 5),
+        'burnicide': new BurnicideAction(),
     };
     health = 70;
     healthMax = 70;

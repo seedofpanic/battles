@@ -5,7 +5,7 @@ import {DeadlyKinshipEffect} from '../effects/deadlyKinshipEffect';
 
 export class DeadlyKinshipAction extends Action {
     constructor() {
-        super('Deadly kinship');
+        super('Deadly kinship', 4);
     }
 
     beforeResolve(combat: Combat, self: Unit, target: Unit) {

@@ -5,9 +5,10 @@ import {BuffAction} from '../actions/buffAction';
 import {PiercingStrikeAction} from '../actions/piercingStrikeAction';
 import {MultipleStrikeAction} from '../actions/multipleStrikeAction';
 import {ShieldOfAngerEffect} from '../effects/shieldOfAngerEffect';
-import {SummonAction} from '../actions/summonAction';
-import {Dog} from './summons/dog';
 import {ShieldBlockEffect} from '../effects/shieldBlockEffect';
+import {GreatArmorEffect} from '../effects/greatArmorEffect';
+import {BladeSweepAction} from '../actions/bladeSweepAction';
+import {BoilingRageEffect} from '../effects/boilingRageEffect';
 
 export class Warrior extends Character {
     actions = {
@@ -15,8 +16,10 @@ export class Warrior extends Character {
         'shield_block': new BuffAction(ShieldBlockEffect, 'Shield block'),
         'double_strike': new MultipleStrikeAction('Double strike', new PiercingStrikeAction(), 2, 0.3),
         'shield_of_anger': new BuffAction(ShieldOfAngerEffect,'Shield of anger', 3),
+        'great_armor': new BuffAction(GreatArmorEffect, 'Great armor'),
         'shield_strike': new ShieldAction(),
-        'summon_dog': new SummonAction('Summon dog', 'dog', Dog)
+        'blade_sweep': new BladeSweepAction(),
+        'boiling_rage': new BuffAction(BoilingRageEffect, 'Boiling rage'),
     };
     health = 100;
     healthMax = 100;

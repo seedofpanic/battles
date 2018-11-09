@@ -3,7 +3,7 @@ import {Player} from '../game/units/player';
 import objectContaining = jasmine.objectContaining;
 import arrayContaining = jasmine.arrayContaining;
 
-describe('bot', () => {
+describe('pvp Warrior vs Mage', () => {
 
     const results: any[] = [];
     const sessions: Session[] = [
@@ -21,7 +21,7 @@ describe('bot', () => {
 
     beforeAll(() => {
         spyOn(console, 'log').and.callFake(msg => results.push(msg));
-        spyOn(Math, 'random').and.returnValue(0.5);
+        spyOn(Math, 'random').and.returnValue(0.51);
         spyOn(sessions[0].player, 'send').and.callFake((type, payload) => {
             results.push({[type]: payload});
         });
@@ -120,9 +120,9 @@ describe('bot', () => {
             }])
         }, {"note": "Opponent found: Warrior vs Mage"}, {
             select_skill: jasmine.arrayContaining([{
-                "id": "fire_ball",
-                "name": "Fire ball"
-            }, {"id": "frost_arrow", "name": "Frost arrow"}])
+                "id": "fireball",
+                "name": "Fireball"
+            }, {"id": "fireball", "name": "Fireball"}])
         }]);
     });
 
@@ -134,22 +134,16 @@ describe('bot', () => {
     });
 
     it('Второй игрок выбирает огненный шар', () => {
-        doAction(sessions[1], {type: 'select_skill', payload: 'fire_ball'});
+        doAction(sessions[1], {type: 'select_skill', payload: 'fireball'});
 
-        expect(results).toEqual([{"note": "You will use Fire ball skill"}, {
+        expect(results).toEqual([{"note": "You will use Fireball skill"}, {
             "character_update": {
                 "data": {
-                    "health": 92.8,
+                    "health": 94,
                     "healthMax": 100,
                     "id": "warrior",
                     "name": "Warrior",
-                    "effects": [
-                        {
-                            id: 'burning',
-                            name: 'Burning',
-                            ticks: 3
-                        }
-                    ]
+                    "effects": []
                 },
                 "id": "1",
                 team: 'team1'
@@ -157,23 +151,16 @@ describe('bot', () => {
         }, {
             "character_update": {
                 "data": {
-                    "health": 92.8,
+                    "health": 94,
                     "healthMax": 100,
                     "id": "warrior",
                     "name": "Warrior",
-                    "effects": [
-                        {
-                            id: 'burning',
-                            name: 'Burning',
-                            ticks: 3
-                        }
-                    ]
+                    "effects": []
                 }, "id": "1", team: 'team1'
             }
         }, {
             "note": 'Piercing strike do 5 damage\n' +
-                'Fire ball do 8 damage\n' +
-                'Fire ball adds Burning effect'
+                'Fireball do 6 damage'
         }, {
             "select_skill": jasmine.arrayContaining([{"id": "piercing_strike", "name": "Piercing strike"}])
         }, {
@@ -202,15 +189,14 @@ describe('bot', () => {
             }
         }, {
             "note": 'Piercing strike do 5 damage\n' +
-                'Fire ball do 8 damage\n' +
-                'Fire ball adds Burning effect'
-        }, {"select_skill": [{"id": "fire_ball", "name": "Fire ball"}, {"id": "frost_arrow", "name": "Frost arrow"}]}]);
+                'Fireball do 6 damage'
+        }, {"select_skill": jasmine.arrayContaining([{"id": "fireball", "name": "Fireball"}])}]);
     });
 
     it('Второй игрок выбирает огненный шар еще раз', () => {
-        doAction(sessions[1], {type: 'select_skill', payload: 'fire_ball'});
+        doAction(sessions[1], {type: 'select_skill', payload: 'fireball'});
 
-        expect(results).toEqual([{"note": "You will use Fire ball skill"},
+        expect(results).toEqual([{"note": "You will use Fireball skill"},
             {"note": "Waiting for opponent..."}]);
     });
 
@@ -220,22 +206,11 @@ describe('bot', () => {
         expect(results).toEqual([{"note": "You will use Shield strike skill"}, {
             character_update: {
                 data: {
-                    health: 82,
+                    health: 88,
                     healthMax: 100,
                     id: 'warrior',
                     name: 'Warrior',
-                    effects: [
-                        {
-                            id: 'burning',
-                            name: 'Burning',
-                            ticks: 2
-                        },
-                        {
-                            id: 'burning',
-                            name: 'Burning',
-                            ticks: 3
-                        }
-                    ]
+                    effects: []
                 },
                 id: "1",
                 team: 'team1'
@@ -243,32 +218,19 @@ describe('bot', () => {
         }, {
             character_update: {
                 data: {
-                    health: 82,
+                    health: 88,
                     healthMax: 100,
                     id: 'warrior',
                     name: 'Warrior',
-                    effects: [
-                        {
-                            id: 'burning',
-                            name: 'Burning',
-                            ticks: 2
-                        },
-                        {
-                            id: 'burning',
-                            name: 'Burning',
-                            ticks: 3
-                        }
-                    ]
+                    effects: []
                 },
                 id: "1",
                 team: 'team1'
             }
         }, {
-            "note": 'Burning do 4 damage\n' +
-                'Shield strike do 9 damage\n' +
+            "note": 'Shield strike do 11 damage\n' +
                 'Shield strike adds Stun effect\n' +
-                'Fire ball do 8 damage\n' +
-                'Fire ball adds Burning effect'
+                'Fireball do 6 damage'
         }, {
             "select_skill": jasmine.arrayContaining([
                     {"id": "piercing_strike", "name": "Piercing strike"}
@@ -276,7 +238,7 @@ describe('bot', () => {
         }, {
             "character_update": {
                 "data": {
-                    "health": 56,
+                    "health": 54.5,
                     healthMax: 70,
                     id: 'mage',
                     name: 'Mage',
@@ -294,7 +256,7 @@ describe('bot', () => {
         }, {
             "character_update": {
                 "data": {
-                    "health": 56,
+                    "health": 54.5,
                     healthMax: 70,
                     id: 'mage',
                     name: 'Mage',
@@ -310,11 +272,9 @@ describe('bot', () => {
                 team: 'team2'
             }
         }, {
-            "note": 'Burning do 4 damage\n' +
-                'Shield strike do 9 damage\n' +
+            "note": 'Shield strike do 11 damage\n' +
                 'Shield strike adds Stun effect\n' +
-                'Fire ball do 8 damage\n' +
-                'Fire ball adds Burning effect'
+                'Fireball do 6 damage'
         }, {"select_skill": []}]);
     });
 
@@ -336,22 +296,11 @@ describe('bot', () => {
         expect(results).toEqual([{"note": "You will use Piercing strike skill"}, {
             "character_update": {
                 "data": {
-                    "health": 74.80000000000001,
+                    "health": 88,
                     healthMax: 100,
                     id: 'warrior',
                     name: 'Warrior',
-                    "effects": [
-                        {
-                            id: 'burning',
-                            name: 'Burning',
-                            ticks: 1
-                        },
-                        {
-                            id: 'burning',
-                            name: 'Burning',
-                            ticks: 2
-                        }
-                    ]
+                    "effects": []
                 },
                 "id": "1",
                 team: 'team1'
@@ -359,36 +308,23 @@ describe('bot', () => {
         }, {
             "character_update": {
                 "data": {
-                    "health": 74.80000000000001,
+                    "health": 88,
                     healthMax: 100,
                     id: 'warrior',
                     name: 'Warrior',
-                    "effects": [
-                        {
-                            id: 'burning',
-                            name: 'Burning',
-                            ticks: 1
-                        },
-                        {
-                            id: 'burning',
-                            name: 'Burning',
-                            ticks: 2
-                        }
-                    ]
+                    "effects": []
                 },
                 "id": "1",
                 team: 'team1'
             }
         }, {
-            "note": "Burning do 4 damage\n" +
-                "Burning do 4 damage\n" +
-                "Piercing strike do 5 damage"
+            "note": "Piercing strike do 5 damage"
         }, {
             "select_skill": jasmine.arrayContaining([{"id": "piercing_strike", "name": "Piercing strike"}])
         }, {
             "character_update": {
                 "data": {
-                    "health": 51,
+                    "health": 49.5,
                     healthMax: 70,
                     id: 'mage',
                     name: 'Mage',
@@ -399,7 +335,7 @@ describe('bot', () => {
         }, {
             "character_update": {
                 "data": {
-                    "health": 51,
+                    "health": 49.5,
                     healthMax: 70,
                     id: 'mage',
                     name: 'Mage',
@@ -409,9 +345,9 @@ describe('bot', () => {
                 team: 'team2'
             }
         }, {
-            "note": 'Burning do 4 damage\n' +
-                'Burning do 4 damage\n' +
-                'Piercing strike do 5 damage'
-        }, {"select_skill": []}]);
+            "note": 'Piercing strike do 5 damage'
+        }, {"select_skill": jasmine.arrayContaining([
+                {id: 'fireball', name: 'Fireball'}
+            ])}]);
     });
 });

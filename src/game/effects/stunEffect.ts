@@ -1,5 +1,4 @@
 import {Effect} from '../effect';
-import {Unit} from '../unit';
 
 const NAME = 'Stun';
 
@@ -10,7 +9,7 @@ export class StunEffect extends Effect {
         super(NAME, roundsCount);
     }
 
-    postTick(self: Unit) {
-        self.isStunned = true;
+    isStunned(value: boolean) {
+        return true;
     }
 }

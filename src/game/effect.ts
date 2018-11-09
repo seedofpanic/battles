@@ -30,4 +30,8 @@ export abstract class Effect {
     effectResistMod(value: number, effectId: string) {
         return value;
     }
+
+    isStunned(value: boolean) {
+        return value;
+    }
 }
