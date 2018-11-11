@@ -31,7 +31,7 @@ export class Draconite extends Character {
             'tail_sweep': new HitAction(source, 'Tail sweep', 4, 7, DamageTypes.BLUNT, 0.1, 1.5),
             'claw strike': new ClawStrikeAction(source),
             'fire_breath': new HitAction(source, 'Fire breath', 5, 8, DamageTypes.FIRE),
-            'flaming_armor': new BuffAction(source, FlamingArmorEffect, 'Fire breath', 5),
+            'flaming_armor': new BuffAction(source, FlamingArmorEffect, 'Flaming armor', 5),
             'poison_bite': new PoisonBiteAction(source),
             'wings_of_steel': new BuffAction(source, WingsOfSteelEffect, 'Wings of steel', 6),
             'high_vitality': new BuffAction(source, HighVitalityEffect, 'High vitality', 6),
