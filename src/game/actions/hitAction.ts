@@ -11,7 +11,7 @@ export class HitAction extends Action {
                 protected maxDamage: number,
                 protected type: DamageTypes,
                 private critChance = 0,
-                private critMultipier = 1,
+                private critMultiplier = 1,
                 cooldown = 0,
                 maxCharges = 1) {
         super(source, name, cooldown, maxCharges);
@@ -19,9 +19,15 @@ export class HitAction extends Action {
 
     perform(combat: Combat, self: Unit, target: Unit) {
         const targetResist = target.getResist(this.type);
+        let crit = this.getCrit(this.critChance * targetResist);
+
+        if (crit !== 1) {
+            crit = self.character.effects.reduce((result, effect) => effect.critMod(result, this.type), crit);
+        }
+
         const damage = this.calcDamage(self, target)
             * targetResist
-            * this.getCrit(this.critChance * targetResist);
+            * crit;
 
         target.decreaseHp(this, damage, this.type);
 
@@ -37,6 +43,6 @@ export class HitAction extends Action {
     }
 
     private getCrit(critChance: number): number {
-        return critChance >= Math.random() ? this.critMultipier : 1;
+        return critChance >= Math.random() ? this.critMultiplier : 1;
     }
 }
