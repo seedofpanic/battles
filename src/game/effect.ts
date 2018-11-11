@@ -36,4 +36,8 @@ export abstract class Effect {
 
     onDamage(damage: number, type: DamageTypes, self: Unit, source: Unit) {
     }
+
+    critMod(value: number, type: DamageTypes) {
+        return value;
+    }
 }

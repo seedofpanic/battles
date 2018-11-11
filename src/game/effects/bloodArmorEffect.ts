@@ -13,6 +13,8 @@ export class BloodArmorEffect extends ResistsModEffect {
     }
 
     effectResistMod(value: number, effectId: string) {
-        return 0;
+        if (effectId === 'stun') {
+            return 0;
+        }
     }
 }
