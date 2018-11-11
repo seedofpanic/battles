@@ -1,12 +1,11 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from "../actions/hitAction";
+import {Unit} from '../unit';
+import {Action} from '../action';
 
 export class Devil extends Character {
-    actions = {
-        'fire_breath': new HitAction('Fire breath', 10, 15, DamageTypes.FIRE),
-        'claw strike': new HitAction('Claw strike', 20, 30, DamageTypes.CUTTING),
-    };
+    actions: { [name: string]: Action };
     health = 120;
     healthMax = 120;
     name = 'Devil';
@@ -16,4 +15,13 @@ export class Devil extends Character {
         [DamageTypes.FIRE]: 1.5,
         [DamageTypes.FROST]: 1.5,
     };
+
+    constructor(source: Unit, id: string) {
+        super(id);
+
+        this.actions = {
+            'fire_breath': new HitAction(source, 'Fire breath', 10, 15, DamageTypes.FIRE),
+            'claw strike': new HitAction(source,'Claw strike', 20, 30, DamageTypes.CUTTING),
+        };
+    }
 }

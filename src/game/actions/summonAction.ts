@@ -4,11 +4,12 @@ import {Combat} from '../combat';
 import {Unit} from '../unit';
 
 export class SummonAction extends Action {
-    constructor(name: string, private summonId: string, private summon: new (id: string) => Character) {
-        super(name);
+    constructor(source: Unit, name: string, private summonId: string,
+                private summon: new (source: Unit, id: string) => Character) {
+        super(source, name);
     }
 
-    perform(combat: Combat, player: Unit) {
-        combat.addSummon(new this.summon(this.summonId), player.team);
+    perform(combat: Combat, self: Unit, target: Unit) {
+        combat.addSummon(new this.summon(self, this.summonId), self.team);
     }
 }

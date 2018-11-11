@@ -6,7 +6,7 @@ import {HitAction} from './actions/hitAction';
 describe('Unit', () => {
     let unit: Unit;
     const results: any[] = [];
-    const action = new HitAction('', 0, 0, DamageTypes.CUTTING);
+    const action = new HitAction(null, '', 0, 0, DamageTypes.CUTTING);
 
     beforeEach(() => {
         unit = new Unit('1');
@@ -22,7 +22,7 @@ describe('Unit', () => {
             unit.character.health = 30;
             unit.character.resists[DamageTypes.CUTTING] = 1;
 
-            unit.decreaseHp(action, 10);
+            unit.decreaseHp(action, 10, DamageTypes.CUTTING);
 
             expect(unit.character.health).toBe(20);
         });
@@ -31,7 +31,7 @@ describe('Unit', () => {
             unit.character.health = 5;
             unit.character.resists[DamageTypes.CUTTING] = 1;
 
-            unit.decreaseHp(action, 10);
+            unit.decreaseHp(action, 10, DamageTypes.CUTTING);
 
             expect(unit.character.health).toBe(0);
         });
@@ -41,7 +41,7 @@ describe('Unit', () => {
             unit.character.resists[DamageTypes.CUTTING] = 1;
             unit.character.isDead = false;
 
-            unit.decreaseHp(action, 10);
+            unit.decreaseHp(action, 10, DamageTypes.CUTTING);
 
             expect(unit.character.isDead).toBe(true);
         });

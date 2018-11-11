@@ -1,8 +1,8 @@
-import {HitAction} from './hitAction';
-import {BurningDotEffect} from '../effects/burningDotEffect';
-import {DamageTypes} from '../models/damageTypes';
-import {Combat} from '../combat';
-import {Unit} from '../unit';
+import {HitAction} from '../hitAction';
+import {BurningDotEffect} from '../../effects/burningDotEffect';
+import {DamageTypes} from '../../models/damageTypes';
+import {Combat} from '../../combat';
+import {Unit} from '../../unit';
 
 const NAME = 'Fireball';
 const MIN_DAMAGE = 4;
@@ -11,8 +11,9 @@ const CRIT_CHANCE = 0.15;
 const CRIT_MULTIPLIER = 1.4;
 
 export class FireBeamAction extends HitAction {
-    constructor() {
+    constructor(source: Unit) {
         super(
+            source,
             NAME,
             MIN_DAMAGE,
             MAX_DAMAGE,

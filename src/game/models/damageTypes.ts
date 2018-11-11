@@ -1,4 +1,5 @@
 export enum DamageTypes {
+    POISON,
     DEATH,
     HOLY,
     SHADOW,

@@ -13,8 +13,9 @@ const CRIT_MULTIPLIER = 1.5;
 export class FrostArrowAction extends HitAction {
     private mod = 1;
 
-    constructor() {
+    constructor(source: Unit,) {
         super(
+            source,
             NAME,
             MIN_DAMAGE,
             MAX_DAMAGE,

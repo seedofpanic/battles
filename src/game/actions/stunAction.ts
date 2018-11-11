@@ -5,8 +5,8 @@ import {Unit} from '../unit';
 const NAME = 'Stun';
 
 export class StunAction extends Action {
-    constructor() {
-        super(NAME);
+    constructor(source: Unit) {
+        super(source, NAME);
     }
 
     perform(combat: Combat, self?: Unit, target?: Unit) {

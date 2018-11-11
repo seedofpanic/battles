@@ -1,17 +1,19 @@
 import {Effect} from '../effect';
+import {DamageTypes} from '../models/damageTypes';
+import {Unit} from '../unit';
+
+export const SHIELD_OF_ANGER_EFFECT_ID = 'shield_of_anger';
 
 export class ShieldOfAngerEffect extends Effect {
-    id = 'shield_of_anger';
-
-    constructor() {
-        super('Shield of anger', 3);
+    constructor(source: Unit) {
+        super(SHIELD_OF_ANGER_EFFECT_ID, 'Shield of anger', 3, source);
     }
 
-    resistMod(value: number): number {
+    resistMod(value: number, type: DamageTypes, self: Unit): number {
         return value * 1.2;
     }
 
-    damageMod(value: number): number {
+    damageMod(value: number, type: DamageTypes, self: Unit, target: Unit): number {
         return value * 1.1;
     }
 }

@@ -2,11 +2,10 @@ import {Character} from '../../character';
 import {Action} from '../../action';
 import {DamageTypes} from '../../models/damageTypes';
 import {HitAction} from '../../actions/hitAction';
+import {Unit} from '../../unit';
 
 export class Dog extends Character {
-    actions: { [p: string]: Action } = {
-        'bite': new HitAction('Bite', 1, 3, DamageTypes.CUTTING)
-    };
+    actions: { [name: string]: Action };
     health = 20;
     healthMax = 20;
     name = 'Dog';
@@ -17,4 +16,11 @@ export class Dog extends Character {
         [DamageTypes.FROST]: 1.1,
     };
 
+    constructor(source: Unit, id: string) {
+        super(id);
+
+        this.actions = {
+            'bite': new HitAction(source, 'Bite', 1, 3, DamageTypes.CUTTING)
+        };
+    }
 }
