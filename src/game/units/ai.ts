@@ -5,6 +5,7 @@ import {Combat} from '../combat';
 import {Action} from '../action';
 import {Effect} from '../effect';
 import {StunAction} from '../actions/stunAction';
+import {DamageTypes} from '../models/damageTypes';
 
 export class Ai extends Unit {
     constructor(id: string, team: string, public character: Character, combat: Combat) {
@@ -16,7 +17,7 @@ export class Ai extends Unit {
 
     beforeResolve(target: Unit) {
         if (this.isStunned) {
-            this.character.action = new StunAction();
+            this.character.action = new StunAction(this);
         } else {
             this.selectAction();
         }
@@ -38,8 +39,8 @@ export class Ai extends Unit {
         return true;
     }
 
-    decreaseHp(action: Action | Effect, damage: number) {
-        super.decreaseHp(action, damage);
+    decreaseHp(action: Action | Effect, damage: number, type: DamageTypes) {
+        super.decreaseHp(action, damage, type);
 
         if (this.character.isDead) {
             this.currentCombat.removeUnit(this);

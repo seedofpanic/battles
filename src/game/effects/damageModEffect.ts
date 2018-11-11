@@ -1,12 +1,13 @@
 import {Effect} from '../effect';
 import {DamageTypes} from '../models/damageTypes';
+import {Unit} from '../unit';
 
 export class DamageModEffect extends Effect {
     canStack = false;
-    id = 'damage_mod';
 
-    constructor(name: string, roundsCount: number, private mod: number | {[name: string]: number}) {
-        super(name, roundsCount);
+    constructor(id: string, name: string, roundsCount: number,
+                private mod: number | {[name: string]: number}, source: Unit) {
+        super(id, name, roundsCount, source);
     }
 
     damageMod(value: number, type: DamageTypes): number {

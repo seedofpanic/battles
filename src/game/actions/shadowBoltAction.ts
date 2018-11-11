@@ -1,5 +1,6 @@
 import {HitAction} from './hitAction';
 import {DamageTypes} from '../models/damageTypes';
+import {Unit} from '../unit';
 
 const NAME = 'Shadow bolt';
 const MIN_DAMAGE = 20;
@@ -10,8 +11,9 @@ const COOLDOWN = 6;
 const CHARGES = 1;
 
 export class ShadowBoltAction extends HitAction {
-    constructor() {
-        super(NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.SHADOW, CRIT_CHANCE, CRIT_MULTIPLIER, COOLDOWN, CHARGES);
+    constructor(source: Unit) {
+        super(source, NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.SHADOW,
+            CRIT_CHANCE, CRIT_MULTIPLIER, COOLDOWN, CHARGES);
 
         this.charges = 0;
     }

@@ -135,7 +135,7 @@ export class Game {
     }
 
     private getActionsWithDescriptions(id: string) {
-        const actions = new (allowedCharacters[id].create)(id).actions;
+        const actions = new (allowedCharacters[id].create)(null, id).actions;
 
         return Object.keys(actions).map(keys => {
             return {

@@ -1,12 +1,12 @@
 import {Action} from '../action';
 import {DamageTypes} from '../models/damageTypes';
-import {Game} from '../game';
 import {Combat} from '../combat';
 import {Unit} from '../unit';
 import {calcDamage} from '../../utils/calcDamage';
 
 export class HitAction extends Action {
-    constructor(name: string,
+    constructor(source: Unit,
+                name: string,
                 protected minDamage: number,
                 protected maxDamage: number,
                 protected type: DamageTypes,
@@ -14,15 +14,16 @@ export class HitAction extends Action {
                 private critMultipier = 1,
                 cooldown = 0,
                 maxCharges = 1) {
-        super(name, cooldown, maxCharges);
+        super(source, name, cooldown, maxCharges);
     }
 
     perform(combat: Combat, self: Unit, target: Unit) {
         const targetResist = target.getResist(this.type);
-
-        target.decreaseHp(this, this.calcDamage(self, target)
+        const damage = this.calcDamage(self, target)
             * targetResist
-            * this.getCrit(this.critChance * targetResist));
+            * this.getCrit(this.critChance * targetResist);
+
+        target.decreaseHp(this, damage, this.type);
 
         super.perform(combat);
     }

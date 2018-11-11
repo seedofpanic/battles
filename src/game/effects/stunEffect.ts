@@ -1,12 +1,13 @@
 import {Effect} from '../effect';
+import {Unit} from '../unit';
 
 const NAME = 'Stun';
 
-export class StunEffect extends Effect {
-    id = 'stun';
+export const STUN_EFFECT_ID = 'stun';
 
-    constructor(roundsCount: number) {
-        super(NAME, roundsCount);
+export class StunEffect extends Effect {
+    constructor(roundsCount: number, source: Unit) {
+        super(STUN_EFFECT_ID, NAME, roundsCount, source);
     }
 
     isStunned(value: boolean) {

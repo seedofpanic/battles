@@ -1,7 +1,7 @@
-import {HitAction} from './hitAction';
-import {DamageTypes} from '../models/damageTypes';
-import {Combat} from '../combat';
-import {Unit} from '../unit';
+import {HitAction} from '../hitAction';
+import {DamageTypes} from '../../models/damageTypes';
+import {Combat} from '../../combat';
+import {Unit} from '../../unit';
 
 const NAME = 'Blood leach';
 const MIN_DAMAGE = 1;
@@ -12,8 +12,8 @@ const CRIT_MULTIPLIER = 1;
 const HEAL_AMOUNT = 5;
 
 export class BloodySymbolAction extends HitAction {
-    constructor() {
-        super(NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.PIERCING, CRIT_CHANCE, CRIT_MULTIPLIER, 3);
+    constructor(source: Unit) {
+        super(source, NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.PIERCING, CRIT_CHANCE, CRIT_MULTIPLIER, 3);
     }
 
     perform(combat: Combat, self: Unit, target: Unit) {

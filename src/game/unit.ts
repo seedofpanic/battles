@@ -30,7 +30,9 @@ export class Unit {
         this.character.isDead = true;
     }
 
-    decreaseHp(action: Action | Effect, damage: number) {
+    decreaseHp(action: Action | Effect, damage: number, type: DamageTypes) {
+        this.character.effects.forEach(effect => effect.onDamage(damage, type, this, action.source));
+
         if (this.character.health > damage) {
             this.character.health -= damage;
         } else {
@@ -54,7 +56,8 @@ export class Unit {
     getResist(type: DamageTypes): number {
         const baseResist = this.character.resists[type] || 1;
 
-        return this.character.effects.reduce((result, effect) => effect.resistMod(result, type), baseResist);
+        return this.character.effects
+            .reduce((result, effect) => effect.resistMod(result, type, this), baseResist);
     }
 
     addEffect(action: Action | Effect, effect: Effect) {
@@ -108,9 +111,9 @@ export class Unit {
         });
     }
 
-    setCharacter(characterName: string) {
-        if (allowedCharacters[characterName]) {
-            this.character = new (allowedCharacters[characterName].create)(characterName);
+    setCharacter(characterId: string) {
+        if (allowedCharacters[characterId]) {
+            this.character = new (allowedCharacters[characterId].create)(this, characterId);
         } else {
             this.send('error', 'Unexpected character name');
         }
@@ -133,7 +136,7 @@ export class Unit {
             .map(action => ({id: action, name: this.character.actions[action].name}));
 
         if (actions.length === 0) {
-            this.character.action = new StunAction();
+            this.character.action = new StunAction(this);
         }
 
         return actions;

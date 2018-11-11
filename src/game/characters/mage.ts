@@ -1,28 +1,20 @@
 import {Character} from '../character';
-import {FrostArrowAction} from '../actions/frostArrowAction';
-import {FireBallAction} from '../actions/fireBallAction';
+import {FireBallAction} from '../actions/mage/fireBallAction';
 import {DamageTypes} from '../models/damageTypes';
 import {BuffAction} from '../actions/buffAction';
 import {MagicShieldEffect} from '../effects/magicShieldEffect';
-import {DazzleAction} from '../actions/dazzleAction';
-import {FireBeamAction} from '../actions/fireBeamAction';
+import {DazzleAction} from '../actions/mage/dazzleAction';
+import {FireBeamAction} from '../actions/mage/fireBeamAction';
 import {StoneSkinEffect} from '../effects/stoneSkinEffect';
-import {MagicalBurnAction} from '../actions/magicalBurnAction';
+import {MagicalBurnAction} from '../actions/mage/magicalBurnAction';
 import {DeBuffAction} from '../actions/deBuffAction';
 import {FireBurstEffect} from '../effects/fireBurstEffect';
-import {BurnicideAction} from '../actions/burnicideAction';
+import {BurnicideAction} from '../actions/mage/burnicideAction';
+import {Unit} from '../unit';
+import {Action} from '../action';
 
 export class Mage extends Character {
-    actions = {
-        'fireball': new FireBallAction(),
-        'magic_shield': new BuffAction(MagicShieldEffect, 'Magic shield'),
-        'dazzle': new DazzleAction(),
-        'fire_beam': new FireBeamAction(),
-        'stone_skin': new BuffAction(StoneSkinEffect, 'Stone skin', 4),
-        'magical_burn': new MagicalBurnAction(),
-        'fire_burst': new DeBuffAction(FireBurstEffect, 'Fire burst', 5),
-        'burnicide': new BurnicideAction(),
-    };
+    actions: { [name: string]: Action };
     health = 70;
     healthMax = 70;
     name = 'Mage';
@@ -32,4 +24,19 @@ export class Mage extends Character {
         [DamageTypes.FIRE]: 0.5,
         [DamageTypes.FROST]: 0.5,
     };
+
+    constructor(source: Unit, id: string) {
+        super(id);
+
+        this.actions = {
+            'fireball': new FireBallAction(source),
+            'magic_shield': new BuffAction(source, MagicShieldEffect, 'Magic shield'),
+            'dazzle': new DazzleAction(source),
+            'fire_beam': new FireBeamAction(source),
+            'stone_skin': new BuffAction(source, StoneSkinEffect, 'Stone skin', 4),
+            'magical_burn': new MagicalBurnAction(source),
+            'fire_burst': new DeBuffAction(source, FireBurstEffect, 'Fire burst', 5),
+            'burnicide': new BurnicideAction(source),
+        };
+    }
 }

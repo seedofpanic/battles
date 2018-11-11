@@ -3,9 +3,8 @@ import {Unit} from './unit';
 
 export abstract class Effect {
     canStack = true;
-    abstract id: string;
 
-    constructor(public name: string, public roundsCount: number) {
+    constructor(public id: string, public name: string, public roundsCount: number, public source: Unit) {
     }
 
     preTick(unit: Unit) {
@@ -23,7 +22,7 @@ export abstract class Effect {
         return value;
     }
 
-    resistMod(value: number, type: DamageTypes): number {
+    resistMod(value: number, type: DamageTypes, self: Unit): number {
         return value;
     }
 
@@ -33,5 +32,8 @@ export abstract class Effect {
 
     isStunned(value: boolean) {
         return value;
+    }
+
+    onDamage(damage: number, type: DamageTypes, self: Unit, source: Unit) {
     }
 }

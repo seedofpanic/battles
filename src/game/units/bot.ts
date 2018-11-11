@@ -13,7 +13,7 @@ export class Bot extends Player {
 
     beforeResolve(target: Unit) {
         if (this.isStunned) {
-            this.character.action = new StunAction();
+            this.character.action = new StunAction(this);
         } else {
             this.selectAction();
         }

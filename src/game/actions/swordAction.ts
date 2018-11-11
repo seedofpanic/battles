@@ -1,5 +1,7 @@
 import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from './hitAction';
+import {BlessOfAncestorsEffect} from '../effects/blessOfAncestorsEffect';
+import {Unit} from '../unit';
 
 const NAME = 'Slash';
 const MIN_DAMAGE = 5;
@@ -8,8 +10,9 @@ const CRIT_CHANCE = 0.2;
 const CRIT_MULTIPLIER = 2;
 
 export class SwordAction extends HitAction {
-    constructor() {
+    constructor(source: Unit) {
         super(
+            source,
             NAME,
             MIN_DAMAGE,
             MAX_DAMAGE,
