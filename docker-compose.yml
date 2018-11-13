@@ -1,0 +1,55 @@
+version: '2'
+
+services:
+    battles-backend:
+        build: .
+        container_name: "battles-backend"
+        hostname: "battles-backend"
+        restart: always
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+
+        ports:
+         - "3003:3003"
+        
+        networks:
+            - battles-networks
+
+    battlesdb:
+        build: db
+        hostname: battlesdb
+        restart: always
+        container_name: battlesdb
+
+        logging:
+          driver: json-file
+          options:
+              max-size: "10m"
+              max-file: "5"
+        volumes:
+            - ./db/data:/data/db
+            - ./db/backup:/backup
+        
+        networks:
+            - battles-networks
+        
+        # ports:
+        #     - "57017:27017"
+        environment:
+            - TZ=Europe/Moscow
+            - MONGO_AUTH=true
+            - MONGO_SERVER=battlesdb
+            - MONGO_PORT=27017
+            - MONGO_DB=battlesDB
+            - MONGO_ARCHIVE=battlesdb_startup.tar.gz
+            - MONGO_ADMIN=admin
+            - MONGO_ADMIN_PASSWORD=admin
+            - MONGO_USER=user
+            - MONGO_USER_PASSWORD=user
+networks: 
+  battles-networks:
+    driver: bridge

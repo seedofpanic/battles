@@ -46,9 +46,7 @@ jobs:
                       echo "${HOST_KEY}" >> ~/.ssh/known_hosts
 
                       ssh ${HOST_NAME} "cd ${HOST_DIR};git pull"
-                      ssh ${HOST_NAME} "cd ${HOST_DIR};npm i"
-                      ssh ${HOST_NAME} "cd ${HOST_DIR};npm run stop:prod || true"
-                      ssh ${HOST_NAME} "cd ${HOST_DIR};npm run start:prod"
+                      ssh ${HOST_NAME} "docker-compose up --build -d"
                     fi
 
 
