@@ -1,11 +1,12 @@
 FROM mongo:3.4
 
+RUN mkdir -p /archives 
 
-ADD ./archives /archives
-ADD ./scripts/entrypoint.sh /entrypoint.sh
-ADD ./scripts/restore.sh /restore.sh
-ADD ./scripts/create_user.sh /create_user.sh
-ADD ./scripts/backup_script.sh /backup_script.sh
+ADD archives /archives
+ADD scripts/entrypoint.sh /entrypoint.sh
+ADD scripts/restore.sh /restore.sh
+ADD scripts/create_user.sh /create_user.sh
+ADD scripts/backup_script.sh /backup_script.sh
 # Expose the ports for nginx
 EXPOSE 27017
 
