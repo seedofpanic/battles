@@ -2,6 +2,9 @@ import * as express from 'express';
 import * as expressWs from 'express-ws';
 import {Game} from './game/game';
 import {Player} from './game/units/player';
+import {authRouteInit} from './router/authRoute';
+
+require('dotenv').config();
 
 const game = new Game();
 
@@ -168,6 +171,8 @@ app.ws('/ws', (ws, req) => {
         }
     });
 });
+
+app.use('/auth', authRouteInit());
 
 app.use(express.static('public'));
 
