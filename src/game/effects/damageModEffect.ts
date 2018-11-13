@@ -12,7 +12,7 @@ export class DamageModEffect extends Effect {
 
     damageMod(value: number, type: DamageTypes): number {
         if (typeof this.mod === 'object') {
-            return value * this.mod[type];
+            return value * (this.mod[type] || 1);
         } else {
             return value * this.mod;
         }

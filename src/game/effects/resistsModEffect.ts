@@ -12,7 +12,7 @@ export class ResistsModEffect extends Effect {
 
     resistMod(value: number, type: DamageTypes, self: Unit): number {
         if (typeof this.mod === 'object') {
-            return value * this.mod[type];
+            return value * (this.mod[type] || 1);
         } else {
             return value * this.mod;
         }
