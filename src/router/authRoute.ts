@@ -1,18 +1,19 @@
-const passport = require('passport');
-const facebookStrategy = require('passport-facebook');
-const express = require('express');
+import * as express from 'express';
+import * as passport from 'passport';
+import {Strategy as FacebookStrategy} from 'passport-facebook';
+
 export function authRouteInit() {
     const authRoute = express();
 
-    passport.serializeUser((user, done) => {
+    passport.serializeUser((user: any, done: any) => {
         done(null, user);
     });
 
-    passport.deserializeUser((user, done) => {
+    passport.deserializeUser((user: any, done: any) => {
         done(null, user);
     });
 
-    passport.use(new facebookStrategy({
+    passport.use(new FacebookStrategy({
             clientID: process.env.FB_CLIENT_ID,
             clientSecret: process.env.FB_CLIENT_SECRET,
             callbackURL: `http://${process.env.HOST}/auth/facebook/callback`,
@@ -32,11 +33,11 @@ export function authRouteInit() {
             res.redirect('/');
         });
 
-    authRoute.get('/error', (req, res) => {
+    authRoute.get('/error', (req: any, res: express.Response) => {
         res.send('ok');
     });
 
-    authRoute.get('/logout', (req, res) => {
+    authRoute.get('/logout', (req: express.Request, res: express.Response) => {
         req.logout();
         res.redirect('/');
     });

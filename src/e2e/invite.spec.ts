@@ -1,21 +1,13 @@
-import {doAction, Session} from '../index';
+import {doAction} from '../index';
 import * as crypto from 'crypto';
 import {Player} from '../game/units/player';
 
 xdescribe('bot', () => {
 
     const results: string[] = [];
-    const sessions: Session[] = [
-        {
-            player: new Player('1'),
-            token: '123',
-            played: 0
-        },
-        {
-            player: new Player('2'),
-            token: '321',
-            played: 0
-        }
+    const sessions: Player[] = [
+        new Player('1'),
+        new Player('2')
     ];
 
     beforeAll(() => {
