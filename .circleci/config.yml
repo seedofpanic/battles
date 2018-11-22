@@ -33,6 +33,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - run: cp ./.env.example ./.env
+
       # check linting
       - run: yarn run lint
 

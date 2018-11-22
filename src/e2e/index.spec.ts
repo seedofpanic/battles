@@ -1,4 +1,4 @@
-import {doAction, Session} from '../index';
+import {doAction} from '../index';
 import {Player} from '../game/units/player';
 import objectContaining = jasmine.objectContaining;
 import arrayContaining = jasmine.arrayContaining;
@@ -6,26 +6,18 @@ import arrayContaining = jasmine.arrayContaining;
 describe('pvp Warrior vs Mage', () => {
 
     const results: any[] = [];
-    const sessions: Session[] = [
-        {
-            player: new Player('1'),
-            token: '123',
-            played: 0
-        },
-        {
-            player: new Player('2'),
-            token: '321',
-            played: 0
-        }
+    const sessions: Player[] = [
+        new Player('1'),
+        new Player('2')
     ];
 
     beforeAll(() => {
         spyOn(console, 'log').and.callFake(msg => results.push(msg));
         spyOn(Math, 'random').and.returnValue(0.51);
-        spyOn(sessions[0].player, 'send').and.callFake((type, payload) => {
+        spyOn(sessions[0], 'send').and.callFake((type, payload) => {
             results.push({[type]: payload});
         });
-        spyOn(sessions[1].player, 'send').and.callFake((type, payload) => {
+        spyOn(sessions[1], 'send').and.callFake((type, payload) => {
             results.push({[type]: payload});
         });
     });

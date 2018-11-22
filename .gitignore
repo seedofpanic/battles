@@ -14,3 +14,8 @@ yarn-debug.log*
 yarn-error.log*
 
 package-lock.json
+.env
+
+db/archives
+db/backup
+db/data

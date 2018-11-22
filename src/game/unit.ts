@@ -5,6 +5,7 @@ import {Action} from './action';
 import {DamageTypes} from './models/damageTypes';
 import {allowedCharacters} from './allowedCharacters';
 import {StunAction} from './actions/stunAction';
+import {DBUser} from '../bdTypes/DBUser';
 
 export class Unit {
     username: string;

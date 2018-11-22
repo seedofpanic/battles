@@ -15,7 +15,7 @@ services:
 
         ports:
          - "3003:3003"
-        
+
         networks:
             - battles-networks
 
@@ -37,8 +37,8 @@ services:
         networks:
             - battles-networks
         
-        # ports:
-        #     - "57017:27017"
+        ports:
+            - "57017:27017"
         environment:
             - TZ=Europe/Moscow
             - MONGO_AUTH=true

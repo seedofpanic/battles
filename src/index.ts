@@ -2,31 +2,41 @@ import * as express from 'express';
 import * as expressWs from 'express-ws';
 import {Game} from './game/game';
 import {Player} from './game/units/player';
+import {authRouteInit} from './router/authRoute';
+import cookieParser = require('cookie-parser');
+import bodyParser = require('body-parser');
+import cookieSession = require('cookie-session');
+import {updateUser} from './bdTypes/DBUser';
+const passport = require('passport');
+
+require('dotenv').config();
 
 const game = new Game();
 
 export const app = expressWs(express()).app;
 
-let nextSessionId = 1;
-
-export interface Session {
-    player: Player;
-    token: string;
-    played: number;
-}
-
-const sessions: {
-    [name: string]: Session;
+export const players: {
+    [name: string]: Player;
 } = {};
 
-export function doAction(session: Session, action: any) {
-    const player = session.player;
+app.use(cookieParser());
+app.use(bodyParser());
+app.use(cookieSession({
+    name: 'session',
+    keys: [process.env.SESSION_KEY],
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/auth', authRouteInit());
+
+export function doAction(player: Player, action: any) {
 
     switch (action.type) {
         case 'select_character':
         case 'ready':
             game.selectCharacter(player, action.payload);
-            session.played++;
+            player.played++;
 
             break;
         case 'start':
@@ -79,7 +89,7 @@ export function doAction(session: Session, action: any) {
             game.endCombat(player.currentCombat);
             break;
         case 'info':
-            player.send('note', `You already has played: ${session.played}`);
+            player.send('note', `You already has played: ${player.played}`);
             player.send('note', `Played duels: ${game.combatsEnded}`);
             player.send('note', `Active duels: ${game.combatsCount - game.combatsEnded}`);
             break;
@@ -96,8 +106,6 @@ export function doAction(session: Session, action: any) {
         default:
     }
 }
-
-let id = 1;
 
 export function extractCookies(req: express.Request): {[name: string]: string} {
     if (!req.headers.cookie) {
@@ -116,42 +124,28 @@ export function extractCookies(req: express.Request): {[name: string]: string} {
 
 app.ws('/ws', (ws, req) => {
     let player: Player;
-    const cookies = extractCookies(req) || {};
-    let sessionId = cookies.sessionId;
 
-    if (!sessions[sessionId] || sessions[sessionId].token !== cookies.token) {
-        player = game.addPlayer((id++).toString());
-        sessionId = (nextSessionId++).toString();
+    if (!players[req.session.playerId]) {
+        ws.close(1, 'Not authorized');
 
-        sessions[sessionId] = {
-            player,
-            token: getRandomKey(),
-            played: 0
-        };
-    } else {
-        player = sessions[sessionId].player;
+        return;
     }
+
+    player = players[req.session.playerId];
 
     player.setWS(ws);
 
     player.send('set_my_id', player.id);
 
-    player.send('cookies', [
-        {key: 'sessionId', value: sessionId},
-        {key: 'token', value: sessions[sessionId].token}
-    ]);
-
     ws.on('message', msg => {
         try {
-            doAction(sessions[sessionId], JSON.parse(msg.toString()));
+            doAction(player, JSON.parse(msg.toString()));
         } catch (e) {
             console.error(e);
         }
     });
 
     ws.on('close', () => {
-
-
         if (player.currentCombat) {
             Object.keys(player.currentCombat.units).forEach(id => {
                 const playerTo = player.currentCombat.units[id];
@@ -165,6 +159,10 @@ app.ws('/ws', (ws, req) => {
             });
 
             game.endCombat(player.currentCombat);
+        }
+
+        if (req.user) {
+            updateUser(req.user._id, player.getUserData());
         }
     });
 });
