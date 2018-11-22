@@ -61,16 +61,6 @@ export class Game {
         return !!allowedCharacters[character];
     }
 
-    getPlayer(chatId: string) {
-        return this.players[chatId];
-    }
-
-    addPlayer(id: string): Player {
-        this.players[id] = new Player(id);
-
-        return this.players[id];
-    }
-
     selectCharacter(unit: Unit, character: string) {
 
         if (!this.isAllowedCharacter(character)) {

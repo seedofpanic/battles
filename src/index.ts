@@ -6,6 +6,7 @@ import {authRouteInit} from './router/authRoute';
 import cookieParser = require('cookie-parser');
 import bodyParser = require('body-parser');
 import cookieSession = require('cookie-session');
+import {updateUser} from './bdTypes/DBUser';
 const passport = require('passport');
 
 require('dotenv').config();
@@ -14,7 +15,7 @@ const game = new Game();
 
 export const app = expressWs(express()).app;
 
-const players: {
+export const players: {
     [name: string]: Player;
 } = {};
 
@@ -106,8 +107,6 @@ export function doAction(player: Player, action: any) {
     }
 }
 
-let id = 1;
-
 export function extractCookies(req: express.Request): {[name: string]: string} {
     if (!req.headers.cookie) {
         return;
@@ -126,11 +125,13 @@ export function extractCookies(req: express.Request): {[name: string]: string} {
 app.ws('/ws', (ws, req) => {
     let player: Player;
 
-    if (!players[req.user.id]) {
-        players[req.user.id] = game.addPlayer((id++).toString());
+    if (!players[req.session.playerId]) {
+        ws.close(1, 'Not authorized');
+
+        return;
     }
 
-    player = players[req.user.id];
+    player = players[req.session.playerId];
 
     player.setWS(ws);
 
@@ -158,6 +159,10 @@ app.ws('/ws', (ws, req) => {
             });
 
             game.endCombat(player.currentCombat);
+        }
+
+        if (req.user) {
+            updateUser(req.user._id, player.getUserData());
         }
     });
 });

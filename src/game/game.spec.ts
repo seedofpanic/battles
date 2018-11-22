@@ -42,24 +42,4 @@ describe('Game', () => {
             expect(game.isAllowedCharacter('Ёжик')).toBeFalsy();
         });
     });
-
-    describe('addUnit', () => {
-        it('Верно добавляет пользователя в игру', () => {
-            const player = game.addPlayer('1');
-
-            expect(game.players['1']).toBe(player);
-        });
-    });
-
-    describe('getPlayer', () => {
-        it('Если пользователь есть в игре, возвращает его', () => {
-            const player = game.addPlayer('1');
-
-            expect(game.getPlayer('1')).toBe(player);
-        });
-
-        it('Если пользователя нет в игре, возвращает undefined', () => {
-            expect(game.getPlayer('1')).toBeUndefined();
-        });
-    });
 });
