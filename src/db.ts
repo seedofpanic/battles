@@ -1,9 +1,15 @@
 import {Db, MongoClient} from 'mongodb';
-const url = "mongodb://" + process.env.DB_HOST + "/battlesDB";
 
 export let DB: Db;
+let url: string;
 
 export function connectToDb() {
+    url = "mongodb://" + process.env.DB_HOST + "/battlesDB";
+
+    return tryToConnect();
+}
+
+function tryToConnect() {
     return MongoClient.connect(url, {
         auth: {
             user: 'user',
