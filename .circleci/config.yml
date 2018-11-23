@@ -53,7 +53,7 @@ jobs:
                         npm install
                         docker-compose down
                         docker-compose up --build -d
-                      EOF
+                    EOF
                     fi
 
 
