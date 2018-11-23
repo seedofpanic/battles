@@ -7,6 +7,7 @@ import cookieParser = require('cookie-parser');
 import bodyParser = require('body-parser');
 import cookieSession = require('cookie-session');
 import {updateUser} from './bdTypes/DBUser';
+import {connectToDb} from './db';
 const passport = require('passport');
 
 require('dotenv').config();
@@ -170,9 +171,12 @@ app.ws('/ws', (ws, req) => {
 app.use(express.static('public'));
 
 if (process.env.MODE !== 'test') {
-    app.listen('3003', () => {
-        console.log('Listening...');
-    });
+    connectToDb()
+        .then(() => {
+            app.listen('3003', () => {
+                console.log('Listening...');
+            });
+        });
 }
 
 function getRandomKey(): string {

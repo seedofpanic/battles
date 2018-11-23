@@ -2,7 +2,7 @@
 admin_login=${MONGO_ADMIN}
 admin_pass=${MONGO_ADMIN_PASSWORD}
 mongo_port=27017
-mkdir path_backup=$(pwd)/backup
+mkdir path_backup=/backup
 (
     while :; do
         find /backup -mtime +10 -type f -delete

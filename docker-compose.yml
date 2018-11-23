@@ -13,7 +13,7 @@ services:
               max-size: "10m"
               max-file: "5"
         volumes:
-          - .:/battles
+          - ./:/battles
 
         ports:
          - "3003:3003"
