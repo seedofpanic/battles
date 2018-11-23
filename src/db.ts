@@ -1,5 +1,5 @@
 import {Db, MongoClient} from 'mongodb';
-const url = "mongodb://battlesdb:27017/battlesDB";
+const url = "mongodb://" + process.env.DB_HOST + "/battlesDB";
 
 export let DB: Db;
 
