@@ -1,9 +1,16 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from "../actions/hitAction";
-import {HealAction} from "../actions/healAction";
 import {Unit} from '../unit';
 import {Action} from '../action';
+import {SelfHealAction} from '../actions/priest/selfHealAction';
+import {FlashOfLiteAction} from '../actions/priest/flashOfLiteAction';
+import {GreatMiracleAction} from '../actions/priest/greatMiracleAction';
+import {LiteStrikeAction} from '../actions/priest/liteStrikeAction';
+import {InvulnerabilityAction} from '../actions/priest/invulnerabilityAction';
+import {PrayOfLiteAction} from '../actions/priest/prayOfLiteAction';
+import {DeathPrayAction} from '../actions/priest/deathPrayAction';
+import {LiteBlowAction} from '../actions/priest/LiteBlowAction';
 
 export class Priest extends Character {
     actions: { [name: string]: Action };
@@ -21,8 +28,15 @@ export class Priest extends Character {
         super(id);
 
         this.actions = {
-            'fist_strike': new HitAction(source, 'Fist strike', 10, 15, DamageTypes.BLUNT),
-            'Heal': new HealAction(source, 'Heal', 20),
+            'lite_strike': new LiteStrikeAction(source),
+            'self_heal': new SelfHealAction(source),
+            'flash_of_lite': new FlashOfLiteAction(source),
+            'great_miracle': new GreatMiracleAction(source),
+            'invulnerability': new InvulnerabilityAction(source),
+            'pray_of_lite': new PrayOfLiteAction(source),
+            'death_pray': new DeathPrayAction(source),
+            'lite_blow': new LiteBlowAction(source),
+
         };
     }
 }
