@@ -9,6 +9,7 @@ import {HellsistanceAction} from '../actions/demon/hellsistanceAction';
 import {UnholyForceAction} from '../actions/demon/unholyForceAction';
 import {HellBlastAction} from '../actions/demon/hellBlastAction';
 import {HellHoundAction} from '../actions/demon/hellHoundAction';
+import {InfernoAction} from '../actions/demon/InfernoAction';
 
 export class Demon extends Character {
     actions: { [name: string]: Action };

@@ -14,6 +14,7 @@ import {Dwarf} from './characters/dwarf';
 import {Pirate} from './characters/pirate';
 import {Demon} from './characters/demon';
 import {Unit} from './unit';
+import {Ninja} from './characters/ninja';
 
 export const allowedCharacters: {
     [name: string]: { name: string, create: { new(actor: Unit, id: string): Character } }
@@ -73,5 +74,9 @@ export const allowedCharacters: {
     'demon': {
         name: 'Demon',
         create: Demon
-    }
+    },
+    // 'ninja': {
+    //     name: 'Ninja',
+    //     create: Ninja
+    // }
 };
