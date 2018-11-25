@@ -10,8 +10,8 @@ export class BurningDotEffect extends DotEffect {
     constructor(minDamage: number,
                 maxDamage: number,
                 roundsCount: number,
-                source: Unit,
+                actor: Unit,
     ) {
-        super(BURNING_DOT_EFFECT_ID, NAME, minDamage, maxDamage, DamageTypes.FIRE, roundsCount, source);
+        super(BURNING_DOT_EFFECT_ID, NAME, minDamage, maxDamage, DamageTypes.FIRE, roundsCount, actor);
     }
 }

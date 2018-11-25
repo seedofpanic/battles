@@ -12,9 +12,9 @@ const CRIT_MULTIPLIER = 1;
 const COOLDOWN = 2;
 
 export class DazzleAction extends HitAction {
-    constructor(source: Unit,) {
+    constructor(actor: Unit,) {
         super(
-            source,
+            actor,
             NAME,
             MIN_DAMAGE,
             MAX_DAMAGE,

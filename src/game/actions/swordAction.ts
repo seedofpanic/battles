@@ -10,9 +10,9 @@ const CRIT_CHANCE = 0.2;
 const CRIT_MULTIPLIER = 2;
 
 export class SwordAction extends HitAction {
-    constructor(source: Unit) {
+    constructor(actor: Unit) {
         super(
-            source,
+            actor,
             NAME,
             MIN_DAMAGE,
             MAX_DAMAGE,

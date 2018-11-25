@@ -3,8 +3,8 @@ import {Combat} from "../combat";
 import {Unit} from '../unit';
 
 export class HealAction extends Action {
-    constructor(source: Unit, name: string, private value: number) {
-        super(source, name);
+    constructor(actor: Unit, name: string, private value: number, cooldown = 0, maxCharges = 1) {
+        super(actor, name, cooldown, maxCharges);
     }
 
     perform(combat: Combat, self: Unit) {

@@ -10,9 +10,9 @@ export class HotEffect extends Effect {
                 private maxHeal: number,
                 private type: DamageTypes,
                 roundsCount: number,
-                source: Unit,
+                actor: Unit,
     ) {
-        super(id, name, roundsCount, source);
+        super(id, name, roundsCount, actor);
     }
 
     preTick(self: Unit) {

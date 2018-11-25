@@ -16,12 +16,12 @@ export class Bard extends Character {
         [DamageTypes.FROST]: 1.5,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'fire_breath': new HitAction(source, 'Hearting song', 10, 15, DamageTypes.PIERCING),
-            'guitar_strike': new HitAction(source, 'Guitar strike', 20, 30, DamageTypes.BLUNT),
+            'fire_breath': new HitAction(actor, 'Hearting song', 10, 15, DamageTypes.PIERCING),
+            'guitar_strike': new HitAction(actor, 'Guitar strike', 20, 30, DamageTypes.BLUNT),
         };
     }
 }

@@ -16,12 +16,12 @@ export class Monk extends Character {
         [DamageTypes.FROST]: 1.5,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'fist_strike': new HitAction(source,'Fist strike', 10, 15, DamageTypes.BLUNT),
-            'monkey_hook': new HitAction(source, 'Monkey hook', 20, 30, DamageTypes.BLUNT),
+            'fist_strike': new HitAction(actor,'Fist strike', 10, 15, DamageTypes.BLUNT),
+            'monkey_hook': new HitAction(actor, 'Monkey hook', 20, 30, DamageTypes.BLUNT),
         };
     }
 }

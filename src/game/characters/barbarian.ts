@@ -23,18 +23,18 @@ export class Barbarian extends Character {
         [DamageTypes.FROST]: 1.1,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'axe_strike': new HitAction(source, 'Axe strike', 5, 7, DamageTypes.CUTTING, 0.1, 1.5),
-            "blood_rage": new BuffAction(source, BloodRageEffect, 'Blood rage', 0, 1),
-            'crushing_strike': new HitAction(source, 'Crushing strike', 4, 8, DamageTypes.CUTTING, 0.2, 2),
-            'bless_of_ancestors': new BuffAction(source, BlessOfAncestorsEffect, 'Bless of ancestors', 0),
-            'stunning_roar': new DeBuffAction(source, StunningRoarEffect, 'Stunning roar', 0, 1),
-            'berserk_power': new HitAction(source, 'Berserk power', 6, 10, DamageTypes.CUTTING, 0.3, 3),
-            'blood_sacrifice': new BloodSacrificeAction(source),
-            'bleeding_wound': new SwordCuttingAction(source)
+            'axe_strike': new HitAction(actor, 'Axe strike', 5, 7, DamageTypes.CUTTING, 0.1, 1.5),
+            "blood_rage": new BuffAction(actor, BloodRageEffect, 'Blood rage', 0, 1),
+            'crushing_strike': new HitAction(actor, 'Crushing strike', 4, 8, DamageTypes.CUTTING, 0.2, 2),
+            'bless_of_ancestors': new BuffAction(actor, BlessOfAncestorsEffect, 'Bless of ancestors', 0),
+            'stunning_roar': new DeBuffAction(actor, StunningRoarEffect, 'Stunning roar', 0, 1),
+            'berserk_power': new HitAction(actor, 'Berserk power', 6, 10, DamageTypes.CUTTING, 0.3, 3),
+            'blood_sacrifice': new BloodSacrificeAction(actor),
+            'bleeding_wound': new SwordCuttingAction(actor)
         };
     }
 }

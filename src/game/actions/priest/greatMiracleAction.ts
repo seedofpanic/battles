@@ -3,8 +3,8 @@ import {Unit} from '../../unit';
 import {Combat} from '../../combat';
 
 export class GreatMiracleAction extends Action {
-    constructor(source: Unit) {
-        super(source, 'Great miracle');
+    constructor(actor: Unit) {
+        super(actor, 'Great miracle');
     }
 
     perform(combat?: Combat, self?: Unit, target?: Unit) {

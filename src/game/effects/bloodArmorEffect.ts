@@ -5,16 +5,18 @@ import {Unit} from '../unit';
 export const BLOOD_ARMOR_EFFECT_ID = 'blood_armor';
 
 export class BloodArmorEffect extends ResistsModEffect {
-    constructor(source: Unit) {
+    constructor(actor: Unit) {
         super(BLOOD_ARMOR_EFFECT_ID, {
             [DamageTypes.HOLY]: 0.8,
             [DamageTypes.DEATH]: 0.8
-        }, 'Blood armor', 2, source);
+        }, 'Blood armor', 2, actor);
     }
 
-    effectResistMod(value: number, effectId: string) {
+    effectResistMod(value: number, effectId: string): number {
         if (effectId === 'stun') {
             return 0;
         }
+
+        return value;
     }
 }

@@ -17,8 +17,8 @@ const CUTTING_EFFECT_MAX_DAMAGE = 1.66;
 const CUTTING_EFFECT_ROUNDS_COUNT = 3;
 
 export class SwordCuttingAction extends HitAction {
-    constructor(source: Unit) {
-        super(source, NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.CUTTING,
+    constructor(actor: Unit) {
+        super(actor, NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.CUTTING,
             CRIT_CHANCE, CRIT_MULTIPLIER, COOLDOWN, MAX_CHARGES);
     }
 

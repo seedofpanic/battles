@@ -4,8 +4,8 @@ import {Combat} from '../../combat';
 import {Unit} from '../../unit';
 
 export class BloodSacrificeAction extends HitAction {
-    constructor(source: Unit,) {
-        super(source, 'Blood sacrifice', 0, 0, DamageTypes.SHADOW);
+    constructor(actor: Unit,) {
+        super(actor, 'Blood sacrifice', 0, 0, DamageTypes.SHADOW);
     }
 
     perform(combat: Combat, self?: Unit, target?: Unit) {

@@ -4,8 +4,8 @@ import {Combat} from '../../combat';
 import {DeadlyKinshipEffect} from '../../effects/deadlyKinshipEffect';
 
 export class DeadlyKinshipAction extends Action {
-    constructor(source: Unit) {
-        super(source, 'Deadly kinship', 4);
+    constructor(actor: Unit) {
+        super(actor, 'Deadly kinship', 4);
     }
 
     beforeResolve(combat: Combat, self: Unit, target: Unit) {

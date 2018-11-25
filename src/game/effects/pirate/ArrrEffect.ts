@@ -2,8 +2,8 @@ import {Effect} from '../../effect';
 import {Unit} from '../../unit';
 
 export class ArrrEffect extends Effect {
-    constructor(source: Unit) {
-        super('arrr', 'Arrr', 3, source);
+    constructor(actor: Unit) {
+        super('arrr', 'Arrr', 3, actor);
     }
 
     effectResistMod(value: number, effectId: string) {

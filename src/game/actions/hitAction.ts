@@ -5,7 +5,7 @@ import {Unit} from '../unit';
 import {calcDamage} from '../../utils/calcDamage';
 
 export class HitAction extends Action {
-    constructor(source: Unit,
+    constructor(actor: Unit,
                 name: string,
                 protected minDamage: number,
                 protected maxDamage: number,
@@ -14,11 +14,11 @@ export class HitAction extends Action {
                 private critMultiplier = 1,
                 cooldown = 0,
                 maxCharges = 1) {
-        super(source, name, cooldown, maxCharges);
+        super(actor, name, cooldown, maxCharges);
     }
 
     perform(combat: Combat, self: Unit, target: Unit) {
-        const targetResist = target.getResist(this.type);
+        const targetResist = target.getResist(this.type, this);
         let crit = this.getCrit(this.critChance * targetResist);
 
         if (crit !== 1) {

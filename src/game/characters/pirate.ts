@@ -23,18 +23,18 @@ export class Pirate extends Character {
         [DamageTypes.FROST]: 1.5,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'broadsword_slash': new BroadswordSlashAction(source),
-            'grand_rum': new GrandRumAction(source),
-            'pistol_shot': new PistolShotAction(source),
-            'holly_grenade': new HollyGrenadeAction(source),
-            'pirate_tincture': new PirateTinctureAction(source),
-            'healing_rum': new HealingRumAction(source),
-            'arrr': new ArrrAction(source),
-            'crit_mastery': new CritMasteryAction(source),
+            'broadsword_slash': new BroadswordSlashAction(actor),
+            'grand_rum': new GrandRumAction(actor),
+            'pistol_shot': new PistolShotAction(actor),
+            'holly_grenade': new HollyGrenadeAction(actor),
+            'pirate_tincture': new PirateTinctureAction(actor),
+            'healing_rum': new HealingRumAction(actor),
+            'arrr': new ArrrAction(actor),
+            'crit_mastery': new CritMasteryAction(actor),
         };
     }
 }

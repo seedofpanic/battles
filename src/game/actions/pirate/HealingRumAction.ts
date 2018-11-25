@@ -3,7 +3,7 @@ import {Unit} from '../../unit';
 import {HealingRumEffect} from '../../effects/pirate/healingRumEffect';
 
 export class HealingRumAction extends BuffAction {
-    constructor(source: Unit) {
-        super(source, HealingRumEffect, 'Healing rum', 5);
+    constructor(actor: Unit) {
+        super(actor, HealingRumEffect, 'Healing rum', 5);
     }
 }

@@ -6,8 +6,8 @@ import {CheatDeathEffect} from '../../effects/cheatDeathEffect';
 export const CHEAT_DEATH_ACTION_ID = 'cheat_death';
 
 export class CheatDeathAction extends Action {
-    constructor(source: Unit) {
-        super(source, 'Cheat death');
+    constructor(actor: Unit) {
+        super(actor, 'Cheat death');
     }
 
     beforeResolve(combat: Combat, self: Unit, target: Unit) {

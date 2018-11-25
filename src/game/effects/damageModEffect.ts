@@ -6,8 +6,8 @@ export class DamageModEffect extends Effect {
     canStack = false;
 
     constructor(id: string, name: string, roundsCount: number,
-                private mod: number | {[name: string]: number}, source: Unit) {
-        super(id, name, roundsCount, source);
+                private mod: number | {[name: string]: number}, actor: Unit) {
+        super(id, name, roundsCount, actor);
     }
 
     damageMod(value: number, type: DamageTypes): number {

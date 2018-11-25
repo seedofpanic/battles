@@ -16,7 +16,7 @@ import {Devil} from './characters/devil';
 import {Unit} from './unit';
 
 export const allowedCharacters: {
-    [name: string]: { name: string, create: { new(source: Unit, id: string): Character } }
+    [name: string]: { name: string, create: { new(actor: Unit, id: string): Character } }
 } = {
     'barbarian': {
         name: 'Barbarian',

@@ -32,7 +32,7 @@ export class Unit {
     }
 
     decreaseHp(action: Action | Effect, damage: number, type: DamageTypes) {
-        this.character.effects.forEach(effect => effect.onDamage(damage, type, this, action.source));
+        this.character.effects.forEach(effect => effect.onDamage(damage, type, this, action));
 
         if (this.character.health > damage) {
             this.character.health -= damage;
@@ -54,11 +54,11 @@ export class Unit {
         this.currentCombat.battleLog.push(`${action.name} heals ${Math.ceil(heal)} hp`);
     }
 
-    getResist(type: DamageTypes): number {
+    getResist(type: DamageTypes, source: Action | Effect): number {
         const baseResist = this.character.resists[type] || 1;
 
         return this.character.effects
-            .reduce((result, effect) => effect.resistMod(result, type, this), baseResist);
+            .reduce((result, effect) => effect.resistMod(result, type, this, source), baseResist);
     }
 
     addEffect(action: Action | Effect, effect: Effect) {

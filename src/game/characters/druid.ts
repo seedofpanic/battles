@@ -1,9 +1,15 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
-import {HitAction} from "../actions/hitAction";
-import {HealAction} from "../actions/healAction";
 import {Unit} from '../unit';
 import {Action} from '../action';
+import {InsectsSwarmAction} from '../actions/druid/insectsSwarmAction';
+import {NatureWrathAction} from '../actions/druid/natureWrathAction';
+import {PoisonSkinAction} from '../actions/druid/poisonSkinAction';
+import {NatureHealAction} from '../actions/druid/natureHealAction';
+import {BlessOfNatureAction} from '../actions/druid/BlessOfNatureAction';
+import {NatureProtectionAction} from '../actions/druid/natureProtectionAction';
+import {SpinesAction} from '../actions/druid/spinesAction';
+import {GreatExileAction} from '../actions/druid/greatExileAction';
 
 export class Druid extends Character {
     actions: { [name: string]: Action };
@@ -17,12 +23,18 @@ export class Druid extends Character {
         [DamageTypes.FROST]: 0.5,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'staff_strike': new HitAction(source, 'Staff strike', 10, 20, DamageTypes.BLUNT),
-            'touch_of_nature': new HealAction(source,'Touch of Nature', 10),
+            'insects_swarm': new InsectsSwarmAction(actor),
+            'nature_wrath': new NatureWrathAction(actor),
+            'poison_skin': new PoisonSkinAction(actor),
+            'nature_heal': new NatureHealAction(actor),
+            'bless_of_nature': new BlessOfNatureAction(actor),
+            'nature_protection': new NatureProtectionAction(actor),
+            'spines': new SpinesAction(actor),
+            'great_exile': new GreatExileAction(actor),
         };
     }
 }

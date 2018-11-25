@@ -3,8 +3,8 @@ import {BuffAction} from '../buffAction';
 import {SelfHealEffect} from '../../effects/priest/selfHealEffect';
 
 export class SelfHealAction extends BuffAction {
-    constructor(source: Unit) {
-        super(source,
+    constructor(actor: Unit) {
+        super(actor,
             SelfHealEffect,
         'Self Heal', 5);
     }

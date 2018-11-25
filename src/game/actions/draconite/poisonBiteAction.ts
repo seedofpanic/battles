@@ -5,8 +5,8 @@ import {Combat} from '../../combat';
 import {PoisonBiteEffect} from '../../effects/draconite/poisonBiteEffect';
 
 export class PoisonBiteAction extends HitAction {
-    constructor(source: Unit) {
-        super(source, 'Poison bite', 1, 2, DamageTypes.CUTTING);
+    constructor(actor: Unit) {
+        super(actor, 'Poison bite', 1, 2, DamageTypes.CUTTING);
     }
 
     perform(combat: Combat, self: Unit, target: Unit) {

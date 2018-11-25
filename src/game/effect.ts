@@ -1,10 +1,11 @@
 import {DamageTypes} from './models/damageTypes';
 import {Unit} from './unit';
+import {Action} from './action';
 
 export abstract class Effect {
     canStack = true;
 
-    constructor(public id: string, public name: string, public roundsCount: number, public source: Unit) {
+    constructor(public id: string, public name: string, public roundsCount: number, public actor: Unit) {
     }
 
     preTick(unit: Unit) {
@@ -22,7 +23,7 @@ export abstract class Effect {
         return value;
     }
 
-    resistMod(value: number, type: DamageTypes, self: Unit): number {
+    resistMod(value: number, type: DamageTypes, self: Unit, source: Action | Effect): number {
         return value;
     }
 
@@ -34,7 +35,7 @@ export abstract class Effect {
         return value;
     }
 
-    onDamage(damage: number, type: DamageTypes, self: Unit, source: Unit) {
+    onDamage(damage: number, type: DamageTypes, self: Unit, source: Action | Effect) {
     }
 
     critMod(value: number, type: DamageTypes) {

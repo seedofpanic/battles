@@ -25,18 +25,18 @@ export class Mage extends Character {
         [DamageTypes.FROST]: 0.5,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'fireball': new FireBallAction(source),
-            'magic_shield': new BuffAction(source, MagicShieldEffect, 'Magic shield'),
-            'dazzle': new DazzleAction(source),
-            'fire_beam': new FireBeamAction(source),
-            'stone_skin': new BuffAction(source, StoneSkinEffect, 'Stone skin', 4),
-            'magical_burn': new MagicalBurnAction(source),
-            'fire_burst': new DeBuffAction(source, FireBurstEffect, 'Fire burst', 5),
-            'burnicide': new BurnicideAction(source),
+            'fireball': new FireBallAction(actor),
+            'magic_shield': new BuffAction(actor, MagicShieldEffect, 'Magic shield'),
+            'dazzle': new DazzleAction(actor),
+            'fire_beam': new FireBeamAction(actor),
+            'stone_skin': new BuffAction(actor, StoneSkinEffect, 'Stone skin', 4),
+            'magical_burn': new MagicalBurnAction(actor),
+            'fire_burst': new DeBuffAction(actor, FireBurstEffect, 'Fire burst', 5),
+            'burnicide': new BurnicideAction(actor),
         };
     }
 }

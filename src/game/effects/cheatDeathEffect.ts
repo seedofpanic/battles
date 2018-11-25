@@ -5,8 +5,8 @@ import {Unit} from '../unit';
 export const CHEAT_DEATH_EFFECT_ID = 'cheat_death';
 
 export class CheatDeathEffect extends Effect {
-    constructor(source: Unit) {
-        super(CHEAT_DEATH_EFFECT_ID, 'Cheat death', 3, source);
+    constructor(actor: Unit) {
+        super(CHEAT_DEATH_EFFECT_ID, 'Cheat death', 3, actor);
     }
 
     beforeDeath(combat: Combat, self: Unit): boolean {

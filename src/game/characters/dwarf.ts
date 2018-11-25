@@ -18,13 +18,13 @@ export class Dwarf extends Character {
         [DamageTypes.FROST]: 1.1,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'bleeding_wound': new SwordCuttingAction(source),
-            'slash': new SwordAction(source),
-            'shield_strike': new ShieldAction(source),
+            'bleeding_wound': new SwordCuttingAction(actor),
+            'slash': new SwordAction(actor),
+            'shield_strike': new ShieldAction(actor),
         };
     }
 }

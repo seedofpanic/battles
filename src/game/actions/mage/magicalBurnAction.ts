@@ -5,8 +5,8 @@ import {Action} from '../../action';
 import {BurningDotEffect} from '../../effects/burningDotEffect';
 
 export class MagicalBurnAction extends Action {
-    constructor(source: Unit) {
-        super(source, 'Magical burn', 5);
+    constructor(actor: Unit) {
+        super(actor, 'Magical burn', 5);
     }
 
     perform(combat: Combat, self?: Unit, target?: Unit) {

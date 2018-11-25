@@ -11,9 +11,9 @@ const CRIT_CHANCE = 0.12;
 const CRIT_MULTIPLIER = 1.3;
 
 export class FireBallAction extends HitAction {
-    constructor(source: Unit,) {
+    constructor(actor: Unit,) {
         super(
-            source,
+            actor,
             NAME,
             MIN_DAMAGE,
             MAX_DAMAGE,

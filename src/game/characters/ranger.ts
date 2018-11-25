@@ -16,12 +16,12 @@ export class Ranger extends Character {
         [DamageTypes.FROST]: 1.5,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'bow_shot': new HitAction(source, 'Bow shot', 10, 15, DamageTypes.PIERCING),
-            'precision_shot': new HitAction(source,'Precision shot', 20, 30, DamageTypes.PIERCING),
+            'bow_shot': new HitAction(actor, 'Bow shot', 10, 15, DamageTypes.PIERCING),
+            'precision_shot': new HitAction(actor,'Precision shot', 20, 30, DamageTypes.PIERCING),
         };
     }
 }

@@ -16,11 +16,11 @@ export class Dog extends Character {
         [DamageTypes.FROST]: 1.1,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'bite': new HitAction(source, 'Bite', 1, 3, DamageTypes.CUTTING)
+            'bite': new HitAction(actor, 'Bite', 1, 3, DamageTypes.CUTTING)
         };
     }
 }

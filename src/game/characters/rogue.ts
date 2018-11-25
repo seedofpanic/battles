@@ -17,12 +17,12 @@ export class Rogue extends Character {
         [DamageTypes.FROST]: 1.1,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'bleeding_wound': new SwordCuttingAction(source),
-            'slash': new SwordAction(source),
+            'bleeding_wound': new SwordCuttingAction(actor),
+            'slash': new SwordAction(actor),
         };
     }
 }

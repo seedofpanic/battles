@@ -3,8 +3,8 @@ import {Combat} from '../combat';
 import {Unit} from '../unit';
 
 export class MultipleStrikeAction extends Action {
-    constructor(source: Unit, name: string, private acion: Action, private times: number, private chance: number) {
-        super(source, name);
+    constructor(actor: Unit, name: string, private acion: Action, private times: number, private chance: number) {
+        super(actor, name);
     }
 
     perform(combat?: Combat, self?: Unit, target?: Unit) {

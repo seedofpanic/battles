@@ -4,8 +4,8 @@ import {Combat} from '../combat';
 import {Unit} from '../unit';
 
 export class RemoveEffectsAction extends Action {
-    constructor(source: Unit, name: string) {
-        super(source, name, 4, 2);
+    constructor(actor: Unit, name: string) {
+        super(actor, name, 4, 2);
     }
 
     perform(combat: Combat, self?: Unit, target?: Unit) {

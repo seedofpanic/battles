@@ -16,12 +16,12 @@ export class Devil extends Character {
         [DamageTypes.FROST]: 1.5,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'fire_breath': new HitAction(source, 'Fire breath', 10, 15, DamageTypes.FIRE),
-            'claw strike': new HitAction(source,'Claw strike', 20, 30, DamageTypes.CUTTING),
+            'fire_breath': new HitAction(actor, 'Fire breath', 10, 15, DamageTypes.FIRE),
+            'claw strike': new HitAction(actor,'Claw strike', 20, 30, DamageTypes.CUTTING),
         };
     }
 }

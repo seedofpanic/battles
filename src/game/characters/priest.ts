@@ -1,6 +1,5 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
-import {HitAction} from "../actions/hitAction";
 import {Unit} from '../unit';
 import {Action} from '../action';
 import {SelfHealAction} from '../actions/priest/selfHealAction';
@@ -24,18 +23,18 @@ export class Priest extends Character {
         [DamageTypes.FROST]: 1.5,
     };
 
-    constructor(source: Unit, id: string) {
+    constructor(actor: Unit, id: string) {
         super(id);
 
         this.actions = {
-            'lite_strike': new LiteStrikeAction(source),
-            'self_heal': new SelfHealAction(source),
-            'flash_of_lite': new FlashOfLiteAction(source),
-            'great_miracle': new GreatMiracleAction(source),
-            'invulnerability': new InvulnerabilityAction(source),
-            'pray_of_lite': new PrayOfLiteAction(source),
-            'death_pray': new DeathPrayAction(source),
-            'lite_blow': new LiteBlowAction(source),
+            'lite_strike': new LiteStrikeAction(actor),
+            'self_heal': new SelfHealAction(actor),
+            'flash_of_lite': new FlashOfLiteAction(actor),
+            'great_miracle': new GreatMiracleAction(actor),
+            'invulnerability': new InvulnerabilityAction(actor),
+            'pray_of_lite': new PrayOfLiteAction(actor),
+            'death_pray': new DeathPrayAction(actor),
+            'lite_blow': new LiteBlowAction(actor),
 
         };
     }

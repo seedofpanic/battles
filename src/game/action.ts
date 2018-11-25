@@ -7,7 +7,7 @@ export abstract class Action {
     charges: number;
     recharge = 0;
 
-    constructor(public source: Unit, public name: string, private cooldown = 0, private maxCharges = 1) {
+    constructor(public actor: Unit, public name: string, private cooldown = 0, private maxCharges = 1) {
         this.charges = maxCharges;
     }
 

@@ -11,8 +11,8 @@ const COOLDOWN = 6;
 const CHARGES = 1;
 
 export class ShadowBoltAction extends HitAction {
-    constructor(source: Unit) {
-        super(source, NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.SHADOW,
+    constructor(actor: Unit) {
+        super(actor, NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.SHADOW,
             CRIT_CHANCE, CRIT_MULTIPLIER, COOLDOWN, CHARGES);
 
         this.charges = 0;

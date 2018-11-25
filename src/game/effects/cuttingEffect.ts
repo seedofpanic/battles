@@ -11,8 +11,8 @@ export class CuttingEffect extends DotEffect {
                 maxDamage: number,
                 type: DamageTypes,
                 roundsCount: number,
-                source: Unit,
+                actor: Unit,
     ) {
-        super(CUTTING_RFFECT_ID, NAME, minDamage, maxDamage, type, roundsCount, source);
+        super(CUTTING_RFFECT_ID, NAME, minDamage, maxDamage, type, roundsCount, actor);
     }
 }
