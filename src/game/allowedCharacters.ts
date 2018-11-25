@@ -12,7 +12,7 @@ import {Bard} from './characters/bard';
 import {Rogue} from './characters/rogue';
 import {Dwarf} from './characters/dwarf';
 import {Pirate} from './characters/pirate';
-import {Devil} from './characters/devil';
+import {Demon} from './characters/demon';
 import {Unit} from './unit';
 
 export const allowedCharacters: {
@@ -70,8 +70,8 @@ export const allowedCharacters: {
         name: 'Pirate',
         create: Pirate
     },
-    'devil': {
-        name: 'Devil',
-        create: Devil
+    'demon': {
+        name: 'Demon',
+        create: Demon
     }
 };

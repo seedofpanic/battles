@@ -2,8 +2,8 @@ import {HitAction} from '../hitAction';
 import {Unit} from '../../unit';
 import {DamageTypes} from '../../models/damageTypes';
 
-export class LiteBlowAction extends HitAction {
+export class RagingFlamesAction extends HitAction {
     constructor(actor: Unit) {
-        super(actor, 'Lite blow', 20, 20, DamageTypes.HOLY, 0, 1, 5);
+        super(actor, 'Raging flames', 4, 7, DamageTypes.FIRE, 0.15, 1.5);
     }
 }

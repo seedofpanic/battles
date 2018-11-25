@@ -9,7 +9,7 @@ import {LiteStrikeAction} from '../actions/priest/liteStrikeAction';
 import {InvulnerabilityAction} from '../actions/priest/invulnerabilityAction';
 import {PrayOfLiteAction} from '../actions/priest/prayOfLiteAction';
 import {DeathPrayAction} from '../actions/priest/deathPrayAction';
-import {LiteBlowAction} from '../actions/priest/LiteBlowAction';
+import {LiteBlastAction} from '../actions/priest/LiteBlastAction';
 
 export class Priest extends Character {
     actions: { [name: string]: Action };
@@ -34,7 +34,7 @@ export class Priest extends Character {
             'invulnerability': new InvulnerabilityAction(actor),
             'pray_of_lite': new PrayOfLiteAction(actor),
             'death_pray': new DeathPrayAction(actor),
-            'lite_blow': new LiteBlowAction(actor),
+            'lite_blast': new LiteBlastAction(actor),
 
         };
     }
