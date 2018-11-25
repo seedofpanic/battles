@@ -63,7 +63,7 @@ export class Unit {
 
     addEffect(action: Action | Effect, effect: Effect) {
         effect.roundsCount = this.character.effects
-            .reduce((result, effect) => effect.effectResistMod(result, effect.id), effect.roundsCount);
+            .reduce((result, effect) => effect.effectResistMod(result, effect.type), effect.roundsCount);
 
         if (effect.roundsCount === 0) {
             return;

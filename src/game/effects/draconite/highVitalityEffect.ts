@@ -7,14 +7,14 @@ import {STUN_EFFECT_ID} from '../stunEffect';
 export const HIGH_VITALITY_EFFECT_ID = 'high_vitality';
 
 export class HighVitalityEffect extends Effect {
-    resitstsIds = [BLOOD_RAGE_EFFECT_ID, POISON_BITE_EFFECT, STUN_EFFECT_ID];
+    resitstsIds = [EffectType.BLEED, EffectType.POISON, EffectType.STUN];
 
     constructor(actor: Unit) {
         super(HIGH_VITALITY_EFFECT_ID, 'High vitality', 3, actor);
     }
 
-    effectResistMod(value: number, effectId: string) {
-        if (this.resitstsIds.some(resistId => resistId === effectId)) {
+    effectResistMod(value: number, effectType: EffectType) {
+        if (this.resitstsIds.some(resistId => resistId === effectType)) {
             return 0;
         } else {
             return value;

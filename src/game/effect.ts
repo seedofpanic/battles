@@ -3,6 +3,7 @@ import {Unit} from './unit';
 import {Action} from './action';
 
 export abstract class Effect {
+    type = EffectType.MAGIC;
     canStack = true;
 
     constructor(public id: string, public name: string, public roundsCount: number, public actor: Unit) {
@@ -27,7 +28,7 @@ export abstract class Effect {
         return value;
     }
 
-    effectResistMod(value: number, effectId: string) {
+    effectResistMod(value: number, effectType: EffectType) {
         return value;
     }
 

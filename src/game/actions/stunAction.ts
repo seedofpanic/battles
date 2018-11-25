@@ -5,6 +5,8 @@ import {Unit} from '../unit';
 const NAME = 'Stun';
 
 export class StunAction extends Action {
+    type = EffectType.STUN;
+
     constructor(actor: Unit) {
         super(actor, NAME);
     }

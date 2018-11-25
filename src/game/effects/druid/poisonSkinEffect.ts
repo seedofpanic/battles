@@ -11,8 +11,11 @@ export class PoisonSkinEffect extends Effect {
 
     onDamage(damage: number, type: DamageTypes, self: Unit, source: Action | Effect) {
         source.actor.decreaseHp(this, 5 * source.actor.getResist(DamageTypes.POISON, this), DamageTypes.POISON);
-        source.actor.addEffect(this,
-            new DotEffect('poison', 'Poison', 5, 5, DamageTypes.POISON, 2, self)
-        );
+
+        const poisonEffect = new DotEffect('poison', 'Poison', 5, 5, DamageTypes.POISON, 2, self);
+
+        poisonEffect.type = EffectType.POISON;
+
+        source.actor.addEffect(this, poisonEffect);
     }
 }

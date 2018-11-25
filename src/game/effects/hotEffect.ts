@@ -8,7 +8,7 @@ export class HotEffect extends Effect {
                 name: string,
                 private minHeal: number,
                 private maxHeal: number,
-                private type: DamageTypes,
+                private damageType: DamageTypes,
                 roundsCount: number,
                 actor: Unit,
     ) {

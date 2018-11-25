@@ -6,8 +6,8 @@ export class ArrrEffect extends Effect {
         super('arrr', 'Arrr', 3, actor);
     }
 
-    effectResistMod(value: number, effectId: string) {
-        if (effectId === 'stun') {
+    effectResistMod(value: number, effectType: EffectType) {
+        if (effectType === EffectType.STUN) {
             return 0;
         }
     }

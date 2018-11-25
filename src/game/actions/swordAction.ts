@@ -1,6 +1,5 @@
 import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from './hitAction';
-import {BlessOfAncestorsEffect} from '../effects/blessOfAncestorsEffect';
 import {Unit} from '../unit';
 
 const NAME = 'Slash';

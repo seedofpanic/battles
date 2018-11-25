@@ -12,8 +12,8 @@ export class BloodArmorEffect extends ResistsModEffect {
         }, 'Blood armor', 2, actor);
     }
 
-    effectResistMod(value: number, effectId: string): number {
-        if (effectId === 'stun') {
+    effectResistMod(value: number, effectType: EffectType): number {
+        if (effectType === EffectType.STUN) {
             return 0;
         }
 

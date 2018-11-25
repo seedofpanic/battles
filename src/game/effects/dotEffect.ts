@@ -8,7 +8,7 @@ export class DotEffect extends Effect {
                 name: string,
                 private minDamage: number,
                 private maxDamage: number,
-                private type: DamageTypes,
+                private damageType: DamageTypes,
                 roundsCount: number,
                 actor: Unit,
     ) {
@@ -17,7 +17,7 @@ export class DotEffect extends Effect {
 
     preTick(self: Unit) {
         self.decreaseHp(this, calcDamage(this.minDamage, this.maxDamage)
-            * self.getResist(this.type, this), this.type);
+            * self.getResist(this.damageType, this), this.damageType);
 
         super.preTick(self);
     }
