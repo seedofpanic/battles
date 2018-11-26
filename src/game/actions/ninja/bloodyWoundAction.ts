@@ -10,7 +10,7 @@ export class BloodyWoundAction extends HitAction {
     }
 
     perform(combat: Combat, self: Unit, target: Unit) {
-        this.perform(combat, self, target);
+        super.perform(combat, self, target);
 
         target.addEffect(this, new BloodyWoundEffect(this.actor));
     }

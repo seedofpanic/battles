@@ -2,6 +2,7 @@ import {BuffAction} from '../buffAction';
 import {Unit} from '../../unit';
 import {GreatShieldOfLiteEffect} from '../../effects/paladin/greatShieldOfLiteEffect';
 import {Combat} from '../../combat';
+import {EffectType} from '../../models/effectType';
 
 export class GreatShieldOfLiteAction extends BuffAction {
     effectsArr = [EffectType.POISON, EffectType.BLEED];

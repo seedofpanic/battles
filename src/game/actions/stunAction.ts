@@ -1,6 +1,7 @@
 import {Action} from '../action';
 import {Combat} from '../combat';
 import {Unit} from '../unit';
+import {EffectType} from '../models/effectType';
 
 const NAME = 'Stun';
 

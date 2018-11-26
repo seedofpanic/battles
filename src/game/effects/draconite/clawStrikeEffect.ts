@@ -1,6 +1,7 @@
 import {DotEffect} from '../dotEffect';
 import {DamageTypes} from '../../models/damageTypes';
 import {Unit} from '../../unit';
+import {EffectType} from '../../models/effectType';
 
 export const CLAW_STRIKE_EFFECT = 'claw_strike';
 

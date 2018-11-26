@@ -13,6 +13,6 @@ export class InfernoAction extends HitAction {
 
         self.decreaseHp(this, 10 * resist, DamageTypes.FIRE);
 
-        this.perform(combat, self, target);
+        super.perform(combat, self, target);
     }
 }

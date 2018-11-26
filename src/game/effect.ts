@@ -1,6 +1,7 @@
 import {DamageTypes} from './models/damageTypes';
 import {Unit} from './unit';
 import {Action} from './action';
+import {EffectType} from './models/effectType';
 
 export abstract class Effect {
     type = EffectType.MAGIC;

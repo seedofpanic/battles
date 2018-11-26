@@ -1,6 +1,7 @@
 import {ResistsModEffect} from './resistsModEffect';
 import {DamageTypes} from '../models/damageTypes';
 import {Unit} from '../unit';
+import {EffectType} from '../models/effectType';
 
 export const BLOOD_ARMOR_EFFECT_ID = 'blood_armor';
 

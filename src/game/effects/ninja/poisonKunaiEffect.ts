@@ -1,6 +1,7 @@
 import {DotEffect} from '../dotEffect';
 import {Unit} from '../../unit';
 import {DamageTypes} from '../../models/damageTypes';
+import {EffectType} from '../../models/effectType';
 
 export class PoisonKunaiEffect extends DotEffect {
     type = EffectType.POISON;

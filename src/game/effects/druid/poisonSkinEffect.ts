@@ -3,6 +3,7 @@ import {Unit} from '../../unit';
 import {DamageTypes} from '../../models/damageTypes';
 import {DotEffect} from '../dotEffect';
 import {Action} from '../../action';
+import {EffectType} from '../../models/effectType';
 
 export class PoisonSkinEffect extends Effect {
     constructor(actor: Unit) {

@@ -3,6 +3,7 @@ import {Unit} from '../../unit';
 import {BLOOD_RAGE_EFFECT_ID} from '../bloodRageEffect';
 import {POISON_BITE_EFFECT} from './poisonBiteEffect';
 import {STUN_EFFECT_ID} from '../stunEffect';
+import {EffectType} from '../../models/effectType';
 
 export const HIGH_VITALITY_EFFECT_ID = 'high_vitality';
 

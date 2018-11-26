@@ -1,5 +1,6 @@
 import {Effect} from '../../effect';
 import {Unit} from '../../unit';
+import {EffectType} from '../../models/effectType';
 
 export class ArrrEffect extends Effect {
     constructor(actor: Unit) {

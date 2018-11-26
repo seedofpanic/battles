@@ -1,6 +1,7 @@
 import {Unit} from '../../unit';
 import {DotEffect} from '../dotEffect';
 import {DamageTypes} from '../../models/damageTypes';
+import {EffectType} from '../../models/effectType';
 
 export class PoisonBladeEffect extends DotEffect {
     type = EffectType.POISON;

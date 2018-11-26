@@ -1,5 +1,6 @@
 import {Unit} from '../../unit';
 import {Effect} from '../../effect';
+import {EffectType} from '../../models/effectType';
 
 export class PrayEffect extends Effect {
     effectsArr = [EffectType.STUN, EffectType.POISON, EffectType.BLEED];

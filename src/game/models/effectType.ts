@@ -1,4 +1,4 @@
-enum EffectType {
+export enum EffectType {
     MAGIC,
     BLEED,
     POISON,
