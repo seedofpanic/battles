@@ -19,10 +19,10 @@ export class Mage extends Character {
     healthMax = 70;
     name = 'Mage';
     resists = {
-        [DamageTypes.BLUNT]: 1.5,
-        [DamageTypes.CUTTING]: 1.7,
-        [DamageTypes.FIRE]: 0.5,
-        [DamageTypes.FROST]: 0.5,
+        [DamageTypes.BLUNT]: 1,
+        [DamageTypes.CUTTING]: 1,
+        [DamageTypes.FIRE]: 1,
+        [DamageTypes.FROST]: 1,
     };
 
     constructor(actor: Unit, id: string) {

@@ -10,10 +10,10 @@ export class Bard extends Character {
     healthMax = 120;
     name = 'Bard';
     resists = {
-        [DamageTypes.BLUNT]: 1.5,
-        [DamageTypes.CUTTING]: 1.7,
-        [DamageTypes.FIRE]: 1.5,
-        [DamageTypes.FROST]: 1.5,
+        [DamageTypes.BLUNT]: 1,
+        [DamageTypes.CUTTING]: 1,
+        [DamageTypes.FIRE]: 1,
+        [DamageTypes.FROST]: 1,
     };
 
     constructor(actor: Unit, id: string) {

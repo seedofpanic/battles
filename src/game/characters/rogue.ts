@@ -11,10 +11,10 @@ export class Rogue extends Character {
     healthMax = 100;
     name = 'Rogue';
     resists = {
-        [DamageTypes.BLUNT]: 1.3,
-        [DamageTypes.CUTTING]: 0.9,
-        [DamageTypes.FIRE]: 1.2,
-        [DamageTypes.FROST]: 1.1,
+        [DamageTypes.BLUNT]: 1,
+        [DamageTypes.CUTTING]: 1,
+        [DamageTypes.FIRE]: 1,
+        [DamageTypes.FROST]: 1,
     };
 
     constructor(actor: Unit, id: string) {

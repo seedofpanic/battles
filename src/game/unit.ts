@@ -5,15 +5,18 @@ import {Action} from './action';
 import {DamageTypes} from './models/damageTypes';
 import {allowedCharacters} from './allowedCharacters';
 import {StunAction} from './actions/stunAction';
-import {DBUser} from '../bdTypes/DBUser';
+import {game} from '../index';
+import {getRandomSkill} from '../utils/getRandomSkill';
 
 export class Unit {
+    isPlayer = false;
     username: string;
     currentCombat: Combat;
     character: Character;
     targetId: string;
     team: string;
     isValuable = false;
+    timer: NodeJS.Timer;
 
     get isStunned() {
         return this.character.effects.reduce((result, effect) => effect.isStunned(result), false);
@@ -23,6 +26,7 @@ export class Unit {
     }
 
     setAction(action: string) {
+        this.clearTimer();
         this.character.action = this.character.actions[action];
     }
 
@@ -129,6 +133,23 @@ export class Unit {
 
     sendSkills() {
         this.send('select_skill', this.getActions());
+
+        if (this.isPlayer) {
+            const skillSelectTimer = 20;
+            this.send('show_timer', skillSelectTimer);
+            this.timer = setTimeout(() => {
+                if (this.currentCombat) {
+                    game.setAction(this as any, getRandomSkill(this));
+                }
+            }, skillSelectTimer * 1000);
+        }
+    }
+
+    clearTimer() {
+        if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
+        }
     }
 
     getActions() {

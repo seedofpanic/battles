@@ -12,7 +12,7 @@ const passport = require('passport');
 
 require('dotenv').config();
 
-const game = new Game();
+export const game = new Game();
 
 export const app = expressWs(express()).app;
 
@@ -36,8 +36,7 @@ export function doAction(player: Player, action: any) {
     switch (action.type) {
         case 'select_character':
         case 'ready':
-            game.selectCharacter(player, action.payload);
-            player.played++;
+            game.playerSelectCharacter(player, action.payload);
 
             break;
         case 'start':
@@ -61,29 +60,7 @@ export function doAction(player: Player, action: any) {
             player.send('note', 'You left the queue');
             break;
         case 'select_skill':
-            const combat = player.currentCombat;
-
-            if (player.character.action) {
-                player.send('error', 'Skill already selected');
-
-                return;
-            }
-
-            if (player.character.actions[action.payload]
-                && player.character.actions[action.payload].isAvailable()) {
-                player.send('note', `You will use ${player.character.actions[action.payload].name} skill`);
-            } else {
-                player.send('error',
-                    `Skill ${action.payload} is not available now`);
-
-                return;
-            }
-
-            player.setAction(action.payload);
-
-            if (!game.update(combat)) {
-                player.send('note', 'Waiting for opponent...');
-            }
+            game.setAction(player, action.payload);
             break;
         case 'cancel_fight':
             player.kill();

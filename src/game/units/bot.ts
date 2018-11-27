@@ -1,11 +1,13 @@
-import {allowedCharacters} from '../allowedCharacters';
 import {fairRandom} from '../../utils/fairRandom';
 import {Player} from './player';
 import {Unit} from '../unit';
 import {StunAction} from '../actions/stunAction';
+import {getRandomCharacter} from '../../utils/getRandomCharacter';
+import {getRandomSkill} from '../../utils/getRandomSkill';
 
 export class Bot extends Player {
     isValuable = true;
+    isPlayer = false;
 
     constructor() {
         super('bot');
@@ -21,18 +23,12 @@ export class Bot extends Player {
         super.beforeResolve(target);
     }
 
-    selectCharacter() {
-        const allowedCharactersKeys = Object.keys(allowedCharacters);
-
-        return allowedCharactersKeys[fairRandom(allowedCharactersKeys.length)];
+    selectCharacter(): string {
+        return getRandomCharacter();
     }
 
     selectAction() {
-        const actionsKeys = Object.keys(this.character.actions);
-
-        this.setAction(
-            actionsKeys[fairRandom(actionsKeys.length)]
-        );
+        this.setAction(getRandomSkill(this));
     }
 
     send(type: string, payload: any) {

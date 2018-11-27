@@ -7,6 +7,7 @@ export class Player extends Unit {
     isValuable = true;
     played = 0;
     userId: any;
+    isPlayer = true;
 
     constructor(id: string, user?: DBUser) {
         super(id);

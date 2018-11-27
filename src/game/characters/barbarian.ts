@@ -17,10 +17,10 @@ export class Barbarian extends Character {
     health = 140;
     healthMax = 140;
     resists = {
-        [DamageTypes.BLUNT]: 1.2,
-        [DamageTypes.CUTTING]: 1.4,
-        [DamageTypes.FIRE]: 1.5,
-        [DamageTypes.FROST]: 1.1,
+        [DamageTypes.BLUNT]: 1,
+        [DamageTypes.CUTTING]: 1,
+        [DamageTypes.FIRE]: 1,
+        [DamageTypes.FROST]: 1,
     };
 
     constructor(actor: Unit, id: string) {

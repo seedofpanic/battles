@@ -74,6 +74,12 @@ export class Combat {
             unit.sendSkills();
         });
 
+        if (this.isEnded) {
+            Object.keys(this.units).forEach(id => {
+                this.units[id].character = null;
+            });
+        }
+
         this.battleLog.length = 0;
     }
 

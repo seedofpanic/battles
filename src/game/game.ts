@@ -4,6 +4,8 @@ import {randomBytes} from 'crypto';
 import {allowedCharacters} from './allowedCharacters';
 import {Unit} from './unit';
 import {Bot} from './units/bot';
+import {fairRandom} from '../utils/fairRandom';
+import {getRandomCharacter} from '../utils/getRandomCharacter';
 
 export class Game {
 
@@ -53,12 +55,29 @@ export class Game {
         this.showCharacters(player);
     }
 
-    showCharacters(player: Unit) {
+    showCharacters(player: Player) {
+        const characterSelectTimer = 120;
+
         player.send('select_character', this.getCharacters());
+
+        if (player.isPlayer) {
+            player.send('show_timer', characterSelectTimer);
+            player.timer = setTimeout(() => {
+                if (player.currentCombat) {
+                    this.playerSelectCharacter(player, getRandomCharacter());
+                }
+            }, characterSelectTimer * 1000);
+        }
     }
 
     isAllowedCharacter(character: string) {
         return !!allowedCharacters[character];
+    }
+
+    playerSelectCharacter(player: Player, character: string) {
+        player.clearTimer();
+        this.selectCharacter(player, character);
+        player.played++;
     }
 
     selectCharacter(unit: Unit, character: string) {
@@ -114,6 +133,30 @@ export class Game {
         }
 
         return false;
+    }
+
+    setAction(player: Player, action: string) {
+        if (player.character.action) {
+            player.send('error', 'Skill already selected');
+
+            return;
+        }
+
+        if (player.character.actions[action]
+            && player.character.actions[action].isAvailable()) {
+            player.send('note', `You will use ${player.character.actions[action].name} skill`);
+        } else {
+            player.send('error',
+                `Skill ${action} is not available now`);
+
+            return;
+        }
+
+        player.setAction(action);
+
+        if (!this.update(player.currentCombat)) {
+            player.send('note', 'Waiting for opponent...');
+        }
     }
 
     private getCharacters() {

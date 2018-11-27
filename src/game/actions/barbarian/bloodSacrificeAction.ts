@@ -11,7 +11,7 @@ export class BloodSacrificeAction extends HitAction {
     perform(combat: Combat, self?: Unit, target?: Unit) {
         const health = self.character.health / 2;
 
-        self.character.health = health;
+        self.decreaseHp(this, health, DamageTypes.DEATH);
 
         this.minDamage = health;
         this.maxDamage = health;

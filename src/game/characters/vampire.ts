@@ -17,10 +17,10 @@ export class Vampire extends Character {
     healthMax = 80;
     name = 'Vampire';
     resists = {
-        [DamageTypes.BLUNT]: 1.3,
-        [DamageTypes.CUTTING]: 0.9,
-        [DamageTypes.FIRE]: 0.7,
-        [DamageTypes.FROST]: 0.7
+        [DamageTypes.BLUNT]: 1,
+        [DamageTypes.CUTTING]: 1,
+        [DamageTypes.FIRE]: 1,
+        [DamageTypes.FROST]: 1
     };
 
     constructor(actor: Unit, id: string) {
