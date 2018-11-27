@@ -12,6 +12,6 @@ export class PoisonKunaiAction extends HitAction {
     perform(combat: Combat, self: Unit, target: Unit) {
         super.perform(combat, self, target);
 
-        target.addEffect(this, new PoisonKunaiEffect(this.actor))
+        target.addEffect(this, new PoisonKunaiEffect(this.actor));
     }
 }
