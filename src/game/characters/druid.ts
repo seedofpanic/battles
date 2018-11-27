@@ -6,7 +6,7 @@ import {InsectsSwarmAction} from '../actions/druid/insectsSwarmAction';
 import {NatureWrathAction} from '../actions/druid/natureWrathAction';
 import {PoisonSkinAction} from '../actions/druid/poisonSkinAction';
 import {NatureHealAction} from '../actions/druid/natureHealAction';
-import {BlessOfNatureAction} from '../actions/druid/BlessOfNatureAction';
+import {BlessOfNatureAction} from '../actions/druid/blessOfNatureAction';
 import {NatureProtectionAction} from '../actions/druid/natureProtectionAction';
 import {SpinesAction} from '../actions/druid/spinesAction';
 import {GreatExileAction} from '../actions/druid/greatExileAction';
