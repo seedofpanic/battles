@@ -1,8 +1,8 @@
-import {Effect} from '../../effect';
 import {IUnit} from '../../../models/unit';
+import {DamageModEffect} from '../damageModEffect';
 
-export class ChainShackleEffect extends Effect {
+export class ChainShackleEffect extends DamageModEffect {
     constructor(actor: IUnit) {
-        super('chain_shackle', 'Chain shackle', 3, actor);
+        super('chain_shackle', 'Chain shackle', 3, 0.85, actor);
     }
 }
