@@ -23,7 +23,7 @@ export class Player extends Unit implements IPlayer {
     }
 
     send(type: string, payload: any) {
-        if (this.ws.readyState !== this.ws.OPEN) {
+        if (!this.ws || this.ws.readyState !== this.ws.OPEN) {
             return;
         }
 
