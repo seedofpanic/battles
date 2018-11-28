@@ -8,11 +8,11 @@ import {BloodArmorEffect} from '../effects/bloodArmorEffect';
 import {DeadlyKinshipAction} from '../actions/vampire/deadlyKinshipAction';
 import {BloodySymbolAction} from '../actions/vampire/bloodySymbolAction';
 import {CHEAT_DEATH_ACTION_ID, CheatDeathAction} from '../actions/vampire/cheatDeathAction';
-import {Unit} from '../unit';
-import {Action} from '../action';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Vampire extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 80;
     healthMax = 80;
     name = 'Vampire';
@@ -23,7 +23,7 @@ export class Vampire extends Character {
         [DamageTypes.FROST]: 1
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

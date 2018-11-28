@@ -1,7 +1,5 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
-import {Action} from '../action';
 import {ShurikenHurlAction} from '../actions/ninja/shurikenHurlAction';
 import {PoisonKunaiAction} from '../actions/ninja/poisonKunaiAction';
 import {SuddenStrikeAction} from '../actions/ninja/suddenStrikeAction';
@@ -10,9 +8,11 @@ import {StunGrenadeAction} from '../actions/ninja/stunGrenadeAction';
 import {ChainShackleAction} from '../actions/ninja/chainShackleAction';
 import {PoisonBladeAction} from '../actions/ninja/PoisonBladeAction';
 import {VanishAction} from '../actions/ninja/vanishAction';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Ninja extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 120;
     healthMax = 120;
     name =  'Ninja';
@@ -23,7 +23,7 @@ export class Ninja extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

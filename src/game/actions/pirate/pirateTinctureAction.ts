@@ -1,9 +1,9 @@
 import {BuffAction} from '../buffAction';
-import {Unit} from '../../unit';
 import {PirateTinctureEffect} from '../../effects/pirate/pirateTinctureEffect';
+import {IUnit} from '../../../models/unit';
 
 export class PirateTinctureAction extends BuffAction {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, PirateTinctureEffect, 'Pirate tincture', 5);
     }
 }

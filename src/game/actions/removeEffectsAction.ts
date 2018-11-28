@@ -1,14 +1,14 @@
 import {Action} from '../action';
 import {DamageTypes} from '../models/damageTypes';
-import {Combat} from '../combat';
-import {Unit} from '../unit';
+import {IUnit} from '../../models/unit';
+import {ICombat} from '../../models/combat';
 
 export class RemoveEffectsAction extends Action {
-    constructor(actor: Unit, name: string) {
+    constructor(actor: IUnit, name: string) {
         super(actor, name, 4, 2);
     }
 
-    perform(combat: Combat, self?: Unit, target?: Unit) {
+    perform(combat: ICombat, self?: IUnit, target?: IUnit) {
         self.character.effects.length = 0;
         super.perform(combat);
     }

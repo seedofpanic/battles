@@ -1,12 +1,9 @@
-import {Unit} from './unit';
-import {Ai} from './units/ai';
-import {Character} from './character';
-import {Player} from './units/player';
+import {ICombat} from '../models/combat';
+import {IPlayer} from '../models/player';
+import {IUnit} from '../models/unit';
 
-let nextSummonId = 1;
-
-export class Combat {
-    units: {[name: string]: Unit} = {};
+export class Combat implements ICombat {
+    units: {[name: string]: IUnit} = {};
     isEnded = false;
     battleLog: string[] = [];
     teams: string[];
@@ -18,7 +15,7 @@ export class Combat {
         ];
     }
 
-    get unitsArr(): Unit[] {
+    get unitsArr(): IUnit[] {
         return Object.keys(this.units).map(key => this.units[key]);
     }
 
@@ -109,19 +106,19 @@ export class Combat {
         });
     }
 
-    addPlayer(player: Player) {
+    addPlayer(player: IPlayer) {
         this.addUnit(player);
         this.setTeamToPlayer(player);
         player.consumeUpdate();
     }
 
-    addUnit(player: Unit) {
+    addUnit(player: IUnit) {
         player.currentCombat = this;
 
         this.units[player.id] = player;
     }
 
-    setTeamToPlayer(player: Player) {
+    setTeamToPlayer(player: IPlayer) {
         const units = this.unitsArr;
 
         for (let i = 0; i < this.teams.length; i++) {
@@ -148,13 +145,11 @@ export class Combat {
             });
     }
 
-    addSummon(summon: Character, team: string) {
-        const unit = new Ai(`${summon.id}_${nextSummonId++}`, team, summon, this);
-
+    addSummon(unit: IUnit) {
         this.addUnit(unit);
     }
 
-    removeUnit(unit: Unit) {
+    removeUnit(unit: IUnit) {
         delete this.units[unit.id];
 
         this.broadcast('remove_unit', {

@@ -1,9 +1,9 @@
 import {Effect} from '../../effect';
-import {Unit} from '../../unit';
 import {EffectType} from '../../models/effectType';
+import {IUnit} from '../../../models/unit';
 
 export class ArrrEffect extends Effect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('arrr', 'Arrr', 3, actor);
     }
 

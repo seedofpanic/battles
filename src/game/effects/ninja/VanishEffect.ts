@@ -1,8 +1,8 @@
 import {Effect} from '../../effect';
-import {Unit} from '../../unit';
+import {IUnit} from '../../../models/unit';
 
 export class VanishEffect extends Effect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('vanish', 'Vanish', 1, actor);
     }
 }

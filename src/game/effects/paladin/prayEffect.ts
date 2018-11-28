@@ -1,11 +1,11 @@
-import {Unit} from '../../unit';
 import {Effect} from '../../effect';
 import {EffectType} from '../../models/effectType';
+import {IUnit} from '../../../models/unit';
 
 export class PrayEffect extends Effect {
     effectsArr = [EffectType.STUN, EffectType.POISON, EffectType.BLEED];
 
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('pray', 'Pray', 3, actor);
     }
 

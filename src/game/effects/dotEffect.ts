@@ -1,7 +1,7 @@
 import {Effect} from '../effect';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
 import {calcDamage} from '../../utils/calcDamage';
+import {IUnit} from '../../models/unit';
 
 export class DotEffect extends Effect {
     constructor(id: string,
@@ -10,12 +10,12 @@ export class DotEffect extends Effect {
                 private maxDamage: number,
                 private damageType: DamageTypes,
                 roundsCount: number,
-                actor: Unit,
+                actor: IUnit,
     ) {
         super(id, name, roundsCount, actor);
     }
 
-    preTick(self: Unit) {
+    preTick(self: IUnit) {
         self.decreaseHp(this, calcDamage(this.minDamage, this.maxDamage)
             * self.getResist(this.damageType, this), this.damageType);
 

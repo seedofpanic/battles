@@ -1,11 +1,11 @@
 import {DamageModEffect} from './damageModEffect';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
+import {IUnit} from '../../models/unit';
 
 export const FIRE_BURST_EFFECT = 'fire_burst';
 
 export class FireBurstEffect extends DamageModEffect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(FIRE_BURST_EFFECT, 'Fire burst', 3, {
             [DamageTypes.FIRE]: 1.2
         }, actor);

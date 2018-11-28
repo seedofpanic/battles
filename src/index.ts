@@ -12,8 +12,6 @@ const passport = require('passport');
 
 require('dotenv').config();
 
-export const game = new Game();
-
 export const app = expressWs(express()).app;
 
 export const players: {
@@ -36,40 +34,40 @@ export function doAction(player: Player, action: any) {
     switch (action.type) {
         case 'select_character':
         case 'ready':
-            game.playerSelectCharacter(player, action.payload);
+            Game.playerSelectCharacter(player, action.payload);
 
             break;
         case 'start':
-            game.startCombat(player);
+            Game.startCombat(player);
 
             if (action.payload.withBot) {
-                game.addBot();
+                Game.addBot();
             }
 
             break;
         case 'invite':
-            game.startDuel(player, null);
+            Game.startDuel(player, null);
             break;
         case 'join':
-            game.startDuel(player, action.combatId || null);
+            Game.startDuel(player, action.combatId || null);
             break;
         case 'stop':
-            game.combatsQueue.splice(game.combatsQueue.indexOf(player.currentCombat), 1);
+            Game.combatsQueue.splice(Game.combatsQueue.indexOf(player.currentCombat), 1);
             player.currentCombat = undefined;
 
             player.send('note', 'You left the queue');
             break;
         case 'select_skill':
-            game.setAction(player, action.payload);
+            Game.setAction(player, action.payload);
             break;
         case 'cancel_fight':
             player.kill();
-            game.endCombat(player.currentCombat);
+            Game.endCombat(player.currentCombat);
             break;
         case 'info':
             player.send('note', `You already has played: ${player.played}`);
-            player.send('note', `Played duels: ${game.combatsEnded}`);
-            player.send('note', `Active duels: ${game.combatsCount - game.combatsEnded}`);
+            player.send('note', `Played duels: ${Game.combatsEnded}`);
+            player.send('note', `Active duels: ${Game.combatsCount - Game.combatsEnded}`);
             break;
         case 'auth':
             break;
@@ -136,7 +134,7 @@ app.ws('/ws', (ws, req) => {
                 playerTo.currentCombat = undefined;
             });
 
-            game.endCombat(player.currentCombat);
+            Game.endCombat(player.currentCombat);
         }
 
         if (req.user) {

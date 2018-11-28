@@ -1,7 +1,5 @@
 import {Character} from '../character';
-import {Action} from '../action';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
 import {PrayAction} from '../actions/paladin/prayAction';
 import {SelfAidAction} from '../actions/paladin/selfAidAction';
 import {HeavenStrikeAction} from '../actions/paladin/heavenStrikeAction';
@@ -10,10 +8,12 @@ import {BlindingFlashAction} from '../actions/paladin/blindingFlashAction';
 import {GreatShieldOfLiteAction} from '../actions/paladin/greatShieldOfLiteAction';
 import {ChoppingAction} from '../actions/paladin/choppingAction';
 import {FaithPowerAction} from '../actions/paladin/faithPowerAction';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 
 export class Paladin extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 120;
     healthMax = 120;
     name =  'Paladin';
@@ -24,7 +24,7 @@ export class Paladin extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

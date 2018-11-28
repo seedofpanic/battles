@@ -1,14 +1,14 @@
 import {HitAction} from '../hitAction';
 import {DamageTypes} from '../../models/damageTypes';
-import {Combat} from '../../combat';
-import {Unit} from '../../unit';
+import {IUnit} from '../../../models/unit';
+import {ICombat} from '../../../models/combat';
 
 export class BloodSacrificeAction extends HitAction {
-    constructor(actor: Unit,) {
+    constructor(actor: IUnit,) {
         super(actor, 'Blood sacrifice', 0, 0, DamageTypes.SHADOW);
     }
 
-    perform(combat: Combat, self?: Unit, target?: Unit) {
+    perform(combat: ICombat, self?: IUnit, target?: IUnit) {
         const health = self.character.health / 2;
 
         self.decreaseHp(this, health, DamageTypes.DEATH);

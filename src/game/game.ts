@@ -1,22 +1,22 @@
-import {Player} from './units/player';
-import {Combat} from './combat';
 import {randomBytes} from 'crypto';
 import {allowedCharacters} from './allowedCharacters';
-import {Unit} from './unit';
-import {Bot} from './units/bot';
-import {fairRandom} from '../utils/fairRandom';
 import {getRandomCharacter} from '../utils/getRandomCharacter';
+import {ICombat} from '../models/combat';
+import {IPlayer} from '../models/player';
+import {Combat} from './combat';
+import {IUnit} from '../models/unit';
+import {Bot} from './units/bot';
 
 export class Game {
 
-    players: {[name: string]: Player} = {};
-    combatsQueue: Combat[] = [];
-    combatsInvites: {[name: string]: Combat} = {};
-    combatsCount = 0;
-    combatsEnded = 0;
+    static players: {[name: string]: IPlayer} = {};
+    static combatsQueue: ICombat[] = [];
+    static combatsInvites: {[name: string]: ICombat} = {};
+    static combatsCount = 0;
+    static combatsEnded = 0;
 
-    startDuel(player: Player, combatId: string | null) {
-        let combat: Combat;
+    static startDuel(player: IPlayer, combatId: string | null) {
+        let combat: ICombat;
 
         if (combatId === null) {
             const newCombatId = randomBytes(8).toString('hex');
@@ -44,7 +44,7 @@ export class Game {
         this.showCharacters(player);
     }
 
-    startCombat(player: Player) {
+    static startCombat(player: IPlayer) {
         const combat = this.getCombatFromQueue();
 
         if (combat.isFull()) {
@@ -55,7 +55,7 @@ export class Game {
         this.showCharacters(player);
     }
 
-    showCharacters(player: Player) {
+    static showCharacters(player: IPlayer) {
         const characterSelectTimer = 120;
 
         player.send('select_character', this.getCharacters());
@@ -70,17 +70,17 @@ export class Game {
         }
     }
 
-    isAllowedCharacter(character: string) {
+    static isAllowedCharacter(character: string) {
         return !!allowedCharacters[character];
     }
 
-    playerSelectCharacter(player: Player, character: string) {
+    static playerSelectCharacter(player: IPlayer, character: string) {
         player.clearTimer();
         this.selectCharacter(player, character);
         player.played++;
     }
 
-    selectCharacter(unit: Unit, character: string) {
+    static selectCharacter(unit: IUnit, character: string) {
 
         if (!this.isAllowedCharacter(character)) {
             return;
@@ -100,7 +100,7 @@ export class Game {
         }
     }
 
-    endCombat(combat: Combat) {
+    static endCombat(combat: ICombat) {
         this.combatsQueue.splice(this.combatsQueue.findIndex(c => c === combat));
         this.combatsEnded++;
         Object.keys(combat.units).forEach(id => {
@@ -109,14 +109,14 @@ export class Game {
         });
     }
 
-    addBot() {
+    static addBot() {
         const bot = new Bot();
 
         this.startCombat(bot);
         this.selectCharacter(bot, bot.selectCharacter());
     }
 
-    update(combat: Combat): boolean {
+    static update(combat: ICombat): boolean {
         if (combat.allReady()) {
             combat.perform();
             combat.showResult();
@@ -135,7 +135,7 @@ export class Game {
         return false;
     }
 
-    setAction(player: Player, action: string) {
+    static setAction(player: IPlayer, action: string) {
         if (player.character.action) {
             player.send('error', 'Skill already selected');
 
@@ -159,7 +159,7 @@ export class Game {
         }
     }
 
-    private getCharacters() {
+    private static getCharacters() {
         return Object.keys(allowedCharacters).map((id) => {
                         return {name: allowedCharacters[id].name, id,
                             skills: this.getActionsWithDescriptions(id)
@@ -167,7 +167,7 @@ export class Game {
                     });
     }
 
-    private getActionsWithDescriptions(id: string) {
+    private static getActionsWithDescriptions(id: string) {
         const actions = new (allowedCharacters[id].create)(null, id).actions;
 
         return Object.keys(actions).map(keys => {
@@ -177,14 +177,14 @@ export class Game {
         });
     }
 
-    private start(player: Player, combat: Combat) {
+    private static start(player: IPlayer, combat: ICombat) {
         player.send('set_in_battle', true);
 
         player.clearCombat();
         combat.addPlayer(player);
     }
 
-    private getCombatFromQueue(): Combat {
+    private static getCombatFromQueue(): ICombat {
         if (this.combatsQueue.length > 0) {
             return this.combatsQueue[0];
         } else {

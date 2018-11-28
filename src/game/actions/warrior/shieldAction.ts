@@ -1,8 +1,8 @@
 import {HitAction} from '../hitAction';
 import {DamageTypes} from '../../models/damageTypes';
 import {StunEffect} from '../../effects/stunEffect';
-import {Combat} from '../../combat';
-import {Unit} from '../../unit';
+import {IUnit} from '../../../models/unit';
+import {ICombat} from '../../../models/combat';
 
 const NAME = 'Shield strike';
 const MIN_DAMAGE = 3;
@@ -12,7 +12,7 @@ const CRIT_MULTIPLIER = 1;
 const COOLDOWN = 4;
 
 export class ShieldAction extends HitAction {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(
             actor,
             NAME,
@@ -25,7 +25,7 @@ export class ShieldAction extends HitAction {
         );
     }
 
-    perform(combat: Combat, self?: Unit, target?: Unit) {
+    perform(combat: ICombat, self?: IUnit, target?: IUnit) {
         super.perform(combat, self, target);
 
         if (Math.random() > 0.5) {

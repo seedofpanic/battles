@@ -1,7 +1,7 @@
 import {DotEffect} from './dotEffect';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
 import {EffectType} from '../models/effectType';
+import {IUnit} from '../../models/unit';
 
 const NAME = 'Bleeding';
 
@@ -14,7 +14,7 @@ export class CuttingEffect extends DotEffect {
                 maxDamage: number,
                 type: DamageTypes,
                 roundsCount: number,
-                actor: Unit,
+                actor: IUnit,
     ) {
         super(CUTTING_RFFECT_ID, NAME, minDamage, maxDamage, type, roundsCount, actor);
     }

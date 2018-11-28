@@ -1,9 +1,9 @@
 import {HitAction} from '../hitAction';
 import {DamageTypes} from '../../models/damageTypes';
-import {Unit} from '../../unit';
+import {IUnit} from '../../../models/unit';
 
 export class PiercingStrikeAction extends HitAction {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, 'Piercing strike', 3, 6, DamageTypes.PIERCING, 0.1, 1.3);
     }
 }

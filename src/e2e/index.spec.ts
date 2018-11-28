@@ -2,6 +2,7 @@ import {doAction} from '../index';
 import {Player} from '../game/units/player';
 import objectContaining = jasmine.objectContaining;
 import arrayContaining = jasmine.arrayContaining;
+import anything = jasmine.anything;
 
 describe('pvp Warrior vs Mage', () => {
 
@@ -39,7 +40,8 @@ describe('pvp Warrior vs Mage', () => {
                     objectContaining({'id': 'mage', skills: jasmine.anything()}),
                     objectContaining({'id': 'vampire', skills: jasmine.anything()})
                 ])
-            }
+            },
+            {'show_timer': anything()}
         ]);
     });
 
@@ -88,7 +90,8 @@ describe('pvp Warrior vs Mage', () => {
                     objectContaining({'id': 'mage', skills: jasmine.anything()}),
                     objectContaining({'id': 'vampire', skills: jasmine.anything()})
                 ])
-            }]);
+            },
+            {'show_timer': anything()}]);
     });
 
     it('Второй игрок сообщил что готов играть за Мага', () => {
@@ -105,17 +108,20 @@ describe('pvp Warrior vs Mage', () => {
                 "id": "2",
                 team: 'team2'
             }
-        }, {"note": "Opponent found: Warrior vs Mage"}, {
+        },
+            {"note": "Opponent found: Warrior vs Mage"}, {
             select_skill: jasmine.arrayContaining([{
                 "id": "piercing_strike",
                 "name": "Piercing strike"
             }])
-        }, {"note": "Opponent found: Warrior vs Mage"}, {
+        }, {'show_timer': anything()},
+            {"note": "Opponent found: Warrior vs Mage"}, {
             select_skill: jasmine.arrayContaining([{
                 "id": "fireball",
                 "name": "Fireball"
-            }, {"id": "fireball", "name": "Fireball"}])
-        }]);
+            }])
+        },
+            {'show_timer': anything()}]);
     });
 
     it('Первый игрок выбирает Piercing strike', () => {
@@ -131,7 +137,7 @@ describe('pvp Warrior vs Mage', () => {
         expect(results).toEqual([{"note": "You will use Fireball skill"}, {
             "character_update": {
                 "data": {
-                    "health": 94,
+                    "health": 95,
                     "healthMax": 100,
                     "id": "warrior",
                     "name": "Warrior",
@@ -143,7 +149,7 @@ describe('pvp Warrior vs Mage', () => {
         }, {
             "character_update": {
                 "data": {
-                    "health": 94,
+                    "health": 95,
                     "healthMax": 100,
                     "id": "warrior",
                     "name": "Warrior",
@@ -152,10 +158,10 @@ describe('pvp Warrior vs Mage', () => {
             }
         }, {
             "note": 'Piercing strike do 5 damage\n' +
-                'Fireball do 6 damage'
+                'Fireball do 5 damage'
         }, {
             "select_skill": jasmine.arrayContaining([{"id": "piercing_strike", "name": "Piercing strike"}])
-        }, {
+        }, {'show_timer': anything()}, {
             "character_update": {
                 "data": {
                     "health": 65,
@@ -181,8 +187,9 @@ describe('pvp Warrior vs Mage', () => {
             }
         }, {
             "note": 'Piercing strike do 5 damage\n' +
-                'Fireball do 6 damage'
-        }, {"select_skill": jasmine.arrayContaining([{"id": "fireball", "name": "Fireball"}])}]);
+                'Fireball do 5 damage'
+        }, {"select_skill": jasmine.arrayContaining([{"id": "fireball", "name": "Fireball"}])},
+            {'show_timer': anything()}]);
     });
 
     it('Второй игрок выбирает огненный шар еще раз', () => {
@@ -198,7 +205,7 @@ describe('pvp Warrior vs Mage', () => {
         expect(results).toEqual([{"note": "You will use Shield strike skill"}, {
             character_update: {
                 data: {
-                    health: 88,
+                    health: 90,
                     healthMax: 100,
                     id: 'warrior',
                     name: 'Warrior',
@@ -210,7 +217,7 @@ describe('pvp Warrior vs Mage', () => {
         }, {
             character_update: {
                 data: {
-                    health: 88,
+                    health: 90,
                     healthMax: 100,
                     id: 'warrior',
                     name: 'Warrior',
@@ -220,17 +227,17 @@ describe('pvp Warrior vs Mage', () => {
                 team: 'team1'
             }
         }, {
-            "note": 'Shield strike do 11 damage\n' +
+            "note": 'Shield strike do 7 damage\n' +
                 'Shield strike adds Stun effect\n' +
-                'Fireball do 6 damage'
+                'Fireball do 5 damage'
         }, {
             "select_skill": jasmine.arrayContaining([
                     {"id": "piercing_strike", "name": "Piercing strike"}
                 ])
-        }, {
+        }, {'show_timer': anything()}, {
             "character_update": {
                 "data": {
-                    "health": 54.5,
+                    "health": 58,
                     healthMax: 70,
                     id: 'mage',
                     name: 'Mage',
@@ -248,7 +255,7 @@ describe('pvp Warrior vs Mage', () => {
         }, {
             "character_update": {
                 "data": {
-                    "health": 54.5,
+                    "health": 58,
                     healthMax: 70,
                     id: 'mage',
                     name: 'Mage',
@@ -264,10 +271,11 @@ describe('pvp Warrior vs Mage', () => {
                 team: 'team2'
             }
         }, {
-            "note": 'Shield strike do 11 damage\n' +
+            "note": 'Shield strike do 7 damage\n' +
                 'Shield strike adds Stun effect\n' +
-                'Fireball do 6 damage'
-        }, {"select_skill": []}]);
+                'Fireball do 5 damage'
+        }, {"select_skill": []},
+            {'show_timer': anything()}]);
     });
 
     it('Второй игрок выбирает ледяную стрелу', () => {
@@ -288,7 +296,7 @@ describe('pvp Warrior vs Mage', () => {
         expect(results).toEqual([{"note": "You will use Piercing strike skill"}, {
             "character_update": {
                 "data": {
-                    "health": 88,
+                    "health": 90,
                     healthMax: 100,
                     id: 'warrior',
                     name: 'Warrior',
@@ -300,7 +308,7 @@ describe('pvp Warrior vs Mage', () => {
         }, {
             "character_update": {
                 "data": {
-                    "health": 88,
+                    "health": 90,
                     healthMax: 100,
                     id: 'warrior',
                     name: 'Warrior',
@@ -313,10 +321,10 @@ describe('pvp Warrior vs Mage', () => {
             "note": "Piercing strike do 5 damage"
         }, {
             "select_skill": jasmine.arrayContaining([{"id": "piercing_strike", "name": "Piercing strike"}])
-        }, {
+        }, {'show_timer': anything()}, {
             "character_update": {
                 "data": {
-                    "health": 49.5,
+                    "health": 53,
                     healthMax: 70,
                     id: 'mage',
                     name: 'Mage',
@@ -327,7 +335,7 @@ describe('pvp Warrior vs Mage', () => {
         }, {
             "character_update": {
                 "data": {
-                    "health": 49.5,
+                    "health": 53,
                     healthMax: 70,
                     id: 'mage',
                     name: 'Mage',
@@ -340,6 +348,7 @@ describe('pvp Warrior vs Mage', () => {
             "note": 'Piercing strike do 5 damage'
         }, {"select_skill": jasmine.arrayContaining([
                 {id: 'fireball', name: 'Fireball'}
-            ])}]);
+            ])},
+            {'show_timer': anything()}]);
     });
 });

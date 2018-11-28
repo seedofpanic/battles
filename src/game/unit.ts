@@ -1,18 +1,19 @@
-import {Combat} from './combat';
-import {Character} from './character';
-import {Effect} from './effect';
-import {Action} from './action';
 import {DamageTypes} from './models/damageTypes';
 import {allowedCharacters} from './allowedCharacters';
 import {StunAction} from './actions/stunAction';
-import {game} from '../index';
 import {getRandomSkill} from '../utils/getRandomSkill';
+import {Game} from './game';
+import {IUnit} from '../models/unit';
+import {ICombat} from '../models/combat';
+import {ICharacter} from '../models/character';
+import {IEffect} from '../models/effect';
+import {IAction} from '../models/action';
 
-export class Unit {
+export class Unit implements IUnit {
     isPlayer = false;
     username: string;
-    currentCombat: Combat;
-    character: Character;
+    currentCombat: ICombat;
+    character: ICharacter;
     targetId: string;
     team: string;
     isValuable = false;
@@ -35,7 +36,7 @@ export class Unit {
         this.character.isDead = true;
     }
 
-    decreaseHp(action: Action | Effect, damage: number, type: DamageTypes) {
+    decreaseHp(action: IAction | IEffect, damage: number, type: DamageTypes) {
         this.character.effects.forEach(effect => effect.onDamage(damage, type, this, action));
 
         if (this.character.health > damage) {
@@ -48,7 +49,7 @@ export class Unit {
         this.currentCombat.battleLog.push(`${action.name} do ${Math.ceil(damage)} damage`);
     }
 
-    increaseHp(action: Action | Effect, heal: number) {
+    increaseHp(action: IAction | IEffect, heal: number) {
         if (this.character.health + heal > this.character.healthMax) {
             this.character.health = this.character.healthMax;
         } else {
@@ -58,14 +59,14 @@ export class Unit {
         this.currentCombat.battleLog.push(`${action.name} heals ${Math.ceil(heal)} hp`);
     }
 
-    getResist(type: DamageTypes, source: Action | Effect): number {
+    getResist(type: DamageTypes, source: IAction | IEffect): number {
         const baseResist = this.character.resists[type] || 1;
 
         return this.character.effects
             .reduce((result, effect) => effect.resistMod(result, type, this, source), baseResist);
     }
 
-    addEffect(action: Action | Effect, effect: Effect) {
+    addEffect(action: IAction | IEffect, effect: IEffect) {
         effect.roundsCount = this.character.effects
             .reduce((result, effect) => effect.effectResistMod(result, effect.type), effect.roundsCount);
 
@@ -100,7 +101,7 @@ export class Unit {
         this.character.action = undefined;
     }
 
-    getDefaultTarget(): Unit {
+    getDefaultTarget(): IUnit {
         return this.currentCombat.unitsArr.filter(unit => unit.id !== this.id)[0];
     }
 
@@ -139,7 +140,7 @@ export class Unit {
             this.send('show_timer', skillSelectTimer);
             this.timer = setTimeout(() => {
                 if (this.currentCombat) {
-                    game.setAction(this as any, getRandomSkill(this));
+                    Game.setAction(this as any, getRandomSkill(this));
                 }
             }, skillSelectTimer * 1000);
         }
@@ -178,7 +179,7 @@ export class Unit {
         });
     }
 
-    sendUpdateToPlayer(target: Unit) {
+    sendUpdateToPlayer(target: IUnit) {
         target.send('character_update', {
             id: this.id,
             team: this.team,

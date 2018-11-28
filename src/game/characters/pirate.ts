@@ -1,7 +1,6 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
 import {Unit} from '../unit';
-import {Action} from '../action';
 import {PistolShotAction} from '../actions/pirate/pistolShotAction';
 import {HollyGrenadeAction} from '../actions/pirate/hollyGrenadeAction';
 import {PirateTinctureAction} from '../actions/pirate/pirateTinctureAction';
@@ -10,9 +9,11 @@ import {ArrrAction} from '../actions/pirate/arrrAction';
 import {CritMasteryAction} from '../actions/pirate/critMasteryAction';
 import {BroadswordSlashAction} from '../actions/pirate/broadswordSlashAction';
 import {GrandRumAction} from '../actions/pirate/grandRumAction';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Pirate extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 120;
     healthMax = 120;
     name =  'Pirate';
@@ -23,7 +24,7 @@ export class Pirate extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

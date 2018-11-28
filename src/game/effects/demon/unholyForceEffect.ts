@@ -1,8 +1,8 @@
 import {DamageModEffect} from '../damageModEffect';
-import {Unit} from '../../unit';
+import {IUnit} from '../../../models/unit';
 
 export class UnholyForceEffect extends DamageModEffect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('unholy_force', 'Unholy force', 3, 1.2, actor);
     }
 }

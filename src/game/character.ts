@@ -1,15 +1,16 @@
-import {Action} from './action';
-import {Effect} from './effect';
+import {ICharacter} from '../models/character';
+import {IAction} from '../models/action';
+import {IEffect} from '../models/effect';
 
-export abstract class Character {
+export abstract class Character implements ICharacter {
     abstract name: string;
     abstract healthMax: number;
     abstract health: number;
-    action: Action;
+    action: IAction;
     isDead: boolean;
-    abstract actions: {[name: string]: Action};
+    abstract actions: {[name: string]: IAction};
     abstract resists: {[name: string]: number};
-    effects: Effect[] = [];
+    effects: IEffect[] = [];
 
     constructor(public id: string) {
 

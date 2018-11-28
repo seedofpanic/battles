@@ -1,9 +1,9 @@
 import {ResistsModEffect} from '../resistsModEffect';
-import {Unit} from '../../unit';
 import {DamageTypes} from '../../models/damageTypes';
+import {IUnit} from '../../../models/unit';
 
 export class GrandRumEffect extends ResistsModEffect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('grand_rum', {
             [DamageTypes.FIRE]: 0.7,
             [DamageTypes.DEATH]: 0.7,

@@ -10,11 +10,11 @@ import {MagicalBurnAction} from '../actions/mage/magicalBurnAction';
 import {DeBuffAction} from '../actions/deBuffAction';
 import {FireBurstEffect} from '../effects/fireBurstEffect';
 import {BurnicideAction} from '../actions/mage/burnicideAction';
-import {Unit} from '../unit';
-import {Action} from '../action';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Mage extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 70;
     healthMax = 70;
     name = 'Mage';
@@ -25,7 +25,7 @@ export class Mage extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

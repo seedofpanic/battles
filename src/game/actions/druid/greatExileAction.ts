@@ -1,13 +1,13 @@
 import {Action} from '../../action';
-import {Unit} from '../../unit';
-import {Combat} from '../../combat';
+import {IUnit} from '../../../models/unit';
+import {ICombat} from '../../../models/combat';
 
 export class GreatExileAction extends Action {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, 'Great exile', 5);
     }
 
-    perform(combat?: Combat, self?: Unit, target?: Unit) {
+    perform(combat?: ICombat, self?: IUnit, target?: IUnit) {
         super.perform(combat, self, target);
 
         target.kill();

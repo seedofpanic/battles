@@ -1,13 +1,13 @@
 import {Action} from '../../action';
-import {Unit} from '../../unit';
-import {Combat} from '../../combat';
+import {IUnit} from '../../../models/unit';
+import {ICombat} from '../../../models/combat';
 
 export class GreatMiracleAction extends Action {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, 'Great miracle');
     }
 
-    perform(combat?: Combat, self?: Unit, target?: Unit) {
+    perform(combat?: ICombat, self?: IUnit, target?: IUnit) {
         super.perform(combat, self, target);
 
         self.increaseHp(this, self.character.healthMax * 0.1);

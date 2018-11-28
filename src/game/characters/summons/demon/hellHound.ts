@@ -1,11 +1,11 @@
-import {Action} from '../../../action';
 import {DamageTypes} from '../../../models/damageTypes';
-import {Unit} from '../../../unit';
 import {HitAction} from '../../../actions/hitAction';
 import {Character} from '../../../character';
+import {IAction} from '../../../../models/action';
+import {IUnit} from '../../../../models/unit';
 
 export class HellHound extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 20;
     healthMax = 20;
     name = 'Hell hound';
@@ -16,7 +16,7 @@ export class HellHound extends Character {
         [DamageTypes.FROST]: 1.1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

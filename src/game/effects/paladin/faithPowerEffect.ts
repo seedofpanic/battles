@@ -1,8 +1,8 @@
 import {DamageModEffect} from '../damageModEffect';
-import {Unit} from '../../unit';
+import {IUnit} from '../../../models/unit';
 
 export class FaithPowerEffect extends DamageModEffect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('faith_power', 'Faith power', 2, 1.2, actor);
     }
 }

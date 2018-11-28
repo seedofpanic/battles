@@ -1,12 +1,12 @@
 import {Effect} from '../effect';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
+import {IUnit} from '../../models/unit';
 
 export class DamageModEffect extends Effect {
     canStack = false;
 
     constructor(id: string, name: string, roundsCount: number,
-                private mod: number | {[name: string]: number}, actor: Unit) {
+                private mod: number | {[name: string]: number}, actor: IUnit) {
         super(id, name, roundsCount, actor);
     }
 

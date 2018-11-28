@@ -1,9 +1,9 @@
 import {BuffAction} from '../buffAction';
-import {Unit} from '../../unit';
 import {GrandRumEffect} from '../../effects/pirate/grandRumEffect';
+import {IUnit} from '../../../models/unit';
 
 export class GrandRumAction extends BuffAction {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, GrandRumEffect, 'Grand rum', 5);
     }
 }

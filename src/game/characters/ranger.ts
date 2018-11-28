@@ -1,11 +1,11 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from "../actions/hitAction";
-import {Unit} from '../unit';
-import {Action} from '../action';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Ranger extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 120;
     healthMax = 120;
     name = 'Ranger';
@@ -16,7 +16,7 @@ export class Ranger extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

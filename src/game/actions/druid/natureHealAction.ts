@@ -1,8 +1,8 @@
 import {HealAction} from '../healAction';
-import {Unit} from '../../unit';
+import {IUnit} from '../../../models/unit';
 
 export class NatureHealAction extends HealAction {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, 'Heal', 20, 6);
     }
 }

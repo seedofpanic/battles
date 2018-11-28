@@ -1,15 +1,15 @@
 import {ResistsModEffect} from '../resistsModEffect';
-import {Unit} from '../../unit';
 import {DamageTypes} from '../../models/damageTypes';
-import {Action} from '../../action';
-import {Effect} from '../../effect';
+import {IUnit} from '../../../models/unit';
+import {IEffect} from '../../../models/effect';
+import {IAction} from '../../../models/action';
 
 export class NatureProtectionEffect extends ResistsModEffect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('nature_protection', 0.7, 'Nature protection', 3, actor);
     }
 
-    resistMod(value: number, type: DamageTypes, self: Unit, source: Action | Effect): number {
+    resistMod(value: number, type: DamageTypes, self: IUnit, source: IAction | IEffect): number {
         if (source.actor.isValuable) {
             return value;
         }

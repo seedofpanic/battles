@@ -15,7 +15,7 @@ describe('Game', () => {
     });
 
     it('showCharacters показывает доступных персонажей', () => {
-        game.showCharacters(player);
+        Game.showCharacters(player);
 
         expect(player.send).toBeCalledWith('select_character', arrayContaining([
                 objectContaining({'id': 'barbarian'}),
@@ -27,19 +27,19 @@ describe('Game', () => {
 
     describe('isAllowedCharacter проверяет доступность персонажей по названию', () => {
         it('Варвар доступен', () => {
-            expect(game.isAllowedCharacter('barbarian')).toBe(true);
+            expect(Game.isAllowedCharacter('barbarian')).toBe(true);
         });
 
         it('Воин доступен', () => {
-            expect(game.isAllowedCharacter('warrior')).toBe(true);
+            expect(Game.isAllowedCharacter('warrior')).toBe(true);
         });
 
         it('Маг доступен', () => {
-            expect(game.isAllowedCharacter('mage')).toBe(true);
+            expect(Game.isAllowedCharacter('mage')).toBe(true);
         });
 
         it('Ёжик не доступен', () => {
-            expect(game.isAllowedCharacter('Ёжик')).toBeFalsy();
+            expect(Game.isAllowedCharacter('Ёжик')).toBeFalsy();
         });
     });
 });

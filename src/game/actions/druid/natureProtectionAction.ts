@@ -1,9 +1,9 @@
 import {BuffAction} from '../buffAction';
-import {Unit} from '../../unit';
 import {NatureProtectionEffect} from '../../effects/druid/natureProtectionEffect';
+import {IUnit} from '../../../models/unit';
 
 export class NatureProtectionAction extends BuffAction {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, NatureProtectionEffect, 'Nature protection', 6);
     }
 }

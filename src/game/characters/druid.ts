@@ -1,7 +1,5 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
-import {Action} from '../action';
 import {InsectsSwarmAction} from '../actions/druid/insectsSwarmAction';
 import {NatureWrathAction} from '../actions/druid/natureWrathAction';
 import {PoisonSkinAction} from '../actions/druid/poisonSkinAction';
@@ -10,9 +8,11 @@ import {BlessOfNatureAction} from '../actions/druid/blessOfNatureAction';
 import {NatureProtectionAction} from '../actions/druid/natureProtectionAction';
 import {SpinesAction} from '../actions/druid/spinesAction';
 import {GreatExileAction} from '../actions/druid/greatExileAction';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Druid extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 120;
     healthMax = 120;
     name = 'Druid';
@@ -23,7 +23,7 @@ export class Druid extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

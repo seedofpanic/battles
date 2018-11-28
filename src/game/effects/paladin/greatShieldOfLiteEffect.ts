@@ -1,12 +1,12 @@
 import {ResistsModEffect} from '../resistsModEffect';
-import {Unit} from '../../unit';
 import {DamageTypes} from '../../models/damageTypes';
 import {EffectType} from '../../models/effectType';
+import {IUnit} from '../../../models/unit';
 
 export class GreatShieldOfLiteEffect extends ResistsModEffect {
     effectsArr = [EffectType.POISON, EffectType.BLEED];
 
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('great_shield_of_lite', {
             [DamageTypes.HOLY]: 0.5,
             [DamageTypes.DEATH]: 0.5

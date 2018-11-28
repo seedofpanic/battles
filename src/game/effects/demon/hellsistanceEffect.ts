@@ -1,9 +1,9 @@
 import {ResistsModEffect} from '../resistsModEffect';
-import {Unit} from '../../unit';
 import {DamageTypes} from '../../models/damageTypes';
+import {IUnit} from '../../../models/unit';
 
 export class HellsistanceEffect extends ResistsModEffect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('hellsistance', {
             [DamageTypes.CUTTING]: 0.7,
             [DamageTypes.POISON]: 0.7,

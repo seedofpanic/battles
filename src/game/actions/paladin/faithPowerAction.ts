@@ -1,9 +1,9 @@
 import {BuffAction} from '../buffAction';
-import {Unit} from '../../unit';
 import {FaithPowerEffect} from '../../effects/paladin/faithPowerEffect';
+import {IUnit} from '../../../models/unit';
 
 export class FaithPowerAction extends BuffAction {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, FaithPowerEffect, 'Faith power', 4);
     }
 }

@@ -1,7 +1,6 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
 import {Unit} from '../unit';
-import {Action} from '../action';
 import {SelfHealAction} from '../actions/priest/selfHealAction';
 import {FlashOfLiteAction} from '../actions/priest/flashOfLiteAction';
 import {GreatMiracleAction} from '../actions/priest/greatMiracleAction';
@@ -10,9 +9,11 @@ import {InvulnerabilityAction} from '../actions/priest/invulnerabilityAction';
 import {PrayOfLiteAction} from '../actions/priest/prayOfLiteAction';
 import {DeathPrayAction} from '../actions/priest/deathPrayAction';
 import {LiteBlastAction} from '../actions/priest/LiteBlastAction';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Priest extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 120;
     healthMax = 120;
     name = 'Priest';
@@ -23,7 +24,7 @@ export class Priest extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

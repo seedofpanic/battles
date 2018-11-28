@@ -3,11 +3,11 @@ import {SwordCuttingAction} from '../actions/barbarian/swordCuttingAction';
 import {DamageTypes} from '../models/damageTypes';
 import {ShieldAction} from '../actions/warrior/shieldAction';
 import {SwordAction} from '../actions/swordAction';
-import {Unit} from '../unit';
-import {Action} from '../action';
+import {IUnit} from '../../models/unit';
+import {IAction} from '../../models/action';
 
 export class Dwarf extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 100;
     healthMax = 100;
     name = 'Dwarf';
@@ -18,7 +18,7 @@ export class Dwarf extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

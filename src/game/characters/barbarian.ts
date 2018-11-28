@@ -8,12 +8,12 @@ import {BloodSacrificeAction} from '../actions/barbarian/bloodSacrificeAction';
 import {SwordCuttingAction} from '../actions/barbarian/swordCuttingAction';
 import {BlessOfAncestorsEffect} from '../effects/blessOfAncestorsEffect';
 import {StunningRoarEffect} from '../effects/StunningRoarEffect';
-import {Unit} from '../unit';
-import {Action} from '../action';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Barbarian extends Character {
     name = 'Barbarian';
-    actions: {[name: string]: Action};
+    actions: {[name: string]: IAction};
     health = 140;
     healthMax = 140;
     resists = {
@@ -23,7 +23,7 @@ export class Barbarian extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

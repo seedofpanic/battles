@@ -1,8 +1,9 @@
 import {Unit} from '../unit';
 import * as WebSocket from 'ws';
 import {DBUser} from '../../bdTypes/DBUser';
+import {IPlayer} from '../../models/player';
 
-export class Player extends Unit {
+export class Player extends Unit implements IPlayer {
     private ws: WebSocket;
     isValuable = true;
     played = 0;

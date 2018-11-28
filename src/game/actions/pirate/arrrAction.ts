@@ -1,9 +1,9 @@
 import {BuffAction} from '../buffAction';
-import {Unit} from '../../unit';
 import {ArrrEffect} from '../../effects/pirate/ArrrEffect';
+import {IUnit} from '../../../models/unit';
 
 export class ArrrAction extends BuffAction {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, ArrrEffect, 'Arrr', 5);
     }
 }

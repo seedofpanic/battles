@@ -1,14 +1,14 @@
 import {Action} from '../../action';
-import {Unit} from '../../unit';
-import {Combat} from '../../combat';
 import {VanishEffect} from '../../effects/ninja/VanishEffect';
+import {IUnit} from '../../../models/unit';
+import {ICombat} from '../../../models/combat';
 
 export class VanishAction extends Action {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, 'Vanish', 6);
     }
 
-    beforeResolve(combat?: Combat, self?: Unit, target?: Unit) {
+    beforeResolve(combat?: ICombat, self?: IUnit, target?: IUnit) {
         super.beforeResolve(combat, self, target);
 
         self.addEffect(this, new VanishEffect(this.actor));

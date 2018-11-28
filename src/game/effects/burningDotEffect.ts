@@ -1,6 +1,6 @@
 import {DotEffect} from './dotEffect';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
+import {IUnit} from '../../models/unit';
 
 const NAME = 'Burning';
 
@@ -10,7 +10,7 @@ export class BurningDotEffect extends DotEffect {
     constructor(minDamage: number,
                 maxDamage: number,
                 roundsCount: number,
-                actor: Unit,
+                actor: IUnit,
     ) {
         super(BURNING_DOT_EFFECT_ID, NAME, minDamage, maxDamage, DamageTypes.FIRE, roundsCount, actor);
     }

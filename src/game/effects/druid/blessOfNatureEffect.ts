@@ -1,11 +1,11 @@
 import {Effect} from '../../effect';
-import {Unit} from '../../unit';
 import {EffectType} from '../../models/effectType';
+import {IUnit} from '../../../models/unit';
 
 export class BlessOfNatureEffect extends Effect {
     resistsArr = [EffectType.POISON, EffectType.BLEED, EffectType.STUN];
 
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('bless_of_nature', 'Bless of nature', 3, actor);
     }
 

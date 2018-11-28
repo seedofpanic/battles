@@ -1,31 +1,32 @@
 import {DamageTypes} from './models/damageTypes';
-import {Unit} from './unit';
-import {Action} from './action';
 import {EffectType} from './models/effectType';
+import {IUnit} from '../models/unit';
+import {IEffect} from '../models/effect';
+import {IAction} from '../models/action';
 
-export abstract class Effect {
+export abstract class Effect implements IEffect {
     type = EffectType.MAGIC;
     canStack = true;
 
-    constructor(public id: string, public name: string, public roundsCount: number, public actor: Unit) {
+    constructor(public id: string, public name: string, public roundsCount: number, public actor: IUnit) {
     }
 
-    preTick(unit: Unit) {
+    preTick(unit: IUnit) {
         this.roundsCount--;
     }
 
-    postTick(unit: Unit) {
+    postTick(unit: IUnit) {
     }
 
     getIsEnded(): boolean {
         return this.roundsCount <= 0;
     }
 
-    damageMod(value: number, type: DamageTypes, self: Unit, target: Unit): number {
+    damageMod(value: number, type: DamageTypes, self: IUnit, target: IUnit): number {
         return value;
     }
 
-    resistMod(value: number, type: DamageTypes, self: Unit, source: Action | Effect): number {
+    resistMod(value: number, type: DamageTypes, self: IUnit, source: IAction | IEffect): number {
         return value;
     }
 
@@ -37,7 +38,7 @@ export abstract class Effect {
         return value;
     }
 
-    onDamage(damage: number, type: DamageTypes, self: Unit, source: Action | Effect) {
+    onDamage(damage: number, type: DamageTypes, self: IUnit, source: IAction | IEffect) {
     }
 
     critMod(value: number, type: DamageTypes) {

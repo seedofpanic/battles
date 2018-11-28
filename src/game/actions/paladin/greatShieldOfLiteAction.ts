@@ -1,17 +1,17 @@
 import {BuffAction} from '../buffAction';
-import {Unit} from '../../unit';
 import {GreatShieldOfLiteEffect} from '../../effects/paladin/greatShieldOfLiteEffect';
-import {Combat} from '../../combat';
 import {EffectType} from '../../models/effectType';
+import {IUnit} from '../../../models/unit';
+import {ICombat} from '../../../models/combat';
 
 export class GreatShieldOfLiteAction extends BuffAction {
     effectsArr = [EffectType.POISON, EffectType.BLEED];
 
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, GreatShieldOfLiteEffect, 'Great shield of lite', 6);
     }
 
-    perform(combat?: Combat, self?: Unit, target?: Unit) {
+    perform(combat?: ICombat, self?: IUnit, target?: IUnit) {
         super.perform(combat, self, target);
 
         self.character.effects = self.character.effects.filter(effect =>

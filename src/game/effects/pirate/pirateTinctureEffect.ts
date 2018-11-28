@@ -1,8 +1,8 @@
 import {DamageModEffect} from '../damageModEffect';
-import {Unit} from '../../unit';
+import {IUnit} from '../../../models/unit';
 
 export class PirateTinctureEffect extends DamageModEffect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('pirate_tincture', 'Pirate tincture', 3, 1.2, actor);
     }
 }

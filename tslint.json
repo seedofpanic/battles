@@ -19,7 +19,6 @@
     "class-name": true,
     "curly": [true, "ignore-same-line"],
     "forin": true,
-    "interface-name": [true, "never-prefix"],
     "jsdoc-format": true,
     "label-position": true,
     "member-access": [true, "no-public"],

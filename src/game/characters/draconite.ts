@@ -4,16 +4,16 @@ import {HitAction} from "../actions/hitAction";
 import {ClawStrikeAction} from '../actions/draconite/clawStrikeAction';
 import {BuffAction} from '../actions/buffAction';
 import {FlamingArmorEffect} from '../effects/draconite/flamingArmorEffect';
-import {Unit} from '../unit';
-import {Action} from '../action';
 import {PoisonBiteAction} from '../actions/draconite/poisonBiteAction';
 import {WingsOfSteelEffect} from '../effects/wingsOfSteelEffect';
 import {HighVitalityEffect} from '../effects/draconite/highVitalityEffect';
 import {SummonAction} from '../actions/summonAction';
 import {Imp} from './summons/draconite/imp';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Draconite extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 120;
     healthMax = 120;
     name = 'Draconite';
@@ -24,7 +24,7 @@ export class Draconite extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

@@ -1,11 +1,11 @@
 import {Action} from '../action';
 import {DamageTypes} from '../models/damageTypes';
-import {Combat} from '../combat';
-import {Unit} from '../unit';
 import {calcDamage} from '../../utils/calcDamage';
+import {IUnit} from '../../models/unit';
+import {ICombat} from '../../models/combat';
 
 export class HitAction extends Action {
-    constructor(actor: Unit,
+    constructor(actor: IUnit,
                 name: string,
                 protected minDamage: number,
                 protected maxDamage: number,
@@ -17,7 +17,7 @@ export class HitAction extends Action {
         super(actor, name, cooldown, maxCharges);
     }
 
-    perform(combat: Combat, self: Unit, target: Unit) {
+    perform(combat: ICombat, self: IUnit, target: IUnit) {
         const targetResist = target.getResist(this.type, this);
         let crit = this.getCrit(this.critChance * targetResist);
 
@@ -34,7 +34,7 @@ export class HitAction extends Action {
         super.perform(combat);
     }
 
-    protected calcDamage(self: Unit, target?: Unit): number {
+    protected calcDamage(self: IUnit, target?: IUnit): number {
         const damage = calcDamage(this.minDamage, this.maxDamage);
 
         return self.character.effects.reduce((result, effect) => {

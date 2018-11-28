@@ -1,14 +1,14 @@
 import {Action} from '../../action';
-import {Unit} from '../../unit';
-import {Combat} from '../../combat';
 import {StunEffect} from '../../effects/stunEffect';
+import {IUnit} from '../../../models/unit';
+import {ICombat} from '../../../models/combat';
 
 export class HammerStrikeAction extends Action {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, 'Hammer strike', 4);
     }
 
-    perform(combat?: Combat, self?: Unit, target?: Unit) {
+    perform(combat?: ICombat, self?: IUnit, target?: IUnit) {
         super.perform(combat, self, target);
 
         if (Math.random() < 0.6) {

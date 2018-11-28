@@ -1,18 +1,18 @@
 import {Action} from '../action';
-import {Effect} from '../effect';
-import {Combat} from '../combat';
-import {Unit} from '../unit';
+import {IUnit} from '../../models/unit';
+import {IEffect} from '../../models/effect';
+import {ICombat} from '../../models/combat';
 
 export class BuffAction extends Action {
-    constructor(actor: Unit,
-                private buffEffect: new (actor: Unit) => Effect,
+    constructor(actor: IUnit,
+                private buffEffect: new (actor: IUnit) => IEffect,
                 name: string,
                 cooldown = 0,
                 maxCharges = 1) {
         super(actor, name, cooldown, maxCharges);
     }
 
-    beforeResolve(combat: Combat, self: Unit, target: Unit) {
+    beforeResolve(combat: ICombat, self: IUnit, target: IUnit) {
         self.addEffect(this, new this.buffEffect(self));
     }
 }

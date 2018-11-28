@@ -1,8 +1,7 @@
 import {HitAction} from '../hitAction';
-import {BurningDotEffect} from '../../effects/burningDotEffect';
 import {DamageTypes} from '../../models/damageTypes';
-import {Combat} from '../../combat';
-import {Unit} from '../../unit';
+import {IUnit} from '../../../models/unit';
+import {ICombat} from '../../../models/combat';
 
 const NAME = 'Fireball';
 const MIN_DAMAGE = 4;
@@ -11,7 +10,7 @@ const CRIT_CHANCE = 0.15;
 const CRIT_MULTIPLIER = 1.4;
 
 export class FireBeamAction extends HitAction {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(
             actor,
             NAME,
@@ -23,7 +22,7 @@ export class FireBeamAction extends HitAction {
         );
     }
 
-    perform(combat: Combat, self?: Unit, target?: Unit) {
+    perform(combat: ICombat, self?: IUnit, target?: IUnit) {
         super.perform(combat, self, target);
     }
 }

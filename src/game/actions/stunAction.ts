@@ -1,17 +1,17 @@
 import {Action} from '../action';
-import {Combat} from '../combat';
-import {Unit} from '../unit';
 import {EffectType} from '../models/effectType';
+import {ICombat} from '../../models/combat';
+import {IUnit} from '../../models/unit';
 
 const NAME = 'Stun';
 
 export class StunAction extends Action {
     type = EffectType.STUN;
 
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, NAME);
     }
 
-    perform(combat: Combat, self?: Unit, target?: Unit) {
+    perform(combat: ICombat, self?: IUnit, target?: IUnit) {
     }
 }

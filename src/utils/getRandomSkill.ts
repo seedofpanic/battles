@@ -1,7 +1,7 @@
 import {fairRandom} from './fairRandom';
-import {Unit} from '../game/unit';
+import {IUnit} from '../models/unit';
 
-export function getRandomSkill(player: Unit) {
+export function getRandomSkill(player: IUnit) {
     const actionsKeys = Object.keys(player.character.actions)
         .filter(actionId => {
             return player.character.actions[actionId].isAvailable();

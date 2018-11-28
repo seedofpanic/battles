@@ -3,7 +3,7 @@ import {Unit} from './unit';
 import {Combat} from './combat';
 import {HitAction} from './actions/hitAction';
 
-describe('Unit', () => {
+xdescribe('Unit', () => {
     let unit: Unit;
     const results: any[] = [];
     const action = new HitAction(null, '', 0, 0, DamageTypes.CUTTING);

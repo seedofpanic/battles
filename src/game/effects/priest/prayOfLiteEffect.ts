@@ -1,8 +1,8 @@
 import {DamageModEffect} from '../damageModEffect';
-import {Unit} from '../../unit';
+import {IUnit} from '../../../models/unit';
 
 export class PrayOfLiteEffect extends DamageModEffect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('pray_of_lite', 'Pray of lite', 3, 1.2, actor);
     }
 }

@@ -2,11 +2,11 @@ import {Character} from '../character';
 import {SwordCuttingAction} from '../actions/barbarian/swordCuttingAction';
 import {DamageTypes} from '../models/damageTypes';
 import {SwordAction} from '../actions/swordAction';
-import {Unit} from '../unit';
-import {Action} from '../action';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Rogue extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 100;
     healthMax = 100;
     name = 'Rogue';
@@ -17,7 +17,7 @@ export class Rogue extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

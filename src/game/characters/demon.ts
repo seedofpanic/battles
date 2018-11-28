@@ -1,7 +1,5 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
-import {Action} from '../action';
 import {RagingFlamesAction} from '../actions/demon/ragingFlamesAction';
 import {HardenedSkinAction} from '../actions/demon/hardenedSkinAction';
 import {ScytheStrikeAction} from '../actions/demon/scytheStrikeAction';
@@ -10,9 +8,11 @@ import {UnholyForceAction} from '../actions/demon/unholyForceAction';
 import {HellBlastAction} from '../actions/demon/hellBlastAction';
 import {HellHoundAction} from '../actions/demon/hellHoundAction';
 import {InfernoAction} from '../actions/demon/InfernoAction';
+import {IAction} from '../../models/action';
+import {IUnit} from '../../models/unit';
 
 export class Demon extends Character {
-    actions: { [name: string]: Action };
+    actions: { [name: string]: IAction };
     health = 120;
     healthMax = 120;
     name = 'Demon';
@@ -23,7 +23,7 @@ export class Demon extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: Unit, id: string) {
+    constructor(actor: IUnit, id: string) {
         super(id);
 
         this.actions = {

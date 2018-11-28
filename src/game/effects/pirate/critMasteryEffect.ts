@@ -1,9 +1,9 @@
 import {Effect} from '../../effect';
-import {Unit} from '../../unit';
 import {DamageTypes} from '../../models/damageTypes';
+import {IUnit} from '../../../models/unit';
 
 export class CritMasteryEffect extends Effect {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super('crit_mastery', 'Crit mastery', 3, actor);
     }
 

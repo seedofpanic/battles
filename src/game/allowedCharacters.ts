@@ -1,4 +1,3 @@
-import {Character} from './character';
 import {Barbarian} from './characters/barbarian';
 import {Warrior} from './characters/warrior';
 import {Mage} from './characters/mage';
@@ -13,12 +12,12 @@ import {Rogue} from './characters/rogue';
 import {Dwarf} from './characters/dwarf';
 import {Pirate} from './characters/pirate';
 import {Demon} from './characters/demon';
-import {Unit} from './unit';
-import {Ninja} from './characters/ninja';
 import {Paladin} from './characters/paladin';
+import {IUnit} from '../models/unit';
+import {ICharacter} from '../models/character';
 
 export const allowedCharacters: {
-    [name: string]: { name: string, create: { new(actor: Unit, id: string): Character } }
+    [name: string]: { name: string, create: { new(actor: IUnit, id: string): ICharacter } }
 } = {
     'barbarian': {
         name: 'Barbarian',

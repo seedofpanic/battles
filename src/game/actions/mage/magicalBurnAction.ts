@@ -1,15 +1,15 @@
 import {StunEffect} from '../../effects/stunEffect';
-import {Combat} from '../../combat';
-import {Unit} from '../../unit';
 import {Action} from '../../action';
 import {BurningDotEffect} from '../../effects/burningDotEffect';
+import {IUnit} from '../../../models/unit';
+import {ICombat} from '../../../models/combat';
 
 export class MagicalBurnAction extends Action {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, 'Magical burn', 5);
     }
 
-    perform(combat: Combat, self?: Unit, target?: Unit) {
+    perform(combat: ICombat, self?: IUnit, target?: IUnit) {
         super.perform(combat, self, target);
 
         if (Math.random() > 0.5) {

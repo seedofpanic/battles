@@ -1,9 +1,9 @@
 import {BuffAction} from '../buffAction';
-import {Unit} from '../../unit';
 import {PoisonSkinEffect} from '../../effects/druid/poisonSkinEffect';
+import {IUnit} from '../../../models/unit';
 
 export class PoisonSkinAction extends BuffAction {
-    constructor(actor: Unit) {
+    constructor(actor: IUnit) {
         super(actor, PoisonSkinEffect, 'Poison skin', 4);
     }
 }

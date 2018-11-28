@@ -1,14 +1,14 @@
-import {Unit} from '../unit';
 import {fairRandom} from '../../utils/fairRandom';
-import {Character} from '../character';
-import {Combat} from '../combat';
-import {Action} from '../action';
-import {Effect} from '../effect';
 import {StunAction} from '../actions/stunAction';
 import {DamageTypes} from '../models/damageTypes';
+import {Unit} from '../unit';
+import {ICharacter} from '../../models/character';
+import {ICombat} from '../../models/combat';
+import {IEffect} from '../../models/effect';
+import {IAction} from '../../models/action';
 
 export class Ai extends Unit {
-    constructor(id: string, team: string, public character: Character, combat: Combat) {
+    constructor(id: string, team: string, public character: ICharacter, combat: ICombat) {
         super(id);
 
         this.currentCombat = combat;
@@ -39,7 +39,7 @@ export class Ai extends Unit {
         return true;
     }
 
-    decreaseHp(action: Action | Effect, damage: number, type: DamageTypes) {
+    decreaseHp(action: IAction | IEffect, damage: number, type: DamageTypes) {
         super.decreaseHp(action, damage, type);
 
         if (this.character.isDead) {
