@@ -16,6 +16,7 @@ import {Paladin} from './characters/paladin';
 import {IUnit} from '../models/unit';
 import {ICharacter} from '../models/character';
 import {Ninja} from './characters/ninja';
+import {Necromancer} from './characters/necromancer';
 
 export const allowedCharacters: {
     [name: string]: { name: string, create: { new(actor: IUnit, id: string): ICharacter } }
@@ -83,5 +84,9 @@ export const allowedCharacters: {
     'ninja': {
         name: 'Ninja',
         create: Ninja
+    },
+    'necromancer': {
+        name: 'Necromancer',
+        create: Necromancer
     }
 };
