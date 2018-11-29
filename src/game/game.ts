@@ -122,8 +122,8 @@ export class Game {
         if (combat.allReady()) {
             combat.sendHealth();
             combat.perform();
-            combat.sendHealth();
             combat.showResult();
+            combat.sendHealth();
 
             if (combat.isEnded) {
                 this.endCombat(combat);
