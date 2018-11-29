@@ -43,4 +43,6 @@ export interface IUnit {
     increaseHp(source: IEffect | IAction, value: number): void;
 
     kill(): void;
+
+    clearTimer(): void;
 }

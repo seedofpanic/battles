@@ -106,6 +106,8 @@ export class Game {
         Object.keys(combat.units).forEach(id => {
             combat.units[id].send('set_in_battle', false);
             combat.units[id].currentCombat = undefined;
+            combat.units[id].character = null;
+            combat.units[id].clearTimer();
         });
     }
 

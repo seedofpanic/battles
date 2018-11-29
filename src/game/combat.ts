@@ -74,6 +74,7 @@ export class Combat implements ICombat {
         if (this.isEnded) {
             Object.keys(this.units).forEach(id => {
                 this.units[id].character = null;
+                this.units[id].currentCombat = null;
             });
         }
 

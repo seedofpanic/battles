@@ -32,6 +32,10 @@ export class Unit implements IUnit {
     }
 
     kill() {
+        if (!this.character) {
+            return;
+        }
+
         this.character.health = 0;
         this.character.isDead = true;
     }

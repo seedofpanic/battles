@@ -11,5 +11,7 @@ export class ArrrEffect extends Effect {
         if (effectType === EffectType.STUN) {
             return 0;
         }
+
+        return value;
     }
 }
