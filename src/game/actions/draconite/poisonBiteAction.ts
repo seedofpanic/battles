@@ -11,5 +11,7 @@ export class PoisonBiteAction extends HitAction {
 
     perform(combat: ICombat, self: IUnit, target: IUnit) {
         target.addEffect(this, new PoisonBiteEffect(self));
+
+        super.perform(combat, self, target);
     }
 }

@@ -1,8 +1,15 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
-import {HitAction} from "../actions/hitAction";
 import {IAction} from '../../models/action';
 import {IUnit} from '../../models/unit';
+import {AccurateShotAction} from '../actions/ranger/accurateShotAction';
+import {TripleShotAction} from '../actions/ranger/tripleShotAction';
+import {WolfAction} from '../actions/ranger/wolfAction';
+import {HideAction} from '../actions/ranger/hideAction';
+import {ExplosionArrowAction} from '../actions/ranger/explosionArrowAction';
+import {SmokeScreenAction} from '../actions/ranger/smokeScreenAction';
+import {BeastInsideAction} from '../actions/ranger/beastInsideAction';
+import {AnimalCareAction} from '../actions/ranger/animalCareAction';
 
 export class Ranger extends Character {
     actions: { [name: string]: IAction };
@@ -20,8 +27,14 @@ export class Ranger extends Character {
         super(id);
 
         this.actions = {
-            'bow_shot': new HitAction(actor, 'Bow shot', 10, 15, DamageTypes.PIERCING),
-            'precision_shot': new HitAction(actor,'Precision shot', 20, 30, DamageTypes.PIERCING),
+            'accurate_shot': new AccurateShotAction(actor),
+            'triple_shot': new TripleShotAction(actor),
+            'wolf': new WolfAction(actor),
+            'hide': new HideAction(actor),
+            'explosion_arrow': new ExplosionArrowAction(actor),
+            'smoke_screen': new SmokeScreenAction(actor),
+            'beast_inside': new BeastInsideAction(actor),
+            'animal_care': new AnimalCareAction(actor),
         };
     }
 }

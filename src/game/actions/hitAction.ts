@@ -19,7 +19,15 @@ export class HitAction extends Action {
 
     perform(combat: ICombat, self: IUnit, target: IUnit) {
         const targetResist = target.getResist(this.type, this);
-        let crit = this.getCrit(this.critChance * targetResist);
+
+        let critChance = self.character.effects
+            .reduce((result, effect) => effect.critChanceDefMod(result, this.type), this.critChance);
+
+        if (critChance < 0) {
+            critChance = 0;
+        }
+
+        let crit = this.getCrit(critChance * targetResist);
 
         if (crit !== 1) {
             crit = self.character.effects.reduce((result, effect) => effect.critMod(result, this.type), crit);

@@ -11,5 +11,7 @@ export class ClawStrikeAction extends HitAction {
 
     perform(combat: ICombat, self: IUnit, target: IUnit) {
         target.addEffect(this, new ClawStrikeEffect(self));
+
+        super.perform(combat, self, target);
     }
 }

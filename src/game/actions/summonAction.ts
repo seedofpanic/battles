@@ -18,5 +18,7 @@ export class SummonAction extends Action {
         const unit = new Ai(`${summon.id}_${nextSummonId++}`, team, summon, combat);
 
         combat.addSummon(unit);
+
+        super.perform(combat, self, target);
     }
 }

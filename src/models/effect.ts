@@ -15,6 +15,8 @@ export interface IEffect {
 
     critMod(result: number, type: DamageTypes): number;
 
+    critDefMod(result: number, type: DamageTypes): number;
+
     damageMod(result: number, type: DamageTypes, self: IUnit, target: IUnit): number;
 
     isStunned(result: boolean): boolean;
@@ -28,4 +30,10 @@ export interface IEffect {
     preTick(self: IUnit): void;
 
     postTick(self: IUnit): void;
+
+    critChanceDefMod(result: number, type: DamageTypes): number;
+
+    onAdd(unit: IUnit): void;
+
+    onRemove(unit: IUnit): void;
 }

@@ -11,6 +11,12 @@ export abstract class Effect implements IEffect {
     constructor(public id: string, public name: string, public roundsCount: number, public actor: IUnit) {
     }
 
+    onAdd(unit: IUnit) {
+    }
+
+    onRemove(unit: IUnit) {
+    }
+
     preTick(unit: IUnit) {
         this.roundsCount--;
     }
@@ -42,6 +48,14 @@ export abstract class Effect implements IEffect {
     }
 
     critMod(value: number, type: DamageTypes) {
+        return value;
+    }
+
+    critDefMod(value: number, type: DamageTypes): number {
+        return value;
+    }
+
+    critChanceDefMod(value: number, type: DamageTypes): number {
         return value;
     }
 }

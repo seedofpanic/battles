@@ -12,5 +12,7 @@ export class BurnicideAction extends HitAction {
         const selfResist = self.getResist(this.type, this);
 
         target.decreaseHp(this, 10 * selfResist, this.type);
+
+        super.perform(combat, self, target);
     }
 }

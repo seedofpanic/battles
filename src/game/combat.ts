@@ -35,7 +35,15 @@ export class Combat implements ICombat {
 
         units.forEach(unit => {
             unit.character.effects =
-                unit.character.effects.filter(effect => !effect.getIsEnded());
+                unit.character.effects.filter(effect => {
+                    const isEnded = effect.getIsEnded();
+
+                    if (isEnded) {
+                        effect.onRemove(unit);
+                    }
+
+                    return !isEnded;
+                });
         });
 
         const team1IsDead = Object.keys(this.units).every(key => {
