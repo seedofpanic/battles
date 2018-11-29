@@ -120,7 +120,9 @@ export class Game {
 
     static update(combat: ICombat): boolean {
         if (combat.allReady()) {
+            combat.sendHealth();
             combat.perform();
+            combat.sendHealth();
             combat.showResult();
 
             if (combat.isEnded) {

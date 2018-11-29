@@ -60,6 +60,15 @@ export class Combat implements ICombat {
         this.isEnded = team1IsDead || team2IsDead;
     }
 
+    sendHealth() {
+        const units = this.unitsArr;
+        units.forEach(unitTo => {
+            units.forEach(unit => {
+                unitTo.send('note', `${unit.character.name} ${unit.character.health}/${unit.character.healthMax}`);
+            });
+        });
+    }
+
     showResult() {
         Object.keys(this.units).forEach(id => {
             const unit = this.units[id];

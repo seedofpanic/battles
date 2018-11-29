@@ -24,4 +24,6 @@ export interface ICombat {
     removeUnit(self: IUnit): void;
 
     addSummon(unit: IUnit): void;
+
+    sendHealth(): void;
 }

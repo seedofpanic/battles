@@ -45,4 +45,6 @@ export interface IUnit {
     kill(): void;
 
     clearTimer(): void;
+
+    clearCombat(): void;
 }

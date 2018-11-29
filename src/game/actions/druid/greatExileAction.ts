@@ -1,6 +1,7 @@
 import {Action} from '../../action';
 import {IUnit} from '../../../models/unit';
 import {ICombat} from '../../../models/combat';
+import {DamageTypes} from '../../models/damageTypes';
 
 export class GreatExileAction extends Action {
     constructor(actor: IUnit) {
@@ -10,6 +11,8 @@ export class GreatExileAction extends Action {
     perform(combat?: ICombat, self?: IUnit, target?: IUnit) {
         super.perform(combat, self, target);
 
-        target.kill();
+        if (!target.isValuable) {
+            target.decreaseHp(this, target.character.health, DamageTypes.DEATH);
+        }
     }
 }

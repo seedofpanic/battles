@@ -6,8 +6,6 @@ export interface IPlayer extends IUnit {
     isPlayer: boolean;
     consumeUpdate(): void;
 
-    clearCombat(): void;
-
     clearTimer(): void;
 
     setAction(action: string): void;
