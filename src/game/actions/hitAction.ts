@@ -19,23 +19,11 @@ export class HitAction extends Action {
 
     perform(combat: ICombat, self: IUnit, target: IUnit) {
         const targetResist = target.getResist(this.type, this);
-
-        let critChance = self.character.effects
-            .reduce((result, effect) => effect.critChanceDefMod(result, this.type), this.critChance);
-
-        if (critChance < 0) {
-            critChance = 0;
-        }
-
-        let crit = this.getCrit(critChance * targetResist);
-
-        if (crit !== 1) {
-            crit = self.character.effects.reduce((result, effect) => effect.critMod(result, this.type), crit);
-        }
+        const critMod = this.getCritMod(self, target, this.type, targetResist);
 
         const damage = this.calcDamage(self, target)
             * targetResist
-            * crit;
+            * critMod;
 
         target.decreaseHp(this, damage, this.type);
 
@@ -52,5 +40,27 @@ export class HitAction extends Action {
 
     private getCrit(critChance: number): number {
         return critChance >= Math.random() ? this.critMultiplier : 1;
+    }
+
+    private getCritMod(self: IUnit, target: IUnit, type: DamageTypes, targetResist: number) {
+        let critChance = this.critChance;
+
+        critChance = self.character.effects
+            .reduce((result, effect) => effect.critChanceMod(result, type), critChance);
+        critChance = target.character.effects
+            .reduce((result, effect) => effect.critChanceDefMod(result, type), critChance);
+
+        if (critChance < 0) {
+            critChance = 0;
+        }
+
+        let crit = this.getCrit(critChance * targetResist);
+
+        if (crit !== 1) {
+            crit = self.character.effects.reduce((result, effect) => effect.critMod(result, type), crit);
+            crit = target.character.effects.reduce((result, effect) => effect.critDefMod(result, type), crit);
+        }
+
+        return crit;
     }
 }

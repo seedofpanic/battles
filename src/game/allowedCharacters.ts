@@ -8,7 +8,7 @@ import {Priest} from './characters/priest';
 import {Ranger} from './characters/ranger';
 import {Draconite} from './characters/draconite';
 import {Bard} from './characters/bard';
-import {Rogue} from './characters/rogue';
+import {Thief} from './characters/thief';
 import {Dwarf} from './characters/dwarf';
 import {Pirate} from './characters/pirate';
 import {Demon} from './characters/demon';
@@ -61,9 +61,9 @@ export const allowedCharacters: {
         name: 'Bard',
         create: Bard
     },
-    'rogue': {
-        name: 'Rogue',
-        create: Rogue
+    'thief': {
+        name: 'Thief',
+        create: Thief
     },
     'dwarf': {
         name: 'Dwarf',

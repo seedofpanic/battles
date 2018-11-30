@@ -58,4 +58,8 @@ export abstract class Effect implements IEffect {
     critChanceDefMod(value: number, type: DamageTypes): number {
         return value;
     }
+
+    critChanceMod(value: number, type: DamageTypes): number {
+        return value;
+    }
 }

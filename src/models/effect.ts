@@ -13,25 +13,27 @@ export interface IEffect {
 
     getIsEnded(): boolean;
 
-    critMod(result: number, type: DamageTypes): number;
+    critMod(value: number, type: DamageTypes): number;
 
-    critDefMod(result: number, type: DamageTypes): number;
+    critDefMod(value: number, type: DamageTypes): number;
 
-    damageMod(result: number, type: DamageTypes, self: IUnit, target: IUnit): number;
+    damageMod(value: number, type: DamageTypes, self: IUnit, target: IUnit): number;
 
     isStunned(result: boolean): boolean;
 
     onDamage(damage: number, type: DamageTypes, self: IUnit, action: IAction | IEffect): any;
 
-    resistMod(result: number, type: DamageTypes, self: IUnit, source: IAction | IEffect): any;
+    resistMod(value: number, type: DamageTypes, self: IUnit, source: IAction | IEffect): any;
 
-    effectResistMod(result: number, type: EffectType): number;
+    effectResistMod(value: number, type: EffectType): number;
 
     preTick(self: IUnit): void;
 
     postTick(self: IUnit): void;
 
-    critChanceDefMod(result: number, type: DamageTypes): number;
+    critChanceMod(value: number, type: DamageTypes): number;
+
+    critChanceDefMod(value: number, type: DamageTypes): number;
 
     onAdd(unit: IUnit): void;
 
