@@ -1,10 +1,14 @@
 import {Character} from '../character';
-import {SwordCuttingAction} from '../actions/barbarian/swordCuttingAction';
 import {DamageTypes} from '../models/damageTypes';
-import {ShieldAction} from '../actions/warrior/shieldAction';
-import {SwordAction} from '../actions/swordAction';
 import {IUnit} from '../../models/unit';
 import {IAction} from '../../models/action';
+import {AxeStrikeAction} from '../actions/dwarf/axeStrikeAction';
+import {AxeThrowAction} from '../actions/dwarf/axeThrowAction';
+import {DwarfAleAction} from '../actions/dwarf/dwarfAleAction';
+import {MagicProofAction} from '../actions/dwarf/magicProofAction';
+import {UndergroundRoarAction} from '../actions/dwarf/undergroundRoarAction';
+import {DwarfArmorAction} from '../actions/dwarf/dwarfArmorAction';
+import {DwarfrageAction} from '../actions/dwarf/dwarfrageAction';
 
 export class Dwarf extends Character {
     actions: { [name: string]: IAction };
@@ -22,9 +26,13 @@ export class Dwarf extends Character {
         super(id);
 
         this.actions = {
-            'bleeding_wound': new SwordCuttingAction(actor),
-            'slash': new SwordAction(actor),
-            'shield_strike': new ShieldAction(actor),
+            'axe_strike': new AxeStrikeAction(actor),
+            'axe_throw': new AxeThrowAction(actor),
+            'dwarf_ale': new DwarfAleAction(actor),
+            'magic_proof': new MagicProofAction(actor),
+            'underground_roar': new UndergroundRoarAction(actor),
+            'dwarf_armor': new DwarfArmorAction(actor),
+            'dwarfrage': new DwarfrageAction(actor)
         };
     }
 }

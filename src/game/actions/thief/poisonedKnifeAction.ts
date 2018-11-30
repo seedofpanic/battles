@@ -10,6 +10,7 @@ export class PoisonedKnifeAction extends HitAction {
     }
 
     perform(combat: ICombat, self: IUnit, target: IUnit) {
+        super.perform(combat, self, target);
         target.addEffect(this, new PoisonedKnifeEffect(this.actor));
     }
 }

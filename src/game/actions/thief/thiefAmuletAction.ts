@@ -17,6 +17,7 @@ export class ThiefAmuletAction extends Action {
     }
 
     beforeResolve(combat?: ICombat, self?: IUnit, target?: IUnit) {
+        super.beforeResolve(combat, self, target);
         self.character.effects = self.character.effects.filter(effect => !removeTypes[effect.type]);
     }
 }
