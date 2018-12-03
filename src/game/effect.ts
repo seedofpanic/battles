@@ -62,4 +62,9 @@ export abstract class Effect implements IEffect {
     critChanceMod(value: number, type: DamageTypes): number {
         return value;
     }
+
+    onDeath(value: number, oldHp: number,
+            damage: number, type: DamageTypes, self: IUnit, action: IAction | IEffect): number {
+        return value;
+    }
 }

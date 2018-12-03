@@ -47,8 +47,10 @@ export class Unit implements IUnit {
         if (this.character.health > damage) {
             this.character.health -= damage;
         } else {
-            this.character.health = 0;
             this.character.isDead = true;
+            this.character.health = this.character.effects
+                .reduce((result, effect) => effect.onDeath(result, this.character.health, damage, type, this, action),
+                    0);
         }
 
         this.currentCombat.battleLog.push(`${action.name} do ${Math.ceil(damage)} damage`);

@@ -38,4 +38,7 @@ export interface IEffect {
     onAdd(unit: IUnit): void;
 
     onRemove(unit: IUnit): void;
+
+    onDeath(value: number, oldHp: number,
+            damage: number, type: DamageTypes, self: IUnit, action: IAction | IEffect): number;
 }
