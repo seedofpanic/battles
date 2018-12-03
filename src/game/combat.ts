@@ -169,6 +169,7 @@ export class Combat implements ICombat {
 
     removeUnit(unit: IUnit) {
         delete this.units[unit.id];
+        unit.currentCombat = null;
 
         this.broadcast('remove_unit', {
             id: unit.id,

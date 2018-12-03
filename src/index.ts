@@ -38,6 +38,7 @@ export function doAction(player: Player, action: any) {
 
             break;
         case 'start':
+            player.endCombat();
             Game.startCombat(player);
 
             if (action.payload.withBot) {

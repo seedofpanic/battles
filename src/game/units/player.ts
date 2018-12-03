@@ -44,4 +44,12 @@ export class Player extends Unit implements IPlayer {
         this.played = user.played;
         this.userId = user._id;
     }
+
+    endCombat() {
+        if (!this.currentCombat) {
+            return;
+        }
+
+        this.kill();
+    }
 }

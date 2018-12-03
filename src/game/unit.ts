@@ -38,6 +38,7 @@ export class Unit implements IUnit {
 
         this.character.health = 0;
         this.character.isDead = true;
+        this.currentCombat.removeUnit(this);
     }
 
     decreaseHp(action: IAction | IEffect, damage: number, type: DamageTypes) {
