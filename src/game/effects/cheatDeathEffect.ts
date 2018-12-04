@@ -1,6 +1,9 @@
 import {Effect} from '../effect';
 import {IUnit} from '../../models/unit';
 import {ICombat} from '../../models/combat';
+import {DamageTypes} from '../models/damageTypes';
+import {IAction} from '../../models/action';
+import {IEffect} from '../../models/effect';
 
 export const CHEAT_DEATH_EFFECT_ID = 'cheat_death';
 
@@ -9,13 +12,12 @@ export class CheatDeathEffect extends Effect {
         super(CHEAT_DEATH_EFFECT_ID, 'Cheat death', 3, actor);
     }
 
-    beforeDeath(combat: ICombat, self: IUnit): boolean {
+    onDeath(value: number, oldHp: number,
+            damage: number, type: DamageTypes, self: IUnit, action: IAction | IEffect): number {
         if (Math.random() > 0.5) {
-            self.increaseHp(this, self.character.healthMax);
-
-            return false;
+            return self.character.healthMax;
         }
 
-        return true;
+        return value;
     }
 }
