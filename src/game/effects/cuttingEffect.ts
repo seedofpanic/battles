@@ -8,7 +8,10 @@ const NAME = 'Bleeding';
 export const CUTTING_RFFECT_ID = 'cutting';
 
 export class CuttingEffect extends DotEffect {
-    type = EffectType.BLEED;
+    type = {
+        ...super.type,
+        [EffectType.BLEED]: true
+    };
 
     constructor(minDamage: number,
                 maxDamage: number,

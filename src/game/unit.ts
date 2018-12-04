@@ -76,7 +76,7 @@ export class Unit implements IUnit {
     addEffect(action: IAction | IEffect, effect: IEffect) {
         effect.onAdd(this);
         effect.roundsCount = this.character.effects
-            .reduce((result, effect) => effect.effectResistMod(result, effect.type), effect.roundsCount);
+            .reduce((result, effect) => effect.effectResistMod(result, effect), effect.roundsCount);
 
         if (effect.roundsCount === 0) {
             return;

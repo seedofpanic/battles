@@ -9,7 +9,7 @@ export class HitAction extends Action {
                 name: string,
                 protected minDamage: number,
                 protected maxDamage: number,
-                protected type: DamageTypes,
+                protected damageType: DamageTypes,
                 private critChance = 0,
                 private critMultiplier = 1,
                 cooldown = 0,
@@ -18,14 +18,14 @@ export class HitAction extends Action {
     }
 
     perform(combat: ICombat, self: IUnit, target: IUnit) {
-        const targetResist = target.getResist(this.type, this);
-        const critMod = this.getCritMod(self, target, this.type, targetResist);
+        const targetResist = target.getResist(this.damageType, this);
+        const critMod = this.getCritMod(self, target, this.damageType, targetResist);
 
         const damage = this.calcDamage(self, target)
             * targetResist
             * critMod;
 
-        target.decreaseHp(this, damage, this.type);
+        target.decreaseHp(this, damage, this.damageType);
 
         super.perform(combat);
     }
@@ -34,7 +34,7 @@ export class HitAction extends Action {
         const damage = calcDamage(this.minDamage, this.maxDamage);
 
         return self.character.effects.reduce((result, effect) => {
-            return effect.damageMod(result, this.type, self, target);
+            return effect.damageMod(result, this.damageType, self, target, this);
         }, damage);
     }
 

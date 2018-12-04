@@ -2,6 +2,7 @@ import {IUnit} from './unit';
 import {ICombat} from './combat';
 
 export interface IAction {
+    type: {[name: string]: boolean};
     name: string;
     actor: IUnit;
 

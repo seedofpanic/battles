@@ -9,9 +9,9 @@ export class BurnicideAction extends HitAction {
     }
 
     perform(combat: ICombat, self: IUnit, target: IUnit) {
-        const selfResist = self.getResist(this.type, this);
+        const selfResist = self.getResist(this.damageType, this);
 
-        target.decreaseHp(this, 10 * selfResist, this.type);
+        target.decreaseHp(this, 10 * selfResist, this.damageType);
 
         super.perform(combat, self, target);
     }

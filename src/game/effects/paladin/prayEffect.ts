@@ -1,6 +1,7 @@
 import {Effect} from '../../effect';
 import {EffectType} from '../../models/effectType';
 import {IUnit} from '../../../models/unit';
+import {IEffect} from '../../../models/effect';
 
 export class PrayEffect extends Effect {
     effectsArr = [EffectType.STUN, EffectType.POISON, EffectType.BLEED];
@@ -9,8 +10,8 @@ export class PrayEffect extends Effect {
         super('pray', 'Pray', 3, actor);
     }
 
-    effectResistMod(value: number, effectType: EffectType) {
-        if (this.effectsArr.some(type => type === effectType)) {
+    effectResistMod(value: number, effect: IEffect) {
+        if (this.effectsArr.some(type => effect.type[type])) {
             return 0;
         }
 

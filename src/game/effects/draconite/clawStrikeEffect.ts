@@ -6,7 +6,10 @@ import {IUnit} from '../../../models/unit';
 export const CLAW_STRIKE_EFFECT = 'claw_strike';
 
 export class ClawStrikeEffect extends DotEffect {
-    type = EffectType.BLEED;
+    type = {
+        ...super.type,
+        [EffectType.BLEED]: true
+    };
 
     constructor(actor: IUnit) {
         super(CLAW_STRIKE_EFFECT, 'Claw strike', 1, 2, DamageTypes.CUTTING, 3, actor);

@@ -2,6 +2,7 @@ import {IUnit} from '../../../models/unit';
 import {ResistsModEffect} from '../resistsModEffect';
 import {DamageTypes} from '../../models/damageTypes';
 import {EffectType} from '../../models/effectType';
+import {IEffect} from '../../../models/effect';
 
 export class BoneArmorEffect extends ResistsModEffect {
     effectsArr = [EffectType.BLEED, EffectType.POISON];
@@ -13,8 +14,8 @@ export class BoneArmorEffect extends ResistsModEffect {
         }, 'Bone armor', 3, actor);
     }
 
-    effectResistMod(value: number, effectType: EffectType) {
-        if (this.effectsArr.some(type => type === effectType)) {
+    effectResistMod(value: number, effect: IEffect) {
+        if (this.effectsArr.some(type => effect.type[type])) {
             return 0;
         }
 

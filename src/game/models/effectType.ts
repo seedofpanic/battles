@@ -1,4 +1,5 @@
 export enum EffectType {
+    SONG,
     BLIND,
     MAGIC,
     BLEED,

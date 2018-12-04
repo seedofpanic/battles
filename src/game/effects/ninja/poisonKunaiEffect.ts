@@ -4,7 +4,10 @@ import {EffectType} from '../../models/effectType';
 import {IUnit} from '../../../models/unit';
 
 export class PoisonKunaiEffect extends DotEffect {
-    type = EffectType.POISON;
+    type = {
+        ...super.type,
+        [EffectType.POISON]: true
+    };
 
     constructor(actor: IUnit) {
         super('poison_kunai', 'Poison kunai', 2, 3, DamageTypes.POISON, 3, actor);

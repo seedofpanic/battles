@@ -2,6 +2,7 @@ import {ResistsModEffect} from '../resistsModEffect';
 import {DamageTypes} from '../../models/damageTypes';
 import {EffectType} from '../../models/effectType';
 import {IUnit} from '../../../models/unit';
+import {IEffect} from '../../../models/effect';
 
 export class GreatShieldOfLiteEffect extends ResistsModEffect {
     effectsArr = [EffectType.POISON, EffectType.BLEED];
@@ -13,8 +14,8 @@ export class GreatShieldOfLiteEffect extends ResistsModEffect {
         }, 'Great shield of lite', 3, actor);
     }
 
-    effectResistMod(value: number, effectType: EffectType) {
-        if (this.effectsArr.some(type => type === effectType)) {
+    effectResistMod(value: number, effect: IEffect) {
+        if (this.effectsArr.some(type => effect.type[type])) {
             return 0;
         }
 

@@ -14,7 +14,7 @@ export class VanishEffect extends Effect {
         return 0;
     }
 
-    effectResistMod(value: number, effectType: EffectType) {
+    effectResistMod(value: number, effect: IEffect) {
         return 0;
     }
 }

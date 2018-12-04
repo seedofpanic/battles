@@ -13,6 +13,6 @@ export class DefenceStanceAction extends BuffAction {
         super.perform(combat, self, target);
 
         self.character.effects = self.character.effects
-            .filter(effect => effect.type !== EffectType.BLEED);
+            .filter(effect => !effect.type[EffectType.BLEED]);
     }
 }

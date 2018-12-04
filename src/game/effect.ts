@@ -5,7 +5,9 @@ import {IEffect} from '../models/effect';
 import {IAction} from '../models/action';
 
 export abstract class Effect implements IEffect {
-    type = EffectType.MAGIC;
+    type: {[name: string]: boolean} = {
+        [EffectType.MAGIC]: true
+    };
     canStack = true;
 
     constructor(public id: string, public name: string, public roundsCount: number, public actor: IUnit) {
@@ -28,7 +30,7 @@ export abstract class Effect implements IEffect {
         return this.roundsCount <= 0;
     }
 
-    damageMod(value: number, type: DamageTypes, self: IUnit, target: IUnit): number {
+    damageMod(value: number, type: DamageTypes, self: IUnit, target: IUnit, source: IAction | IEffect): number {
         return value;
     }
 
@@ -36,7 +38,7 @@ export abstract class Effect implements IEffect {
         return value;
     }
 
-    effectResistMod(value: number, effectType: EffectType) {
+    effectResistMod(value: number, effect: IEffect) {
         return value;
     }
 

@@ -16,7 +16,7 @@ export class PoisonSkinEffect extends Effect {
 
         const poisonEffect = new DotEffect('poison', 'Poison', 5, 5, DamageTypes.POISON, 2, self);
 
-        poisonEffect.type = EffectType.POISON;
+        poisonEffect.type[EffectType.POISON] = true;
 
         source.actor.addEffect(this, poisonEffect);
     }

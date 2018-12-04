@@ -1,6 +1,7 @@
 import {Effect} from '../../effect';
 import {EffectType} from '../../models/effectType';
 import {IUnit} from '../../../models/unit';
+import {IEffect} from '../../../models/effect';
 
 export const HIGH_VITALITY_EFFECT_ID = 'high_vitality';
 
@@ -11,8 +12,8 @@ export class HighVitalityEffect extends Effect {
         super(HIGH_VITALITY_EFFECT_ID, 'High vitality', 3, actor);
     }
 
-    effectResistMod(value: number, effectType: EffectType) {
-        if (this.resitstsIds.some(resistId => resistId === effectType)) {
+    effectResistMod(value: number, effect: IEffect) {
+        if (this.resitstsIds.some(resistId => effect.type[resistId])) {
             return 0;
         } else {
             return value;

@@ -15,7 +15,7 @@ export class GreatShieldOfLiteAction extends BuffAction {
         super.perform(combat, self, target);
 
         self.character.effects = self.character.effects.filter(effect =>
-            this.effectsArr.every(type => type !== effect.type)
+            this.effectsArr.every(type => !effect.type[type])
         );
     }
 }

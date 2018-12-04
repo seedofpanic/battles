@@ -2,6 +2,7 @@ import {HitAction} from '../hitAction';
 import {IUnit} from '../../../models/unit';
 import {DamageTypes} from '../../models/damageTypes';
 import {ICombat} from '../../../models/combat';
+import {BladesWhirlwindEffect} from '../../effects/amazon/bladesWhirlwindEffect';
 
 export class BladesWhirlwindAction extends HitAction {
     constructor(actor: IUnit) {

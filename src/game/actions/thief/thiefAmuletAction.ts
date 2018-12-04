@@ -3,12 +3,12 @@ import {IUnit} from '../../../models/unit';
 import {ICombat} from '../../../models/combat';
 import {EffectType} from '../../models/effectType';
 
-const removeTypes: {[name: string]: boolean} = {
-    [EffectType.BLEED]: true,
-    [EffectType.POISON]: true,
-    [EffectType.BLIND]: true,
-    [EffectType.STUN]: true,
-};
+const removeTypes: EffectType[] = [
+    EffectType.BLEED,
+    EffectType.POISON,
+    EffectType.BLIND,
+    EffectType.STUN
+];
 
 export class ThiefAmuletAction extends Action {
 
@@ -18,6 +18,8 @@ export class ThiefAmuletAction extends Action {
 
     beforeResolve(combat?: ICombat, self?: IUnit, target?: IUnit) {
         super.beforeResolve(combat, self, target);
-        self.character.effects = self.character.effects.filter(effect => !removeTypes[effect.type]);
+        self.character.effects = self.character.effects.filter(effect =>
+            !removeTypes.some(type => effect.type[type])
+        );
     }
 }

@@ -6,7 +6,7 @@ import {EffectType} from '../game/models/effectType';
 export interface IEffect {
     id: string;
     canStack: boolean;
-    type: EffectType;
+    type: {[name: string]: boolean};
     roundsCount: number;
     name: string;
     actor: IUnit;
@@ -17,7 +17,7 @@ export interface IEffect {
 
     critDefMod(value: number, type: DamageTypes): number;
 
-    damageMod(value: number, type: DamageTypes, self: IUnit, target: IUnit): number;
+    damageMod(value: number, type: DamageTypes, self: IUnit, target: IUnit, source: IAction | IEffect): number;
 
     isStunned(result: boolean): boolean;
 
@@ -25,7 +25,7 @@ export interface IEffect {
 
     resistMod(value: number, type: DamageTypes, self: IUnit, source: IAction | IEffect): any;
 
-    effectResistMod(value: number, type: EffectType): number;
+    effectResistMod(value: number, effect: IEffect): number;
 
     preTick(self: IUnit): void;
 

@@ -6,7 +6,10 @@ import {IUnit} from '../../models/unit';
 const NAME = 'Stun';
 
 export class StunAction extends Action {
-    type = EffectType.STUN;
+    type = {
+        ...super.type,
+        [EffectType.STUN]: true
+    };
 
     constructor(actor: IUnit) {
         super(actor, NAME);

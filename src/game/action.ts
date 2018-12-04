@@ -5,6 +5,7 @@ import {IUnit} from '../models/unit';
 
 // TODO: rename to Skill
 export abstract class Action implements IAction {
+    type: {[name: string]: boolean} = {};
     charges: number;
     recharge = 0;
 
