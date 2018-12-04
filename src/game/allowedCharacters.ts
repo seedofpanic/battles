@@ -42,10 +42,6 @@ export const allowedCharacters: {
         name: 'Druid',
         create: Druid
     },
-    'monk': {
-        name: 'Monk',
-        create: Monk
-    },
     'priest': {
         name: 'Priest',
         create: Priest
