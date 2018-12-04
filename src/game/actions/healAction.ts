@@ -7,7 +7,7 @@ export class HealAction extends Action {
         super(actor, name, cooldown, maxCharges);
     }
 
-    perform(combat: ICombat, self: IUnit) {
+    perform(combat: ICombat, self: IUnit, target: IUnit) {
         self.increaseHp(this, this.value);
 
         super.perform(combat);

@@ -3,7 +3,7 @@ import {DamageTypes} from '../models/damageTypes';
 import {IAction} from '../../models/action';
 import {IUnit} from '../../models/unit';
 import {BoneSpikeAction} from '../actions/necromancer/boneSpikeAction';
-import {CurseAction} from '../actions/necromancer/curseAction';
+import {WeaknessAction} from '../actions/necromancer/weaknessAction';
 import {DeathTouchAction} from '../actions/necromancer/deathTouchAction';
 import {SkeletonAction} from '../actions/necromancer/skeletonAction';
 import {BoneArmorAction} from '../actions/necromancer/boneArmorAction';
@@ -28,7 +28,7 @@ export class Necromancer extends Character {
 
         this.actions = {
             'bone_spike': new BoneSpikeAction(actor),
-            'curse': new CurseAction(actor),
+            'weakness': new WeaknessAction(actor),
             'death_touch': new DeathTouchAction(actor),
             'skeleton': new SkeletonAction(actor),
             'bone_armor': new BoneArmorAction(actor),

@@ -18,6 +18,7 @@ import {ICharacter} from '../models/character';
 import {Ninja} from './characters/ninja';
 import {Necromancer} from './characters/necromancer';
 import {Amazon} from './characters/amazon';
+import {WitchHunter} from './characters/witchHunter';
 
 export const allowedCharacters: {
     [name: string]: { name: string, create: { new(actor: IUnit, id: string): ICharacter } }
@@ -89,5 +90,9 @@ export const allowedCharacters: {
     'amazon': {
         name: 'Amazon',
         create: Amazon
+    },
+    'witch_hunter': {
+        name: 'WitchHunter',
+        create: WitchHunter
     }
 };

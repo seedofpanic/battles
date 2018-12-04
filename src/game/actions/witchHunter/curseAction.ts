@@ -1,6 +1,6 @@
 import {DeBuffAction} from '../deBuffAction';
 import {IUnit} from '../../../models/unit';
-import {CurseEffect} from '../../effects/necromancer/curseEffect';
+import {CurseEffect} from '../../effects/witchHunter/curseEffect';
 
 export class CurseAction extends DeBuffAction {
     constructor(actor: IUnit) {
