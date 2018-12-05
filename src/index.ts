@@ -69,6 +69,15 @@ export function doAction(player: Player, action: any) {
             player.send('note', `You already has played: ${player.played}`);
             player.send('note', `Played duels: ${Game.combatsEnded}`);
             player.send('note', `Active duels: ${Game.combatsCount - Game.combatsEnded}`);
+
+            for (let i = 4; i > -1; i--) {
+                if (!Game.topWinRate[i]) {
+                    continue;
+                }
+
+                player.send('note', `${Game.topWinRate[i].id}: ${Game.topWinRate[i].rate.toFixed(2)}`);
+            }
+            player.send('note', `Top win rate:`);
             break;
         case 'auth':
             break;
@@ -148,10 +157,14 @@ app.use(express.static('public'));
 
 if (process.env.MODE !== 'test') {
     connectToDb()
+        .then(() => Game.init())
         .then(() => {
             app.listen('3003', () => {
                 console.log('Listening...');
             });
+        })
+        .catch(err => {
+            console.log(err);
         });
 }
 

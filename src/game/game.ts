@@ -6,6 +6,8 @@ import {IPlayer} from '../models/player';
 import {Combat} from './combat';
 import {IUnit} from '../models/unit';
 import {Bot} from './units/bot';
+import {ICharacter} from '../models/character';
+import {getWinDuelRates, saveWinDuelRates, WinDuelRatesStats} from '../bdTypes/DBStats';
 
 export class Game {
 
@@ -14,6 +16,18 @@ export class Game {
     static combatsInvites: {[name: string]: ICombat} = {};
     static combatsCount = 0;
     static combatsEnded = 0;
+
+    static winDuelRates: WinDuelRatesStats;
+    static winlooseDuelCache: {[name: string]: {win: number, loose: number, rate: number}} = {};
+    static topWinRate: {id: string, rate: number}[] = [];
+
+    static init() {
+        return getWinDuelRates()
+            .then(winDuelRates => {
+                this.winDuelRates = winDuelRates;
+                this.recalculateRates();
+            });
+    }
 
     static startDuel(player: IPlayer, combatId: string | null) {
         let combat: ICombat;
@@ -125,6 +139,16 @@ export class Game {
             combat.sendHealth();
 
             if (combat.isEnded) {
+                const units = combat.unitsArr;
+
+                if (units[0].character.isDead !== units[1].character.isDead) {
+                    if (units[0].character.isDead) {
+                        this.updateWinRate(units[1].character, units[0].character);
+                    } else {
+                        this.updateWinRate(units[0].character, units[1].character);
+                    }
+                }
+
                 this.endCombat(combat);
             } else {
                 setTimeout(() => {
@@ -136,6 +160,62 @@ export class Game {
         }
 
         return false;
+    }
+
+    static updateWinRate(winner: ICharacter, looser: ICharacter) {
+        if (!this.winDuelRates[winner.id]) {
+            this.winDuelRates[winner.id] = {};
+        }
+
+        if (!this.winDuelRates[winner.id][looser.id]) {
+            this.winDuelRates[winner.id][looser.id] = 1;
+        } else {
+            this.winDuelRates[winner.id][looser.id]++;
+        }
+
+        saveWinDuelRates(this.winDuelRates);
+        this.recalculateRates();
+    }
+
+    static recalculateRates() {
+        Object.keys(this.winDuelRates).forEach(winnerId => {
+            Object.keys(this.winDuelRates[winnerId]).forEach(looserId => {
+                if (!this.winlooseDuelCache[winnerId]) {
+                    this.winlooseDuelCache[winnerId] = {
+                        win: 0,
+                        loose: 0,
+                        rate: 0
+                    };
+                }
+
+                this.winlooseDuelCache[winnerId].win += this.winDuelRates[winnerId][looserId];
+
+                if (!this.winlooseDuelCache[looserId]) {
+                    this.winlooseDuelCache[looserId] = {
+                        win: 0,
+                        loose: 0,
+                        rate: 0
+                    };
+                }
+
+                this.winlooseDuelCache[looserId].loose += this.winDuelRates[winnerId][looserId];
+            });
+        });
+
+        this.topWinRate.length = 0;
+
+        Object.keys(this.winlooseDuelCache).forEach(rateId => {
+            this.winlooseDuelCache[rateId].rate =
+                this.winlooseDuelCache[rateId].loose
+                    ? this.winlooseDuelCache[rateId].win / this.winlooseDuelCache[rateId].loose
+                    : 0;
+
+            this.topWinRate.push({
+                id: rateId,
+                rate: this.winlooseDuelCache[rateId].rate
+            });
+            this.topWinRate.sort((a, b) => b.rate - a.rate);
+        });
     }
 
     static setAction(player: IPlayer, action: string) {
