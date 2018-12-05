@@ -4,7 +4,7 @@ import {StunEffect} from '../../effects/stunEffect';
 import {IUnit} from '../../../models/unit';
 import {ICombat} from '../../../models/combat';
 
-const NAME = 'Shield strike';
+const NAME = 'Dazzle';
 const MIN_DAMAGE = 3;
 const MAX_DAMAGE = 9;
 const CRIT_CHANCE = 0;

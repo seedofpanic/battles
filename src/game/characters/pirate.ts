@@ -1,6 +1,5 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
 import {PistolShotAction} from '../actions/pirate/pistolShotAction';
 import {HollyGrenadeAction} from '../actions/pirate/hollyGrenadeAction';
 import {PirateTinctureAction} from '../actions/pirate/pirateTinctureAction';

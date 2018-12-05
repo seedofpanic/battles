@@ -21,8 +21,4 @@ export class BloodySymbolAction extends HitAction {
 
         self.increaseHp(this, HEAL_AMOUNT);
     }
-
-    modifyIncomeDamage(damage: number, type: DamageTypes) {
-        return damage * 2;
-    }
 }

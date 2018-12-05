@@ -66,7 +66,7 @@ export class Combat implements ICombat {
             units.forEach(unit => {
                 unitTo.send('note',
                     `${unit.character.name} \ 
-                    ${unit.character.health.toFixed(2)}/${unit.character.healthMax.toFixed(2)}}`);
+                    ${unit.character.health.toFixed(2)}/${unit.character.healthMax.toFixed(2)}`);
             });
         });
     }

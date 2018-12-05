@@ -3,7 +3,7 @@ import {DamageTypes} from '../../models/damageTypes';
 import {IUnit} from '../../../models/unit';
 import {ICombat} from '../../../models/combat';
 
-const NAME = 'Fireball';
+const NAME = 'Fire beam';
 const MIN_DAMAGE = 4;
 const MAX_DAMAGE = 7;
 const CRIT_CHANCE = 0.15;
@@ -20,9 +20,5 @@ export class FireBeamAction extends HitAction {
             CRIT_CHANCE,
             CRIT_MULTIPLIER
         );
-    }
-
-    perform(combat: ICombat, self?: IUnit, target?: IUnit) {
-        super.perform(combat, self, target);
     }
 }
