@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
     battles-backend:
@@ -38,9 +38,7 @@ services:
         
         networks:
             - battles-networks
-        
-        ports:
-            - "57017:27017"
+
         environment:
             - TZ=Europe/Moscow
             - MONGO_AUTH=true

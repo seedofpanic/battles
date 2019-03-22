@@ -9,7 +9,8 @@
     "stop:prod": "forever stop node_modules/.bin/ts-node",
     "test": "cross-env MODE=\"test\" jest",
     "testci": "cross-env MODE=\"test\" jest --runInBand",
-    "lint": "tslint \"src/**/*.ts\""
+    "lint": "tslint \"src/**/*.ts\"",
+    "db": "docker-compose -f docker-compose.yml -f docker-compose.local.yml up -d --build battlesdb"
   },
   "author": "",
   "license": "ISC",
