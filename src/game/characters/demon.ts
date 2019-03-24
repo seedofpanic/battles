@@ -23,18 +23,18 @@ export class Demon extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'raging_flames': new RagingFlamesAction(actor),
-            'hardened_skin': new HardenedSkinAction(actor),
-            'scythe_strike': new ScytheStrikeAction(actor),
-            'hellsistance': new HellsistanceAction(actor),
-            'unholly_force': new UnholyForceAction(actor),
-            'hell_blast': new HellBlastAction(actor),
-            'hell_hound': new HellHoundAction(actor),
-            'inferno': new InfernoAction(actor)
+            'raging_flames': new RagingFlamesAction(this),
+            'hardened_skin': new HardenedSkinAction(this),
+            'scythe_strike': new ScytheStrikeAction(this),
+            'hellsistance': new HellsistanceAction(this),
+            'unholly_force': new UnholyForceAction(this),
+            'hell_blast': new HellBlastAction(this),
+            'hell_hound': new HellHoundAction(this),
+            'inferno': new InfernoAction(this)
         };
     }
 }

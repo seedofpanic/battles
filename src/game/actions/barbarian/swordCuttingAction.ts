@@ -3,6 +3,7 @@ import {HitAction} from '../hitAction';
 import {CuttingEffect} from '../../effects/cuttingEffect';
 import {IUnit} from '../../../models/unit';
 import {ICombat} from '../../../models/combat';
+import {ICharacter} from '../../../models/character';
 
 const NAME = 'Bleeding wound';
 const MIN_DAMAGE = 5;
@@ -17,12 +18,12 @@ const CUTTING_EFFECT_MAX_DAMAGE = 1.66;
 const CUTTING_EFFECT_ROUNDS_COUNT = 3;
 
 export class SwordCuttingAction extends HitAction {
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super(actor, NAME, MIN_DAMAGE, MAX_DAMAGE, DamageTypes.CUTTING,
             CRIT_CHANCE, CRIT_MULTIPLIER, COOLDOWN, MAX_CHARGES);
     }
 
-    perform(combat: ICombat, self?: IUnit, target?: IUnit) {
+    perform(combat: ICombat, self?: ICharacter, target?: ICharacter) {
         super.perform(combat, self, target);
 
         target.addEffect(this, new CuttingEffect(

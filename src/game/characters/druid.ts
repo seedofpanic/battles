@@ -23,18 +23,18 @@ export class Druid extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'insects_swarm': new InsectsSwarmAction(actor),
-            'nature_wrath': new NatureWrathAction(actor),
-            'poison_skin': new PoisonSkinAction(actor),
-            'nature_heal': new NatureHealAction(actor),
-            'bless_of_nature': new BlessOfNatureAction(actor),
-            'nature_protection': new NatureProtectionAction(actor),
-            'spines': new SpinesAction(actor),
-            'great_exile': new GreatExileAction(actor),
+            'insects_swarm': new InsectsSwarmAction(this),
+            'nature_wrath': new NatureWrathAction(this),
+            'poison_skin': new PoisonSkinAction(this),
+            'nature_heal': new NatureHealAction(this),
+            'bless_of_nature': new BlessOfNatureAction(this),
+            'nature_protection': new NatureProtectionAction(this),
+            'spines': new SpinesAction(this),
+            'great_exile': new GreatExileAction(this),
         };
     }
 }

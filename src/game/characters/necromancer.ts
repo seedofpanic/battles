@@ -23,18 +23,18 @@ export class Necromancer extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'bone_spike': new BoneSpikeAction(actor),
-            'weakness': new WeaknessAction(actor),
-            'death_touch': new DeathTouchAction(actor),
-            'skeleton': new SkeletonAction(actor),
-            'bone_armor': new BoneArmorAction(actor),
-            'undead_power': new UndeadPowerAction(actor),
-            'undead_aura': new UndeadAuraAction(actor),
-            'death_breath': new DeathBreathAction(actor)
+            'bone_spike': new BoneSpikeAction(this),
+            'weakness': new WeaknessAction(this),
+            'death_touch': new DeathTouchAction(this),
+            'skeleton': new SkeletonAction(this),
+            'bone_armor': new BoneArmorAction(this),
+            'undead_power': new UndeadPowerAction(this),
+            'undead_aura': new UndeadAuraAction(this),
+            'death_breath': new DeathBreathAction(this)
         };
     }
 }

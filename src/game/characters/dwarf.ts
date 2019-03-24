@@ -22,17 +22,17 @@ export class Dwarf extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'axe_strike': new AxeStrikeAction(actor),
-            'axe_throw': new AxeThrowAction(actor),
-            'dwarf_ale': new DwarfAleAction(actor),
-            'magic_proof': new MagicProofAction(actor),
-            'underground_roar': new UndergroundRoarAction(actor),
-            'dwarf_armor': new DwarfArmorAction(actor),
-            'dwarfrage': new DwarfrageAction(actor)
+            'axe_strike': new AxeStrikeAction(this),
+            'axe_throw': new AxeThrowAction(this),
+            'dwarf_ale': new DwarfAleAction(this),
+            'magic_proof': new MagicProofAction(this),
+            'underground_roar': new UndergroundRoarAction(this),
+            'dwarf_armor': new DwarfArmorAction(this),
+            'dwarfrage': new DwarfrageAction(this)
         };
     }
 }

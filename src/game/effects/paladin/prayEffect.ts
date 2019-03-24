@@ -2,11 +2,12 @@ import {Effect} from '../../effect';
 import {EffectType} from '../../models/effectType';
 import {IUnit} from '../../../models/unit';
 import {IEffect} from '../../../models/effect';
+import {ICharacter} from '../../../models/character';
 
 export class PrayEffect extends Effect {
     effectsArr = [EffectType.STUN, EffectType.POISON, EffectType.BLEED];
 
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super('pray', 'Pray', 3, actor);
     }
 

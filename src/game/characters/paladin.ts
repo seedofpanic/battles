@@ -24,18 +24,18 @@ export class Paladin extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'pray': new PrayAction(actor),
-            'self_aid': new SelfAidAction(actor),
-            'heaven_strike': new HeavenStrikeAction(actor),
-            'hammer_strike': new HammerStrikeAction(actor),
-            'blinding_flash': new BlindingFlashAction(actor),
-            'great_shield_of_lite': new GreatShieldOfLiteAction(actor),
-            'chopping': new ChoppingAction(actor),
-            'faith_power': new FaithPowerAction(actor)
+            'pray': new PrayAction(this),
+            'self_aid': new SelfAidAction(this),
+            'heaven_strike': new HeavenStrikeAction(this),
+            'hammer_strike': new HammerStrikeAction(this),
+            'blinding_flash': new BlindingFlashAction(this),
+            'great_shield_of_lite': new GreatShieldOfLiteAction(this),
+            'chopping': new ChoppingAction(this),
+            'faith_power': new FaithPowerAction(this)
         };
     }
 }

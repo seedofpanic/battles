@@ -1,7 +1,6 @@
 import {DamageTypes} from '../game/models/damageTypes';
-import {IUnit} from './unit';
 import {IAction} from './action';
-import {EffectType} from '../game/models/effectType';
+import {ICharacter} from './character';
 
 export interface IEffect {
     id: string;
@@ -9,7 +8,7 @@ export interface IEffect {
     type: {[name: string]: boolean};
     roundsCount: number;
     name: string;
-    actor: IUnit;
+    actor: ICharacter;
 
     getIsEnded(): boolean;
 
@@ -17,28 +16,29 @@ export interface IEffect {
 
     critDefMod(value: number, type: DamageTypes): number;
 
-    damageMod(value: number, type: DamageTypes, self: IUnit, target: IUnit, source: IAction | IEffect): number;
+    damageMod(value: number, type: DamageTypes,
+              self: ICharacter, target: ICharacter, source: IAction | IEffect): number;
 
     isStunned(result: boolean): boolean;
 
-    onDamage(damage: number, type: DamageTypes, self: IUnit, action: IAction | IEffect): any;
+    onDamage(damage: number, type: DamageTypes, self: ICharacter, action: IAction | IEffect): any;
 
-    resistMod(value: number, type: DamageTypes, self: IUnit, source: IAction | IEffect): any;
+    resistMod(value: number, type: DamageTypes, self: ICharacter, source: IAction | IEffect): any;
 
     effectResistMod(value: number, effect: IEffect): number;
 
-    preTick(self: IUnit): void;
+    preTick(self: ICharacter): void;
 
-    postTick(self: IUnit): void;
+    postTick(self: ICharacter): void;
 
     critChanceMod(value: number, type: DamageTypes): number;
 
     critChanceDefMod(value: number, type: DamageTypes): number;
 
-    onAdd(unit: IUnit): void;
+    onAdd(unit: ICharacter): void;
 
-    onRemove(unit: IUnit): void;
+    onRemove(unit: ICharacter): void;
 
     onDeath(value: number, oldHp: number,
-            damage: number, type: DamageTypes, self: IUnit, action: IAction | IEffect): number;
+            damage: number, type: DamageTypes, self: ICharacter, action: IAction | IEffect): number;
 }

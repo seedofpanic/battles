@@ -3,6 +3,7 @@ import {IAction} from '../../../../models/action';
 import {DamageTypes} from '../../../models/damageTypes';
 import {IUnit} from '../../../../models/unit';
 import {HitAction} from '../../../actions/hitAction';
+import {ICharacter} from '../../../../models/character';
 
 export class Skeleton extends Character {
     actions: { [name: string]: IAction };
@@ -16,11 +17,11 @@ export class Skeleton extends Character {
         [DamageTypes.FROST]: 1.1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'hit': new HitAction(actor, 'hit', 1, 3, DamageTypes.CUTTING)
+            'hit': new HitAction(this, 'hit', 1, 3, DamageTypes.CUTTING)
         };
     }
 }

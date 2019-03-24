@@ -2,7 +2,6 @@ import {DamageTypes} from '../../../models/damageTypes';
 import {HitAction} from '../../../actions/hitAction';
 import {Character} from '../../../character';
 import {IAction} from '../../../../models/action';
-import {IUnit} from '../../../../models/unit';
 
 export class HellHound extends Character {
     actions: { [name: string]: IAction };
@@ -16,11 +15,11 @@ export class HellHound extends Character {
         [DamageTypes.FROST]: 1.1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'bite': new HitAction(actor, 'Bite', 1, 3, DamageTypes.CUTTING)
+            'bite': new HitAction(this, 'Bite', 1, 3, DamageTypes.CUTTING)
         };
     }
 }

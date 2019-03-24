@@ -3,11 +3,12 @@ import {ResistsModEffect} from '../resistsModEffect';
 import {DamageTypes} from '../../models/damageTypes';
 import {EffectType} from '../../models/effectType';
 import {IEffect} from '../../../models/effect';
+import {ICharacter} from '../../../models/character';
 
 export class BoneArmorEffect extends ResistsModEffect {
     effectsArr = [EffectType.BLEED, EffectType.POISON];
 
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super('bone_armor', {
             [DamageTypes.PIERCING]: 0.7,
             [DamageTypes.CUTTING]: 0.7

@@ -1,9 +1,10 @@
 import {IUnit} from '../../../models/unit';
 import {Effect} from '../../effect';
 import {DamageTypes} from '../../models/damageTypes';
+import {ICharacter} from '../../../models/character';
 
 export class ImprovedCritEffect extends Effect {
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super('improved_crit', 'Improved crit', 3, actor);
     }
 

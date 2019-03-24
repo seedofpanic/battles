@@ -1,10 +1,11 @@
 import {ResistsModEffect} from './resistsModEffect';
 import {IUnit} from '../../models/unit';
+import {ICharacter} from '../../models/character';
 
 export const BLESS_OF_ANCESTORS_EFFECT_ID = 'bless_of_ancestors';
 
 export class BlessOfAncestorsEffect extends ResistsModEffect {
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super(BLESS_OF_ANCESTORS_EFFECT_ID, 1.1, 'Bless', 3, actor);
     }
 }

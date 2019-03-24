@@ -23,18 +23,18 @@ export class Vampire extends Character {
         [DamageTypes.FROST]: 1
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'claws_strike': new HitAction(actor, 'Claws strike', 2, 4, DamageTypes.CUTTING, 0.12, 1.3),
-            'bite': new VampireBiteAction(actor),
-            'shadow_guard': new BuffAction(actor, ShadowGuardEffect, 'Shadow guard'),
-            'blood_armor': new BuffAction(actor, BloodArmorEffect, 'Blood armor'),
-            'doom_strike': new HitAction(actor, 'Doom strike', 4, 7, DamageTypes.DEATH, 0.15, 1.5),
-            'deadly_kinship': new DeadlyKinshipAction(actor),
-            'Bloody_symbol': new BloodySymbolAction(actor),
-            [CHEAT_DEATH_ACTION_ID]: new CheatDeathAction(actor)
+            'claws_strike': new HitAction(this, 'Claws strike', 2, 4, DamageTypes.CUTTING, 0.12, 1.3),
+            'bite': new VampireBiteAction(this),
+            'shadow_guard': new BuffAction(this, ShadowGuardEffect, 'Shadow guard'),
+            'blood_armor': new BuffAction(this, BloodArmorEffect, 'Blood armor'),
+            'doom_strike': new HitAction(this, 'Doom strike', 4, 7, DamageTypes.DEATH, 0.15, 1.5),
+            'deadly_kinship': new DeadlyKinshipAction(this),
+            'Bloody_symbol': new BloodySymbolAction(this),
+            [CHEAT_DEATH_ACTION_ID]: new CheatDeathAction(this)
         };
     }
 }

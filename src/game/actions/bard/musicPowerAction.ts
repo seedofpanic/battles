@@ -2,6 +2,7 @@ import {BuffAction} from '../buffAction';
 import {IUnit} from '../../../models/unit';
 import {MusicPowerEffect} from '../../effects/bard/musicPowerEffect';
 import {EffectType} from '../../models/effectType';
+import {ICharacter} from '../../../models/character';
 
 export class MusicPowerAction extends BuffAction {
     type = {
@@ -9,7 +10,7 @@ export class MusicPowerAction extends BuffAction {
         [EffectType.SONG]: true
     };
 
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super(actor, MusicPowerEffect, 'Music power', 6);
     }
 }

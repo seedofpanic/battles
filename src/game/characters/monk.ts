@@ -3,6 +3,7 @@ import {DamageTypes} from '../models/damageTypes';
 import {HitAction} from "../actions/hitAction";
 import {IAction} from '../../models/action';
 import {IUnit} from '../../models/unit';
+import {ICharacter} from '../../models/character';
 
 export class Monk extends Character {
     actions: { [name: string]: IAction };
@@ -16,12 +17,12 @@ export class Monk extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'fist_strike': new HitAction(actor,'Fist strike', 10, 15, DamageTypes.BLUNT),
-            'monkey_hook': new HitAction(actor, 'Monkey hook', 20, 30, DamageTypes.BLUNT),
+            'fist_strike': new HitAction(this,'Fist strike', 10, 15, DamageTypes.BLUNT),
+            'monkey_hook': new HitAction(this, 'Monkey hook', 20, 30, DamageTypes.BLUNT),
         };
     }
 }

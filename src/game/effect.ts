@@ -1,8 +1,8 @@
 import {DamageTypes} from './models/damageTypes';
 import {EffectType} from './models/effectType';
-import {IUnit} from '../models/unit';
 import {IEffect} from '../models/effect';
 import {IAction} from '../models/action';
+import {ICharacter} from '../models/character';
 
 export abstract class Effect implements IEffect {
     type: {[name: string]: boolean} = {
@@ -10,31 +10,32 @@ export abstract class Effect implements IEffect {
     };
     canStack = true;
 
-    constructor(public id: string, public name: string, public roundsCount: number, public actor: IUnit) {
+    constructor(public id: string, public name: string, public roundsCount: number, public actor: ICharacter) {
     }
 
-    onAdd(unit: IUnit) {
+    onAdd(unit: ICharacter) {
     }
 
-    onRemove(unit: IUnit) {
+    onRemove(unit: ICharacter) {
     }
 
-    preTick(unit: IUnit) {
+    preTick(unit: ICharacter) {
         this.roundsCount--;
     }
 
-    postTick(unit: IUnit) {
+    postTick(unit: ICharacter) {
     }
 
     getIsEnded(): boolean {
         return this.roundsCount <= 0;
     }
 
-    damageMod(value: number, type: DamageTypes, self: IUnit, target: IUnit, source: IAction | IEffect): number {
+    damageMod(value: number,
+              type: DamageTypes, self: ICharacter, target: ICharacter, source: IAction | IEffect): number {
         return value;
     }
 
-    resistMod(value: number, type: DamageTypes, self: IUnit, source: IAction | IEffect): number {
+    resistMod(value: number, type: DamageTypes, self: ICharacter, source: IAction | IEffect): number {
         return value;
     }
 
@@ -46,7 +47,7 @@ export abstract class Effect implements IEffect {
         return value;
     }
 
-    onDamage(damage: number, type: DamageTypes, self: IUnit, source: IAction | IEffect) {
+    onDamage(damage: number, type: DamageTypes, self: ICharacter, source: IAction | IEffect) {
     }
 
     critMod(value: number, type: DamageTypes) {
@@ -66,7 +67,7 @@ export abstract class Effect implements IEffect {
     }
 
     onDeath(value: number, oldHp: number,
-            damage: number, type: DamageTypes, self: IUnit, action: IAction | IEffect): number {
+            damage: number, type: DamageTypes, self: ICharacter, action: IAction | IEffect): number {
         return value;
     }
 }

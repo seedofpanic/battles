@@ -24,18 +24,18 @@ export class Draconite extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'tail_sweep': new HitAction(actor, 'Tail sweep', 4, 7, DamageTypes.BLUNT, 0.1, 1.5),
-            'claw strike': new ClawStrikeAction(actor),
-            'fire_breath': new HitAction(actor, 'Fire breath', 5, 8, DamageTypes.FIRE),
-            'flaming_armor': new BuffAction(actor, FlamingArmorEffect, 'Flaming armor', 5),
-            'poison_bite': new PoisonBiteAction(actor),
-            'wings_of_steel': new BuffAction(actor, WingsOfSteelEffect, 'Wings of steel', 6),
-            'high_vitality': new BuffAction(actor, HighVitalityEffect, 'High vitality', 6),
-            'summon_imp': new SummonAction(actor, 'Summon Imp', 'imp', Imp),
+            'tail_sweep': new HitAction(this, 'Tail sweep', 4, 7, DamageTypes.BLUNT, 0.1, 1.5),
+            'claw strike': new ClawStrikeAction(this),
+            'fire_breath': new HitAction(this, 'Fire breath', 5, 8, DamageTypes.FIRE),
+            'flaming_armor': new BuffAction(this, FlamingArmorEffect, 'Flaming armor', 5),
+            'poison_bite': new PoisonBiteAction(this),
+            'wings_of_steel': new BuffAction(this, WingsOfSteelEffect, 'Wings of steel', 6),
+            'high_vitality': new BuffAction(this, HighVitalityEffect, 'High vitality', 6),
+            'summon_imp': new SummonAction(this, 'Summon Imp', 'imp', Imp),
         };
     }
 }

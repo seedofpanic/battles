@@ -2,6 +2,7 @@ import {Action} from '../../action';
 import {IUnit} from '../../../models/unit';
 import {ICombat} from '../../../models/combat';
 import {EffectType} from '../../models/effectType';
+import {ICharacter} from '../../../models/character';
 
 const removeTypes: EffectType[] = [
     EffectType.BLEED,
@@ -12,13 +13,13 @@ const removeTypes: EffectType[] = [
 
 export class ThiefAmuletAction extends Action {
 
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super(actor, 'Thief amulet', 5);
     }
 
-    beforeResolve(combat?: ICombat, self?: IUnit, target?: IUnit) {
+    beforeResolve(combat?: ICombat, self?: ICharacter, target?: ICharacter) {
         super.beforeResolve(combat, self, target);
-        self.character.effects = self.character.effects.filter(effect =>
+        self.effects = self.effects.filter(effect =>
             !removeTypes.some(type => effect.type[type])
         );
     }

@@ -21,7 +21,7 @@ import {Amazon} from './characters/amazon';
 import {WitchHunter} from './characters/witchHunter';
 
 export const allowedCharacters: {
-    [name: string]: { name: string, create: { new(actor: IUnit, id: string): ICharacter } }
+    [name: string]: { name: string, create: { new(id: string): ICharacter } }
 } = {
     'barbarian': {
         name: 'Barbarian',

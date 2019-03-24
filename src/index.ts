@@ -32,17 +32,30 @@ app.use('/auth', authRouteInit());
 export function doAction(player: Player, action: any) {
 
     switch (action.type) {
+        case 'get_character_list':
+            Game.showCharacters(player);
+            break;
         case 'select_character':
         case 'ready':
-            Game.playerSelectCharacter(player, action.payload);
+            if (Game.playerSelectCharacter(player, action.payload)) {
+                player.send('character_selected', player.characterId);
+            }
 
             break;
         case 'start':
-            player.endCombat();
+            if (!player.characterId) {
+                return;
+            }
+
             Game.startCombat(player);
 
             if (action.payload.withBot) {
                 Game.addBot();
+            }
+
+            if (player.character.combat.isFull()) {
+                Game.removeCombatFromQueue(player.character.combat);
+                player.character.combat.start();
             }
 
             break;
@@ -53,17 +66,16 @@ export function doAction(player: Player, action: any) {
             Game.startDuel(player, action.combatId || null);
             break;
         case 'stop':
-            Game.combatsQueue.splice(Game.combatsQueue.indexOf(player.currentCombat), 1);
-            player.currentCombat = undefined;
+            player.leaveCombat();
 
             player.send('note', 'You left the queue');
             break;
         case 'select_skill':
             Game.setAction(player, action.payload);
             break;
+        case 'leave_fight':
         case 'cancel_fight':
-            player.kill();
-            Game.endCombat(player.currentCombat);
+            Game.leaveCombat(player);
             break;
         case 'info':
             player.send('note', `You already has played: ${player.played}`);
@@ -82,11 +94,9 @@ export function doAction(player: Player, action: any) {
         case 'auth':
             break;
         case 'select_target':
-            const unit = player.currentCombat.units[action.payload.unitId];
+            const character = player.character.combat.characters[action.payload.unitId];
 
-            if (unit.team === player.team) {
-                unit.targetId = action.payload.targetId;
-            }
+            character.targetId = action.payload.targetId;
 
             break;
         default:
@@ -132,19 +142,8 @@ app.ws('/ws', (ws, req) => {
     });
 
     ws.on('close', () => {
-        if (player.currentCombat) {
-            Object.keys(player.currentCombat.units).forEach(id => {
-                const playerTo = player.currentCombat.units[id];
-
-                if (player === playerTo) {
-                     return;
-                }
-
-                playerTo.send('note', 'Opponent left, you won!');
-                playerTo.currentCombat = undefined;
-            });
-
-            Game.endCombat(player.currentCombat);
+        if (player.character) {
+            player.leaveCombat();
         }
 
         if (req.user) {

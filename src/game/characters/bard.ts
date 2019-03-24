@@ -23,18 +23,18 @@ export class Bard extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'music_power': new MusicPowerAction(actor),
-            'stunning_song': new StunningSongAction(actor),
-            'ear_bleed': new EarBleedAction(actor),
-            'healing_melody': new HealingMelodyAction(actor),
-            'demoralize': new DemoralizeAction(actor),
-            'knife_throw': new KnifeThrowAction(actor),
-            'guitar_strike': new GuitarStrikeAction(actor),
-            'immunity': new ImmunityAction(actor),
+            'music_power': new MusicPowerAction(this),
+            'stunning_song': new StunningSongAction(this),
+            'ear_bleed': new EarBleedAction(this),
+            'healing_melody': new HealingMelodyAction(this),
+            'demoralize': new DemoralizeAction(this),
+            'knife_throw': new KnifeThrowAction(this),
+            'guitar_strike': new GuitarStrikeAction(this),
+            'immunity': new ImmunityAction(this),
         };
     }
 }

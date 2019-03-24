@@ -24,18 +24,18 @@ export class Priest extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'lite_strike': new LiteStrikeAction(actor),
-            'self_heal': new SelfHealAction(actor),
-            'flash_of_lite': new FlashOfLiteAction(actor),
-            'great_miracle': new GreatMiracleAction(actor),
-            'invulnerability': new InvulnerabilityAction(actor),
-            'pray_of_lite': new PrayOfLiteAction(actor),
-            'death_pray': new DeathPrayAction(actor),
-            'lite_blast': new LiteBlastAction(actor),
+            'lite_strike': new LiteStrikeAction(this),
+            'self_heal': new SelfHealAction(this),
+            'flash_of_lite': new FlashOfLiteAction(this),
+            'great_miracle': new GreatMiracleAction(this),
+            'invulnerability': new InvulnerabilityAction(this),
+            'pray_of_lite': new PrayOfLiteAction(this),
+            'death_pray': new DeathPrayAction(this),
+            'lite_blast': new LiteBlastAction(this),
 
         };
     }

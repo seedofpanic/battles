@@ -24,18 +24,18 @@ export class Warrior extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'piercing_strike': new PiercingStrikeAction(actor),
-            'shield_block': new BuffAction(actor, ShieldBlockEffect, 'Shield block'),
-            'double_strike': new MultipleStrikeAction(actor,'Double strike', new PiercingStrikeAction(actor), 2, 0.3),
-            'shield_of_anger': new BuffAction(actor, ShieldOfAngerEffect,'Shield of anger', 3),
-            'great_armor': new BuffAction(actor, GreatArmorEffect, 'Great armor'),
-            'shield_strike': new ShieldAction(actor),
-            'blade_sweep': new BladeSweepAction(actor),
-            'boiling_rage': new BuffAction(actor, BoilingRageEffect, 'Boiling rage'),
+            'piercing_strike': new PiercingStrikeAction(this),
+            'shield_block': new BuffAction(this, ShieldBlockEffect, 'Shield block'),
+            'double_strike': new MultipleStrikeAction(this,'Double strike', new PiercingStrikeAction(this), 2, 0.3),
+            'shield_of_anger': new BuffAction(this, ShieldOfAngerEffect,'Shield of anger', 3),
+            'great_armor': new BuffAction(this, GreatArmorEffect, 'Great armor'),
+            'shield_strike': new ShieldAction(this),
+            'blade_sweep': new BladeSweepAction(this),
+            'boiling_rage': new BuffAction(this, BoilingRageEffect, 'Boiling rage'),
         };
     }
 }

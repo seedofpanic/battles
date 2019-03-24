@@ -4,13 +4,14 @@ import {DamageTypes} from '../../models/damageTypes';
 import {IAction} from '../../../models/action';
 import {IEffect} from '../../../models/effect';
 import {EffectType} from '../../models/effectType';
+import {ICharacter} from '../../../models/character';
 
 export class VanishEffect extends Effect {
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super('vanish', 'Vanish', 1, actor);
     }
 
-    resistMod(value: number, type: DamageTypes, self: IUnit, source: IAction | IEffect): number {
+    resistMod(value: number, type: DamageTypes, self: ICharacter, source: IAction | IEffect): number {
         return 0;
     }
 

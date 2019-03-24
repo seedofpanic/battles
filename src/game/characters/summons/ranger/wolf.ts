@@ -3,6 +3,7 @@ import {HitAction} from '../../../actions/hitAction';
 import {Character} from '../../../character';
 import {IAction} from '../../../../models/action';
 import {IUnit} from '../../../../models/unit';
+import {ICharacter} from '../../../../models/character';
 
 export class Wolf extends Character {
     actions: { [name: string]: IAction };
@@ -16,11 +17,11 @@ export class Wolf extends Character {
         [DamageTypes.FROST]: 1.1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'bite': new HitAction(actor, 'Bite', 1, 3, DamageTypes.CUTTING)
+            'bite': new HitAction(this, 'Bite', 1, 3, DamageTypes.CUTTING)
         };
     }
 }

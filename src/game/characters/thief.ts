@@ -23,18 +23,18 @@ export class Thief extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'poisoned_knife': new PoisonedKnifeAction(actor),
-            'brass_knock': new BrassKnockAction(actor),
-            'handmade_bomb': new HandmadeBombAction(actor),
-            'improved_crit': new ImprovedCritAction(actor),
-            'simple_trick': new SimpleTrickAction(actor),
-            'brotherhood_covenant': new BrotherhoodCovenantAction(actor),
-            'throwing_knives': new ThrowingKnivesAction(actor),
-            'thief_amulet': new ThiefAmuletAction(actor),
+            'poisoned_knife': new PoisonedKnifeAction(this),
+            'brass_knock': new BrassKnockAction(this),
+            'handmade_bomb': new HandmadeBombAction(this),
+            'improved_crit': new ImprovedCritAction(this),
+            'simple_trick': new SimpleTrickAction(this),
+            'brotherhood_covenant': new BrotherhoodCovenantAction(this),
+            'throwing_knives': new ThrowingKnivesAction(this),
+            'thief_amulet': new ThiefAmuletAction(this),
         };
     }
 }

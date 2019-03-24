@@ -1,9 +1,10 @@
 import {ResistsModEffect} from '../resistsModEffect';
 import {DamageTypes} from '../../models/damageTypes';
 import {IUnit} from '../../../models/unit';
+import {ICharacter} from '../../../models/character';
 
 export class HardenedSkinEffect extends ResistsModEffect {
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super('hardened_skin', {
             [DamageTypes.PIERCING]: 0.8,
             [DamageTypes.BLUNT]: 0.8,

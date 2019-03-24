@@ -16,11 +16,11 @@ export class Imp extends Character {
         [DamageTypes.FROST]: 1.1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'fireball': new FireBallAction(actor)
+            'fireball': new FireBallAction(this)
         };
     }
 }

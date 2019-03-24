@@ -10,6 +10,7 @@ import {PoisonBladeAction} from '../actions/ninja/PoisonBladeAction';
 import {VanishAction} from '../actions/ninja/vanishAction';
 import {IAction} from '../../models/action';
 import {IUnit} from '../../models/unit';
+import {ICharacter} from '../../models/character';
 
 export class Ninja extends Character {
     actions: { [name: string]: IAction };
@@ -23,18 +24,18 @@ export class Ninja extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'shuriken_hurl': new ShurikenHurlAction(actor),
-            'poisoned_kunai': new PoisonKunaiAction(actor),
-            'sudden_strike': new SuddenStrikeAction(actor),
-            'bloody_wound': new BloodyWoundAction(actor),
-            'stun_grenade': new StunGrenadeAction(actor),
-            'chain_shackle': new ChainShackleAction(actor),
-            'poison_blade': new PoisonBladeAction(actor),
-            'vanish': new VanishAction(actor)
+            'shuriken_hurl': new ShurikenHurlAction(this),
+            'poisoned_kunai': new PoisonKunaiAction(this),
+            'sudden_strike': new SuddenStrikeAction(this),
+            'bloody_wound': new BloodyWoundAction(this),
+            'stun_grenade': new StunGrenadeAction(this),
+            'chain_shackle': new ChainShackleAction(this),
+            'poison_blade': new PoisonBladeAction(this),
+            'vanish': new VanishAction(this)
         };
     }
 }

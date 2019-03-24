@@ -12,6 +12,7 @@ import {FireBurstEffect} from '../effects/fireBurstEffect';
 import {BurnicideAction} from '../actions/mage/burnicideAction';
 import {IAction} from '../../models/action';
 import {IUnit} from '../../models/unit';
+import {ICharacter} from '../../models/character';
 
 export class Mage extends Character {
     actions: { [name: string]: IAction };
@@ -25,18 +26,18 @@ export class Mage extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'fireball': new FireBallAction(actor),
-            'magic_shield': new BuffAction(actor, MagicShieldEffect, 'Magic shield'),
-            'dazzle': new DazzleAction(actor),
-            'fire_beam': new FireBeamAction(actor),
-            'stone_skin': new BuffAction(actor, StoneSkinEffect, 'Stone skin', 4),
-            'magical_burn': new MagicalBurnAction(actor),
-            'fire_burst': new DeBuffAction(actor, FireBurstEffect, 'Fire burst', 5),
-            'burnicide': new BurnicideAction(actor),
+            'fireball': new FireBallAction(this),
+            'magic_shield': new BuffAction(this, MagicShieldEffect, 'Magic shield'),
+            'dazzle': new DazzleAction(this),
+            'fire_beam': new FireBeamAction(this),
+            'stone_skin': new BuffAction(this, StoneSkinEffect, 'Stone skin', 4),
+            'magical_burn': new MagicalBurnAction(this),
+            'fire_burst': new DeBuffAction(this, FireBurstEffect, 'Fire burst', 5),
+            'burnicide': new BurnicideAction(this),
         };
     }
 }

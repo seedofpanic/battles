@@ -3,11 +3,12 @@ import {DamageTypes} from '../models/damageTypes';
 import {EffectType} from '../models/effectType';
 import {IUnit} from '../../models/unit';
 import {IEffect} from '../../models/effect';
+import {ICharacter} from '../../models/character';
 
 export const BLOOD_ARMOR_EFFECT_ID = 'blood_armor';
 
 export class BloodArmorEffect extends ResistsModEffect {
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super(BLOOD_ARMOR_EFFECT_ID, {
             [DamageTypes.HOLY]: 0.8,
             [DamageTypes.DEATH]: 0.8

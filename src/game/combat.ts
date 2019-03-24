@@ -1,9 +1,10 @@
 import {ICombat} from '../models/combat';
 import {IPlayer} from '../models/player';
 import {IUnit} from '../models/unit';
+import {ICharacter} from '../models/character';
 
 export class Combat implements ICombat {
-    units: {[name: string]: IUnit} = {};
+    characters: {[name: string]: ICharacter} = {};
     isEnded = false;
     battleLog: string[] = [];
     teams: string[];
@@ -15,84 +16,86 @@ export class Combat implements ICombat {
         ];
     }
 
-    get unitsArr(): IUnit[] {
-        return Object.keys(this.units).map(key => this.units[key]);
+    get charactersArr(): ICharacter[] {
+        return Object.keys(this.characters).map(key => this.characters[key]);
     }
 
     allReady(): boolean {
-        return Object.keys(this.units).every(id => {
-            return !!this.units[id].isReady();
+        return Object.keys(this.characters).every(id => {
+            return !!this.characters[id].isReady();
         });
     }
 
     perform() {
-        const units = this.unitsArr;
+        const characters = this.charactersArr;
 
-        units.forEach(unit => unit.beforeResolve(this.units[unit.targetId]));
-        units.forEach(unit => unit.preTick());
-        units.forEach(unit => unit.perform(this.units[unit.targetId]));
-        units.forEach(unit => unit.postTick());
+        characters.forEach(character => character.beforeResolve(this.characters[character.targetId]));
+        characters.forEach(character => character.preTick());
+        characters.forEach(character => character.perform(this.characters[character.targetId]));
+        characters.forEach(character => character.postTick());
 
-        units.forEach(unit => {
-            unit.character.effects =
-                unit.character.effects.filter(effect => {
+        characters.forEach(character => {
+            character.effects =
+                character.effects.filter(effect => {
                     const isEnded = effect.getIsEnded();
 
                     if (isEnded) {
-                        effect.onRemove(unit);
+                        effect.onRemove(character);
                     }
 
                     return !isEnded;
                 });
         });
 
-        const team1IsDead = Object.keys(this.units).every(key => {
-            return (this.units[key].team === this.teams[0]) ||
-                (!this.units[key].isValuable ||
-                    this.units[key].character.isDead);
+        this.checkIsEnded();
+    }
+
+    checkIsEnded() {
+        const team1IsDead = !Object.keys(this.characters).some(key => {
+            return (this.characters[key].team === this.teams[0]) &&
+                this.characters[key].isValuable &&
+                !this.characters[key].isDead;
         });
-        const team2IsDead = Object.keys(this.units).every(key => {
-            return (this.units[key].team === this.teams[1]) ||
-                (!this.units[key].isValuable ||
-                    this.units[key].character.isDead);
+        const team2IsDead = !Object.keys(this.characters).some(key => {
+            return (this.characters[key].team === this.teams[1]) &&
+                this.characters[key].isValuable &&
+                !this.characters[key].isDead;
         });
 
         this.isEnded = team1IsDead || team2IsDead;
     }
 
     sendHealth() {
-        const units = this.unitsArr;
-        units.forEach(unitTo => {
-            units.forEach(unit => {
-                unitTo.send('note',
-                    `${unit.character.name} \ 
-                    ${unit.character.health.toFixed(2)}/${unit.character.healthMax.toFixed(2)}`);
+        const characters = this.charactersArr;
+        characters.forEach(characterTo => {
+            characters.forEach(character => {
+                characterTo.send('note',
+                    `${character.name} \ 
+                    ${character.health.toFixed(2)}/${character.healthMax.toFixed(2)}`);
             });
         });
     }
 
     showResult() {
-        Object.keys(this.units).forEach(id => {
-            const unit = this.units[id];
+        Object.keys(this.characters).forEach(id => {
+            const character = this.characters[id];
 
-            unit.broadcastUpdate();
+            character.broadcastUpdate();
 
-            unit.send('note', this.battleLog.join('\n'));
+            character.send('note', this.battleLog.join('\n'));
 
             if (this.isEnded) {
-                unit.send('note', this.getDeadResult(id));
-
-                unit.currentCombat = undefined;
+                character.send('note', this.getDeadResult(id));
 
                 return;
             }
 
-            unit.sendSkills();
+            character.sendSkills();
         });
 
         if (this.isEnded) {
-            Object.keys(this.units).forEach(id => {
-                this.units[id].currentCombat = null;
+            Object.keys(this.characters).forEach(id => {
+                this.removeCharacter(this.characters[id]);
             });
         }
 
@@ -100,9 +103,9 @@ export class Combat implements ICombat {
     }
 
     getDeadResult(myId: string): string {
-        return Object.keys(this.units)
+        return Object.keys(this.characters)
             .map(id => {
-                if (this.units[id].character.isDead) {
+                if (this.characters[id].isDead) {
                     if (myId === id) {
                         return 'You died, the duel is over';
                     } else {
@@ -113,74 +116,68 @@ export class Combat implements ICombat {
     }
 
     getVsMessage(): string {
-        const units = this.unitsArr;
+        const characters = this.charactersArr;
 
-        return `${units[0].getName()} vs ${units[1].getName()}`;
+        return `${characters[0].name} vs ${characters[1].name}`;
     }
 
     start() {
-        Object.keys(this.units).forEach(chatId => {
-            this.units[chatId].send('note', 'Opponent found: ' + this.getVsMessage());
-            this.units[chatId].sendSkills();
+        Object.keys(this.characters).forEach(chatId => {
+            this.characters[chatId].send('note', 'Opponent found: ' + this.getVsMessage());
+            this.characters[chatId].sendSkills();
         });
     }
 
-    addPlayer(player: IPlayer) {
-        this.addUnit(player);
-        this.setTeamToPlayer(player);
-        player.consumeUpdate();
+    addCharacter(character: ICharacter, team: string = null) {
+        character.combat = this;
+
+        this.characters[character.id] = character;
+
+        if (!team) {
+            this.setTeamToCharacter(character);
+            character.consumeUpdate();
+        }
+
+        character.broadcastUpdate();
     }
 
-    addUnit(player: IUnit) {
-        player.currentCombat = this;
-
-        this.units[player.id] = player;
-    }
-
-    setTeamToPlayer(player: IPlayer) {
-        const units = this.unitsArr;
+    setTeamToCharacter(character: ICharacter) {
+        const characters = this.charactersArr;
 
         for (let i = 0; i < this.teams.length; i++) {
-            if (!units.some(unit => unit.team === this.teams[i])) {
-                player.team = this.teams[i];
+            if (!characters.some(c => c.team === this.teams[i])) {
+                character.team = this.teams[i];
                 break;
             }
         }
 
-        player.send('set_teams', {
-            myTeam: player.team,
-            opponentTeam: this.teams.filter(team => player.team !== team)[0]
+        character.send('set_teams', {
+            myTeam: character.team,
+            opponentTeam: this.teams.filter(team => character.team !== team)[0]
         });
     }
 
     isFull() {
-        return Object.keys(this.units).length === 2;
+        return Object.keys(this.characters).length === 2;
     }
 
     isReadyToStart(): boolean {
-        return this.isFull() &&
-            Object.keys(this.units).every(id => {
-                return !!this.units[id].character;
-            });
+        return this.isFull();
     }
 
-    addSummon(unit: IUnit) {
-        this.addUnit(unit);
-    }
+    removeCharacter(character: ICharacter) {
+        delete this.characters[character.id];
 
-    removeUnit(unit: IUnit) {
-        delete this.units[unit.id];
-        unit.currentCombat = null;
-
+        character.send('set_in_battle', false);
         this.broadcast('remove_unit', {
-            id: unit.id,
-            team: unit.team
+            id: character.id,
+            team: character.team
         });
     }
 
     broadcast(type: string, payload: any) {
-        Object.keys(this.units).forEach(key => {
-            this.units[key].send(type, payload);
+        Object.keys(this.characters).forEach(key => {
+            this.characters[key].send(type, payload);
         });
     }
 }

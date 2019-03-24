@@ -1,9 +1,10 @@
 import {ResistsModEffect} from '../resistsModEffect';
 import {IUnit} from '../../../models/unit';
 import {DamageTypes} from '../../models/damageTypes';
+import {ICharacter} from '../../../models/character';
 
 export class HideEffect extends ResistsModEffect {
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super('hide', {
             [DamageTypes.PIERCING]: 0,
             [DamageTypes.CUTTING]: 0,

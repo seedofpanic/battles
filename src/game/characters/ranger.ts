@@ -23,18 +23,18 @@ export class Ranger extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'accurate_shot': new AccurateShotAction(actor),
-            'triple_shot': new TripleShotAction(actor),
-            'wolf': new WolfAction(actor),
-            'hide': new HideAction(actor),
-            'explosion_arrow': new ExplosionArrowAction(actor),
-            'smoke_screen': new SmokeScreenAction(actor),
-            'beast_inside': new BeastInsideAction(actor),
-            'animal_care': new AnimalCareAction(actor),
+            'accurate_shot': new AccurateShotAction(this),
+            'triple_shot': new TripleShotAction(this),
+            'wolf': new WolfAction(this),
+            'hide': new HideAction(this),
+            'explosion_arrow': new ExplosionArrowAction(this),
+            'smoke_screen': new SmokeScreenAction(this),
+            'beast_inside': new BeastInsideAction(this),
+            'animal_care': new AnimalCareAction(this),
         };
     }
 }

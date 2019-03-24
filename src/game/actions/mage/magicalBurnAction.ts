@@ -3,13 +3,14 @@ import {Action} from '../../action';
 import {BurningDotEffect} from '../../effects/burningDotEffect';
 import {IUnit} from '../../../models/unit';
 import {ICombat} from '../../../models/combat';
+import {ICharacter} from '../../../models/character';
 
 export class MagicalBurnAction extends Action {
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super(actor, 'Magical burn', 5);
     }
 
-    perform(combat: ICombat, self?: IUnit, target?: IUnit) {
+    perform(combat: ICombat, self?: ICharacter, target?: ICharacter) {
         super.perform(combat, self, target);
 
         if (Math.random() > 0.5) {

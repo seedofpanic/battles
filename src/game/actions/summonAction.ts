@@ -7,17 +7,19 @@ import {ICharacter} from '../../models/character';
 let nextSummonId = 1;
 
 export class SummonAction extends Action {
-    constructor(actor: IUnit, name: string, private summonId: string,
-                private summon: new (actor: IUnit, id: string) => ICharacter) {
+    constructor(actor: ICharacter, name: string, private summonId: string,
+                private summon: new (id: string) => ICharacter) {
         super(actor, name);
     }
 
-    perform(combat: ICombat, self: IUnit, target: IUnit) {
-        const summon = new this.summon(self, this.summonId);
+    perform(combat: ICombat, self: ICharacter, target: ICharacter) {
+        const summon = new this.summon(this.summonId);
         const team = self.team;
         const unit = new Ai(`${summon.id}_${nextSummonId++}`, team, summon, combat);
 
-        combat.addSummon(unit);
+        unit.character = summon;
+
+        combat.addCharacter(summon, self.team);
 
         super.perform(combat, self, target);
     }

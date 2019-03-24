@@ -23,18 +23,18 @@ export class Amazon extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'far_lunge': new FarLungeAction(actor),
-            'blades_whirlwind': new BladesWhirlwindAction(actor),
-            'defence_stance': new DefenceStanceAction(actor),
-            'battle_cry': new BattleCryAction(actor),
-            'second_wind': new SecondWindAction(actor),
-            'battle_stance': new BattleStatnceAction(actor),
-            'suppress_shout': new SuppressShoutAction(actor),
-            'spear_throw': new SpearThrowAction(actor)
+            'far_lunge': new FarLungeAction(this),
+            'blades_whirlwind': new BladesWhirlwindAction(this),
+            'defence_stance': new DefenceStanceAction(this),
+            'battle_cry': new BattleCryAction(this),
+            'second_wind': new SecondWindAction(this),
+            'battle_stance': new BattleStatnceAction(this),
+            'suppress_shout': new SuppressShoutAction(this),
+            'spear_throw': new SpearThrowAction(this)
         };
     }
 }

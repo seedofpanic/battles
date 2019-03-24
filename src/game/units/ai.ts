@@ -1,28 +1,26 @@
 import {fairRandom} from '../../utils/fairRandom';
 import {StunAction} from '../actions/stunAction';
-import {DamageTypes} from '../models/damageTypes';
 import {Unit} from '../unit';
 import {ICharacter} from '../../models/character';
 import {ICombat} from '../../models/combat';
-import {IEffect} from '../../models/effect';
-import {IAction} from '../../models/action';
 
 export class Ai extends Unit {
     constructor(id: string, team: string, public character: ICharacter, combat: ICombat) {
         super(id);
 
-        this.currentCombat = combat;
-        this.team = team;
+        this.character.combat = combat;
+        this.character.team = team;
+        this.character.setUnit(this);
     }
 
     beforeResolve(target: Unit) {
-        if (this.isStunned) {
-            this.character.action = new StunAction(this);
+        if (this.character.isStunned) {
+            this.character.action = new StunAction(this.character);
         } else {
             this.selectAction();
         }
 
-        super.beforeResolve(target);
+        super.character.beforeResolve(target.character);
     }
 
     selectAction() {
@@ -33,17 +31,16 @@ export class Ai extends Unit {
     }
 
     send(type: string, payload: any) {
+        if (type === 'select_skill') {
+            if (this.character.isStunned) {
+                this.character.action = new StunAction(this.character);
+            } else {
+                this.selectAction();
+            }
+        }
     }
 
     isReady(): boolean {
         return true;
-    }
-
-    decreaseHp(action: IAction | IEffect, damage: number, type: DamageTypes) {
-        super.decreaseHp(action, damage, type);
-
-        if (this.character.isDead) {
-            this.currentCombat.removeUnit(this);
-        }
     }
 }

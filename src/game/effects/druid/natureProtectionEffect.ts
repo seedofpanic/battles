@@ -3,13 +3,14 @@ import {DamageTypes} from '../../models/damageTypes';
 import {IUnit} from '../../../models/unit';
 import {IEffect} from '../../../models/effect';
 import {IAction} from '../../../models/action';
+import {ICharacter} from '../../../models/character';
 
 export class NatureProtectionEffect extends ResistsModEffect {
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super('nature_protection', 0.7, 'Nature protection', 3, actor);
     }
 
-    resistMod(value: number, type: DamageTypes, self: IUnit, source: IAction | IEffect): number {
+    resistMod(value: number, type: DamageTypes, self: ICharacter, source: IAction | IEffect): number {
         if (source.actor.isValuable) {
             return value;
         }

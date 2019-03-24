@@ -23,18 +23,18 @@ export class WitchHunter extends Character {
         [DamageTypes.FROST]: 1,
     };
 
-    constructor(actor: IUnit, id: string) {
+    constructor(id: string) {
         super(id);
 
         this.actions = {
-            'rapier_attack': new RapierAttackAction(actor),
-            'executing_sward': new ExecutingSwardAction(actor),
-            'perfect_shot': new PerfectShotAction(actor),
-            'curse': new CurseAction(actor),
-            'god_armour': new GodArmourAction(actor),
-            'healing': new HealingAction(actor),
-            'bloody_haze': new BloodyHazeAction(actor),
-            'bane': new BaneAction(actor)
+            'rapier_attack': new RapierAttackAction(this),
+            'executing_sward': new ExecutingSwardAction(this),
+            'perfect_shot': new PerfectShotAction(this),
+            'curse': new CurseAction(this),
+            'god_armour': new GodArmourAction(this),
+            'healing': new HealingAction(this),
+            'bloody_haze': new BloodyHazeAction(this),
+            'bane': new BaneAction(this)
         };
     }
 }

@@ -1,6 +1,7 @@
 import {Effect} from '../effect';
 import {EffectType} from '../models/effectType';
 import {IUnit} from '../../models/unit';
+import {ICharacter} from '../../models/character';
 
 const NAME = 'Stun';
 
@@ -12,7 +13,7 @@ export class StunEffect extends Effect {
         [EffectType.STUN]: true
     };
 
-    constructor(roundsCount: number, actor: IUnit) {
+    constructor(roundsCount: number, actor: ICharacter) {
         super(STUN_EFFECT_ID, NAME, roundsCount, actor);
     }
 

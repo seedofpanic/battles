@@ -2,6 +2,7 @@ import {HitAction} from '../hitAction';
 import {DamageTypes} from '../../models/damageTypes';
 import {IUnit} from '../../../models/unit';
 import {ICombat} from '../../../models/combat';
+import {ICharacter} from '../../../models/character';
 
 const NAME = 'Fire beam';
 const MIN_DAMAGE = 4;
@@ -10,7 +11,7 @@ const CRIT_CHANCE = 0.15;
 const CRIT_MULTIPLIER = 1.4;
 
 export class FireBeamAction extends HitAction {
-    constructor(actor: IUnit) {
+    constructor(actor: ICharacter) {
         super(
             actor,
             NAME,

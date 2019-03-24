@@ -1,10 +1,9 @@
-import {IUnit} from './unit';
-import {IPlayer} from './player';
+import {ICharacter} from './character';
 
 export interface ICombat {
     isEnded: boolean;
-    units: {[name: string]: IUnit};
-    unitsArr: IUnit[];
+    characters: {[name: string]: ICharacter};
+    charactersArr: ICharacter[];
     battleLog: string[];
 
     isReadyToStart(): boolean;
@@ -17,13 +16,13 @@ export interface ICombat {
 
     showResult(): void;
 
-    addPlayer(player: IPlayer): void;
+    addCharacter(character: ICharacter, team?: string): void;
 
     isFull(): boolean;
 
-    removeUnit(self: IUnit): void;
-
-    addSummon(unit: IUnit): void;
+    removeCharacter(character: ICharacter): void;
 
     sendHealth(): void;
+
+    checkIsEnded(): void;
 }
