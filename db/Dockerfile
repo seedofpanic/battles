@@ -1,6 +1,5 @@
 FROM mongo:3.4
 
-ADD ./archives /archives
 ADD ./scripts/entrypoint.sh /entrypoint.sh
 ADD ./scripts/restore.sh /restore.sh
 ADD ./scripts/create_user.sh /create_user.sh
