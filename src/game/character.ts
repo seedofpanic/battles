@@ -160,15 +160,16 @@ export abstract class Character implements ICharacter {
     }
 
     decreaseHp(action: IAction | IEffect, damage: number, type: DamageTypes) {
-        this.effects.forEach(effect => effect.onDamage(damage, type, this, action));
+        if (this.health <= damage) {
+            this.health = this.effects
+                .reduce((result, effect) => effect.onDeath(result, this.health, damage, type, this, action),
+                    0);
+        }
 
         if (this.health > damage) {
             this.health -= damage;
         } else {
             this.isDead = true;
-            this.health = this.effects
-                .reduce((result, effect) => effect.onDeath(result, this.health, damage, type, this, action),
-                    0);
 
             if (this.isValuable) {
                 const characters = this.combat.charactersArr;

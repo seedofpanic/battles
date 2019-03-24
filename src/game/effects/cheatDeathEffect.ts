@@ -15,10 +15,6 @@ export class CheatDeathEffect extends Effect {
 
     onDeath(value: number, oldHp: number,
             damage: number, type: DamageTypes, self: ICharacter, action: IAction | IEffect): number {
-        if (Math.random() > 0.5) {
-            return self.healthMax;
-        }
-
-        return value;
+        return self.healthMax;
     }
 }
