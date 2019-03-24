@@ -9,7 +9,6 @@ import {DeadlyKinshipAction} from '../actions/vampire/deadlyKinshipAction';
 import {BloodySymbolAction} from '../actions/vampire/bloodySymbolAction';
 import {CHEAT_DEATH_ACTION_ID, CheatDeathAction} from '../actions/vampire/cheatDeathAction';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 
 export class Vampire extends Character {
     actions: { [name: string]: IAction };
@@ -17,10 +16,15 @@ export class Vampire extends Character {
     healthMax = 80;
     name = 'Vampire';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
-        [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1
+        [DamageTypes.POISON]: 0.75,
+        [DamageTypes.DEATH]: 0.25,
+        [DamageTypes.HOLY]: 1.5,
+        [DamageTypes.SHADOW]: 0.5,
+        [DamageTypes.BLUNT]: 0.5,
+        [DamageTypes.CUTTING]: 0.5,
+        [DamageTypes.PIERCING]: 0.75,
+        [DamageTypes.FIRE]: 1.25,
+        [DamageTypes.FROST]: 1.25
     };
 
     constructor(id: string) {

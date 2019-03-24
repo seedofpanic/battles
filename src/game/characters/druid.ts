@@ -9,7 +9,6 @@ import {NatureProtectionAction} from '../actions/druid/natureProtectionAction';
 import {SpinesAction} from '../actions/druid/spinesAction';
 import {GreatExileAction} from '../actions/druid/greatExileAction';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 
 export class Druid extends Character {
     actions: { [name: string]: IAction };
@@ -17,10 +16,15 @@ export class Druid extends Character {
     healthMax = 120;
     name = 'Druid';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
-        [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.POISON]: 1.25,
+        [DamageTypes.DEATH]: 1.5,
+        [DamageTypes.HOLY]: 1,
+        [DamageTypes.SHADOW]: 1,
+        [DamageTypes.BLUNT]: 0.5,
+        [DamageTypes.CUTTING]: 1.25,
+        [DamageTypes.PIERCING]: 1.25,
+        [DamageTypes.FIRE]: 1.5,
+        [DamageTypes.FROST]: 0.75
     };
 
     constructor(id: string) {

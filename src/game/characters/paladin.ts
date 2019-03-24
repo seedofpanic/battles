@@ -9,7 +9,6 @@ import {GreatShieldOfLiteAction} from '../actions/paladin/greatShieldOfLiteActio
 import {ChoppingAction} from '../actions/paladin/choppingAction';
 import {FaithPowerAction} from '../actions/paladin/faithPowerAction';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 
 
 export class Paladin extends Character {
@@ -18,10 +17,15 @@ export class Paladin extends Character {
     healthMax = 120;
     name =  'Paladin';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
-        [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.POISON]: 0.5,
+        [DamageTypes.DEATH]: 0.75,
+        [DamageTypes.HOLY]: 0.25,
+        [DamageTypes.SHADOW]: 1,
+        [DamageTypes.BLUNT]: 0.75,
+        [DamageTypes.CUTTING]: 0.75,
+        [DamageTypes.PIERCING]: 1,
+        [DamageTypes.FIRE]: 0.75,
+        [DamageTypes.FROST]: 0.75
     };
 
     constructor(id: string) {

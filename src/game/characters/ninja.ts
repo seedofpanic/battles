@@ -9,8 +9,6 @@ import {ChainShackleAction} from '../actions/ninja/chainShackleAction';
 import {PoisonBladeAction} from '../actions/ninja/PoisonBladeAction';
 import {VanishAction} from '../actions/ninja/vanishAction';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
-import {ICharacter} from '../../models/character';
 
 export class Ninja extends Character {
     actions: { [name: string]: IAction };
@@ -18,10 +16,15 @@ export class Ninja extends Character {
     healthMax = 120;
     name =  'Ninja';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
+        [DamageTypes.POISON]: 0.75,
+        [DamageTypes.DEATH]: 1,
+        [DamageTypes.HOLY]: 1,
+        [DamageTypes.SHADOW]: 0.75,
+        [DamageTypes.BLUNT]: 1.25,
+        [DamageTypes.CUTTING]: 0.75,
+        [DamageTypes.PIERCING]: 0.75,
         [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.FROST]: 1
     };
 
     constructor(id: string) {

@@ -1,6 +1,5 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
-import {IUnit} from '../../models/unit';
 import {IAction} from '../../models/action';
 import {AxeStrikeAction} from '../actions/dwarf/axeStrikeAction';
 import {AxeThrowAction} from '../actions/dwarf/axeThrowAction';
@@ -16,10 +15,15 @@ export class Dwarf extends Character {
     healthMax = 100;
     name = 'Dwarf';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
-        [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.POISON]: 0.25,
+        [DamageTypes.DEATH]: 0.75,
+        [DamageTypes.HOLY]: 0.75,
+        [DamageTypes.SHADOW]: 1,
+        [DamageTypes.BLUNT]: 0.5,
+        [DamageTypes.CUTTING]: 0.75,
+        [DamageTypes.PIERCING]: 0.75,
+        [DamageTypes.FIRE]: 0.5,
+        [DamageTypes.FROST]: 0.75
     };
 
     constructor(id: string) {

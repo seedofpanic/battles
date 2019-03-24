@@ -1,7 +1,6 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 import {AccurateShotAction} from '../actions/ranger/accurateShotAction';
 import {TripleShotAction} from '../actions/ranger/tripleShotAction';
 import {WolfAction} from '../actions/ranger/wolfAction';
@@ -17,10 +16,15 @@ export class Ranger extends Character {
     healthMax = 120;
     name = 'Ranger';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
+        [DamageTypes.POISON]: 0.5,
+        [DamageTypes.DEATH]: 0.75,
+        [DamageTypes.HOLY]: 1,
+        [DamageTypes.SHADOW]: 1,
+        [DamageTypes.BLUNT]: 1.25,
+        [DamageTypes.CUTTING]: 1.25,
+        [DamageTypes.PIERCING]: 0.75,
         [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.FROST]: 1
     };
 
     constructor(id: string) {

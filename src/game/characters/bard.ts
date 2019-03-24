@@ -1,6 +1,5 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
-import {IUnit} from '../../models/unit';
 import {IAction} from '../../models/action';
 import {MusicPowerAction} from '../actions/bard/musicPowerAction';
 import {StunningSongAction} from '../actions/bard/stunningSongAction';
@@ -17,10 +16,15 @@ export class Bard extends Character {
     healthMax = 120;
     name = 'Bard';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
-        [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.POISON]: 1.25,
+        [DamageTypes.DEATH]: 1.25,
+        [DamageTypes.HOLY]: 1,
+        [DamageTypes.SHADOW]: 1.25,
+        [DamageTypes.BLUNT]: 1.25,
+        [DamageTypes.CUTTING]: 1.25,
+        [DamageTypes.PIERCING]: 1.25,
+        [DamageTypes.FIRE]: 0.75,
+        [DamageTypes.FROST]: 0.75
     };
 
     constructor(id: string) {

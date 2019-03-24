@@ -11,8 +11,6 @@ import {DeBuffAction} from '../actions/deBuffAction';
 import {FireBurstEffect} from '../effects/fireBurstEffect';
 import {BurnicideAction} from '../actions/mage/burnicideAction';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
-import {ICharacter} from '../../models/character';
 
 export class Mage extends Character {
     actions: { [name: string]: IAction };
@@ -20,10 +18,15 @@ export class Mage extends Character {
     healthMax = 70;
     name = 'Mage';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
-        [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.POISON]: 1.25,
+        [DamageTypes.DEATH]: 0.75,
+        [DamageTypes.HOLY]: 0.75,
+        [DamageTypes.SHADOW]: 0.75,
+        [DamageTypes.BLUNT]: 1.25,
+        [DamageTypes.CUTTING]: 1.5,
+        [DamageTypes.PIERCING]: 1.25,
+        [DamageTypes.FIRE]: 0.5,
+        [DamageTypes.FROST]: 0.5
     };
 
     constructor(id: string) {

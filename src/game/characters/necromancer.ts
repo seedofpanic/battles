@@ -1,7 +1,6 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 import {BoneSpikeAction} from '../actions/necromancer/boneSpikeAction';
 import {WeaknessAction} from '../actions/necromancer/weaknessAction';
 import {DeathTouchAction} from '../actions/necromancer/deathTouchAction';
@@ -17,10 +16,15 @@ export class Necromancer extends Character {
     healthMax = 120;
     name =  'Necromancer';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
-        [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.POISON]: 0.5,
+        [DamageTypes.DEATH]: 0.25,
+        [DamageTypes.HOLY]: 1.5,
+        [DamageTypes.SHADOW]: 0.5,
+        [DamageTypes.BLUNT]: 1.25,
+        [DamageTypes.CUTTING]: 0.75,
+        [DamageTypes.PIERCING]: 0.5,
+        [DamageTypes.FIRE]: 0.75,
+        [DamageTypes.FROST]: 0.75
     };
 
     constructor(id: string) {

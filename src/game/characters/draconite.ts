@@ -10,7 +10,6 @@ import {HighVitalityEffect} from '../effects/draconite/highVitalityEffect';
 import {SummonAction} from '../actions/summonAction';
 import {Imp} from './summons/draconite/imp';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 
 export class Draconite extends Character {
     actions: { [name: string]: IAction };
@@ -18,10 +17,15 @@ export class Draconite extends Character {
     healthMax = 120;
     name = 'Draconite';
     resists = {
+        [DamageTypes.POISON]: 1.25,
+        [DamageTypes.DEATH]: 1,
+        [DamageTypes.HOLY]: 1,
+        [DamageTypes.SHADOW]: 1,
         [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
+        [DamageTypes.CUTTING]: 0.75,
+        [DamageTypes.PIERCING]: 1,
         [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.FROST]: 1.25
     };
 
     constructor(id: string) {

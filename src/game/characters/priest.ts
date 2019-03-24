@@ -1,6 +1,5 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
-import {Unit} from '../unit';
 import {SelfHealAction} from '../actions/priest/selfHealAction';
 import {FlashOfLiteAction} from '../actions/priest/flashOfLiteAction';
 import {GreatMiracleAction} from '../actions/priest/greatMiracleAction';
@@ -10,7 +9,6 @@ import {PrayOfLiteAction} from '../actions/priest/prayOfLiteAction';
 import {DeathPrayAction} from '../actions/priest/deathPrayAction';
 import {LiteBlastAction} from '../actions/priest/LiteBlastAction';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 
 export class Priest extends Character {
     actions: { [name: string]: IAction };
@@ -18,10 +16,15 @@ export class Priest extends Character {
     healthMax = 120;
     name = 'Priest';
     resists = {
+        [DamageTypes.POISON]: 0.5,
+        [DamageTypes.DEATH]: 0.5,
+        [DamageTypes.HOLY]: 0.25,
+        [DamageTypes.SHADOW]: 0.75,
         [DamageTypes.BLUNT]: 1,
         [DamageTypes.CUTTING]: 1,
+        [DamageTypes.PIERCING]: 1,
         [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.FROST]: 1
     };
 
     constructor(id: string) {

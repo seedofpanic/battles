@@ -17,10 +17,15 @@ export class Amazon extends Character {
     healthMax = 100;
     name = 'Amazon';
     resists = {
-        [DamageTypes.BLUNT]: 1,
+        [DamageTypes.POISON]: 0.5,
+        [DamageTypes.DEATH]: 0.75,
+        [DamageTypes.HOLY]: 1,
+        [DamageTypes.SHADOW]: 1,
+        [DamageTypes.BLUNT]: 0.75,
         [DamageTypes.CUTTING]: 1,
-        [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.PIERCING]: 1,
+        [DamageTypes.FIRE]: 1.25,
+        [DamageTypes.FROST]: 1.25
     };
 
     constructor(id: string) {

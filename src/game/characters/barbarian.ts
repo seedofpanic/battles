@@ -9,7 +9,6 @@ import {SwordCuttingAction} from '../actions/barbarian/swordCuttingAction';
 import {BlessOfAncestorsEffect} from '../effects/blessOfAncestorsEffect';
 import {StunningRoarEffect} from '../effects/StunningRoarEffect';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 
 export class Barbarian extends Character {
     name = 'Barbarian';
@@ -17,10 +16,15 @@ export class Barbarian extends Character {
     health = 140;
     healthMax = 140;
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
+        [DamageTypes.POISON]: 1.25,
+        [DamageTypes.DEATH]: 1.5,
+        [DamageTypes.HOLY]: 1.25,
+        [DamageTypes.SHADOW]: 1.25,
+        [DamageTypes.BLUNT]: 0.75,
+        [DamageTypes.CUTTING]: 1.25,
+        [DamageTypes.PIERCING]: 0.75,
         [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.FROST]: 1
     };
 
     constructor(id: string) {

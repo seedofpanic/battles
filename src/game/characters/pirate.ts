@@ -9,7 +9,6 @@ import {CritMasteryAction} from '../actions/pirate/critMasteryAction';
 import {BroadswordSlashAction} from '../actions/pirate/broadswordSlashAction';
 import {GrandRumAction} from '../actions/pirate/grandRumAction';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 
 export class Pirate extends Character {
     actions: { [name: string]: IAction };
@@ -17,10 +16,15 @@ export class Pirate extends Character {
     healthMax = 120;
     name =  'Pirate';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
+        [DamageTypes.POISON]: 1,
+        [DamageTypes.DEATH]: 1,
+        [DamageTypes.HOLY]: 1,
+        [DamageTypes.SHADOW]: 1,
+        [DamageTypes.BLUNT]: 0.75,
+        [DamageTypes.CUTTING]: 0.5,
+        [DamageTypes.PIERCING]: 0.5,
         [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.FROST]: 1
     };
 
     constructor(id: string) {

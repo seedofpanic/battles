@@ -10,7 +10,6 @@ import {GreatArmorEffect} from '../effects/greatArmorEffect';
 import {BladeSweepAction} from '../actions/warrior/bladeSweepAction';
 import {BoilingRageEffect} from '../effects/boilingRageEffect';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 
 export class Warrior extends Character {
     actions: { [name: string]: IAction };
@@ -18,10 +17,15 @@ export class Warrior extends Character {
     healthMax = 100;
     name = 'Warrior';
     resists = {
-        [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
-        [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.POISON]: 1.25,
+        [DamageTypes.DEATH]: 1.25,
+        [DamageTypes.HOLY]: 0.75,
+        [DamageTypes.SHADOW]: 1.25,
+        [DamageTypes.BLUNT]: 0.5,
+        [DamageTypes.CUTTING]: 0.5,
+        [DamageTypes.PIERCING]: 0.5,
+        [DamageTypes.FIRE]: 1.25,
+        [DamageTypes.FROST]: 1.25
     };
 
     constructor(id: string) {

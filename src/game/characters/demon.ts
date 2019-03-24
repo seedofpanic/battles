@@ -9,7 +9,6 @@ import {HellBlastAction} from '../actions/demon/hellBlastAction';
 import {HellHoundAction} from '../actions/demon/hellHoundAction';
 import {InfernoAction} from '../actions/demon/InfernoAction';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 
 export class Demon extends Character {
     actions: { [name: string]: IAction };
@@ -17,10 +16,15 @@ export class Demon extends Character {
     healthMax = 120;
     name = 'Demon';
     resists = {
+        [DamageTypes.POISON]: 0.25,
+        [DamageTypes.DEATH]: 0.25,
+        [DamageTypes.HOLY]: 1.75,
+        [DamageTypes.SHADOW]: 0.25,
         [DamageTypes.BLUNT]: 1,
         [DamageTypes.CUTTING]: 1,
+        [DamageTypes.PIERCING]: 1.25,
         [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.FROST]: 1
     };
 
     constructor(id: string) {

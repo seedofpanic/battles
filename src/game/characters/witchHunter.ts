@@ -1,7 +1,6 @@
 import {Character} from '../character';
 import {DamageTypes} from '../models/damageTypes';
 import {IAction} from '../../models/action';
-import {IUnit} from '../../models/unit';
 import {RapierAttackAction} from '../actions/witchHunter/rapierAttackAction';
 import {ExecutingSwardAction} from '../actions/witchHunter/executingSwardAction';
 import {PerfectShotAction} from '../actions/witchHunter/perfectShotAction';
@@ -17,10 +16,15 @@ export class WitchHunter extends Character {
     healthMax = 100;
     name = 'Witch hunter';
     resists = {
+        [DamageTypes.POISON]: 0.75,
+        [DamageTypes.DEATH]: 0.5,
+        [DamageTypes.HOLY]: 1,
+        [DamageTypes.SHADOW]: 1,
         [DamageTypes.BLUNT]: 1,
-        [DamageTypes.CUTTING]: 1,
-        [DamageTypes.FIRE]: 1,
-        [DamageTypes.FROST]: 1,
+        [DamageTypes.CUTTING]: 0.75,
+        [DamageTypes.PIERCING]: 0.75,
+        [DamageTypes.FIRE]: 0.5,
+        [DamageTypes.FROST]: 0.5
     };
 
     constructor(id: string) {
