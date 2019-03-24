@@ -8,6 +8,7 @@ import bodyParser = require('body-parser');
 import cookieSession = require('cookie-session');
 import {updateUser} from './bdTypes/DBUser';
 import {connectToDb} from './db';
+import {error} from 'util';
 const passport = require('passport');
 
 require('dotenv').config();
@@ -63,7 +64,7 @@ export function doAction(player: Player, action: any) {
             Game.startDuel(player, null);
             break;
         case 'join':
-            Game.startDuel(player, action.combatId || null);
+            Game.startDuel(player, action.payload.combatId || null);
             break;
         case 'stop':
             player.leaveCombat();

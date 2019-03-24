@@ -6,6 +6,7 @@ import {IUnit} from '../models/unit';
 import {StunAction} from './actions/stunAction';
 import {DamageTypes} from './models/damageTypes';
 import {Game} from './game';
+import {Bot} from './units/bot';
 
 let nextId = 1;
 
@@ -38,7 +39,7 @@ export abstract class Character implements ICharacter {
     }
 
     setUnit(unit: IUnit) {
-        this.unit = unit;
+        this.unit = unit || new Bot();
     }
 
     isReady(): boolean {
@@ -77,6 +78,10 @@ export abstract class Character implements ICharacter {
     }
 
     send(note: string, message: any) {
+        if (!this.unit) {
+            return;
+        }
+
         this.unit.send(note, message);
     }
 

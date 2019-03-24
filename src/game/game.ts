@@ -1,6 +1,5 @@
 import {randomBytes} from 'crypto';
 import {allowedCharacters} from './allowedCharacters';
-import {getRandomCharacter} from '../utils/getRandomCharacter';
 import {ICombat} from '../models/combat';
 import {IPlayer} from '../models/player';
 import {Combat} from './combat';
@@ -33,20 +32,24 @@ export class Game {
     static startDuel(player: IPlayer, combatId: string | null) {
         let combat: ICombat;
 
-        if (combatId === null) {
+        if (this.combatsInvites[combatId]) {
+            this.combatsCount++;
+            combat = this.combatsInvites[combatId];
+
+            delete this.combatsInvites[combatId];
+        } else {
             const newCombatId = randomBytes(8).toString('hex');
 
             combat = new Combat();
 
             this.combatsInvites[newCombatId] = combat;
-            this.combatsCount++;
 
-            player.send('note', 'Duel created, give this link to your opponent:');
-            player.send('note', `https://localhost?start=${newCombatId}`);
-        } else {
-            combat = this.combatsInvites[combatId];
+            const link = `http://${process.env.FRONT_HOST || process.env.HOST}?start=${newCombatId}`
 
-            delete this.combatsInvites[combatId];
+
+            player.send('note', 'Duel created, give this link to your opponent');
+            player.send('note', link);
+            player.send('duel_link', link);
         }
 
         if (!combat) {
@@ -56,7 +59,10 @@ export class Game {
         }
 
         this.start(player, combat);
-        this.showCharacters(player);
+
+        if (combat.isFull()) {
+            combat.start();
+        }
     }
 
     static startCombat(player: IPlayer) {
@@ -76,10 +82,6 @@ export class Game {
 
     static showCharacters(player: IPlayer) {
         player.send('select_character', this.getCharacters());
-
-        if (player.isPlayer) {
-            const character = player.character;
-        }
     }
 
     static isAllowedCharacter(character: string) {

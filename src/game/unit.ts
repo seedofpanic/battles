@@ -1,8 +1,7 @@
 import {allowedCharacters} from './allowedCharacters';
-import {getRandomSkill} from '../utils/getRandomSkill';
-import {Game} from './game';
 import {IUnit} from '../models/unit';
 import {ICharacter} from '../models/character';
+import {StunAction} from './actions/stunAction';
 
 export class Unit implements IUnit {
     isPlayer = false;
@@ -24,7 +23,10 @@ export class Unit implements IUnit {
             return;
         }
 
+        this.character.setUnit(null);
+        this.character.setAction(new StunAction(this.character));
         this.character.suicide();
+        this.send('set_in_battle', false);
     }
 
     getName() {
