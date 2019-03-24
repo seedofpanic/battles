@@ -6,9 +6,9 @@ import {ICharacter} from '../../../models/character';
 export class ImmunityEffect extends ResistsModEffect {
     constructor(actor: ICharacter) {
         super('immunity', {
-            [DamageTypes.HOLY]: 0.65,
-            [DamageTypes.FIRE]: 0.65,
-            [DamageTypes.DEATH]: 0.65,
+            [DamageTypes.HOLY]: 0.25,
+            [DamageTypes.FIRE]: 0.25,
+            [DamageTypes.DEATH]: 0.25,
         }, 'Immunity', 6, actor);
     }
 }

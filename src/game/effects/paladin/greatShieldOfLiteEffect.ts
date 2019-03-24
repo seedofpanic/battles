@@ -10,8 +10,8 @@ export class GreatShieldOfLiteEffect extends ResistsModEffect {
 
     constructor(actor: ICharacter) {
         super('great_shield_of_lite', {
-            [DamageTypes.HOLY]: 0.5,
-            [DamageTypes.DEATH]: 0.5
+            [DamageTypes.HOLY]: 0.25,
+            [DamageTypes.DEATH]: 0.25
         }, 'Great shield of lite', 3, actor);
     }
 

@@ -11,8 +11,8 @@ export const FLAMING_ARMOR_EFFECT_ID = 'flaming_armor';
 export class FlamingArmorEffect extends ResistsModEffect {
     constructor(actor: ICharacter) {
         super(FLAMING_ARMOR_EFFECT_ID, {
-            [DamageTypes.FIRE]: 0.8,
-            [DamageTypes.HOLY]: 0.8,
+            [DamageTypes.FIRE]: 0.4,
+            [DamageTypes.HOLY]: 0.4,
         }, 'Flaming armor', 2, actor);
     }
 

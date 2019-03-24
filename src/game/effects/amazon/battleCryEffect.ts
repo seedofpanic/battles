@@ -8,6 +8,6 @@ export class BattleCryEffect extends Effect {
     }
 
     critChanceMod(value: number, type: DamageTypes): number {
-        return value + 0.1;
+        return value + 0.2;
     }
 }

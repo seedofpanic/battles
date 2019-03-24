@@ -6,10 +6,10 @@ import {ICharacter} from '../../../models/character';
 export class HellsistanceEffect extends ResistsModEffect {
     constructor(actor: ICharacter) {
         super('hellsistance', {
-            [DamageTypes.CUTTING]: 0.7,
-            [DamageTypes.POISON]: 0.7,
-            [DamageTypes.HOLY]: 0.7,
-            [DamageTypes.DEATH]: 0.7,
+            [DamageTypes.CUTTING]: 0.35,
+            [DamageTypes.POISON]: 0.35,
+            [DamageTypes.HOLY]: 0.35,
+            [DamageTypes.DEATH]: 0.35,
         }, 'Hellsistance', 2, actor);
     }
 }

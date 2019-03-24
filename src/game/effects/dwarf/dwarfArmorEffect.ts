@@ -6,9 +6,9 @@ import {ICharacter} from '../../../models/character';
 export class DwarfArmorEffect extends ResistsModEffect {
     constructor(actor: ICharacter) {
         super('dwarf_armor', {
-            [DamageTypes.BLUNT]: 0.9,
-            [DamageTypes.CUTTING]: 0.9,
-            [DamageTypes.PIERCING]: 0.9,
+            [DamageTypes.BLUNT]: 0.45,
+            [DamageTypes.CUTTING]: 0.45,
+            [DamageTypes.PIERCING]: 0.45,
         }, 'Dwarf armor', 3, actor);
     }
 }

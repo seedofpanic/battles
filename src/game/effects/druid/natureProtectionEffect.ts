@@ -7,7 +7,7 @@ import {ICharacter} from '../../../models/character';
 
 export class NatureProtectionEffect extends ResistsModEffect {
     constructor(actor: ICharacter) {
-        super('nature_protection', 0.7, 'Nature protection', 3, actor);
+        super('nature_protection', 0.35, 'Nature protection', 3, actor);
     }
 
     resistMod(value: number, type: DamageTypes, self: ICharacter, source: IAction | IEffect): number {

@@ -10,8 +10,8 @@ export class BoneArmorEffect extends ResistsModEffect {
 
     constructor(actor: ICharacter) {
         super('bone_armor', {
-            [DamageTypes.PIERCING]: 0.7,
-            [DamageTypes.CUTTING]: 0.7
+            [DamageTypes.PIERCING]: 0.35,
+            [DamageTypes.CUTTING]: 0.35
         }, 'Bone armor', 3, actor);
     }
 

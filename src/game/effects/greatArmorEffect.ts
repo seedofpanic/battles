@@ -8,8 +8,8 @@ export const GREAT_ARMOR_EFFECT_ID = 'great_armor';
 export class GreatArmorEffect extends ResistsModEffect {
     constructor(actor: ICharacter) {
         super(GREAT_ARMOR_EFFECT_ID, {
-            [DamageTypes.DEATH]: 0.5,
-            [DamageTypes.HOLY]: 0.5,
+            [DamageTypes.DEATH]: 0.25,
+            [DamageTypes.HOLY]: 0.25,
         }, 'Great armor', 2, actor);
     }
 }

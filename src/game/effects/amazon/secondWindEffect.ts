@@ -12,6 +12,6 @@ export class SecondWindEffect extends Effect {
 
     onDeath(value: number, oldHp: number,
             damage: number, type: DamageTypes, self: ICharacter, action: IAction | IEffect): number {
-        return self.health * 0.2;
+        return self.health * 0.4;
     }
 }

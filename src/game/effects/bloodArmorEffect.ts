@@ -10,8 +10,8 @@ export const BLOOD_ARMOR_EFFECT_ID = 'blood_armor';
 export class BloodArmorEffect extends ResistsModEffect {
     constructor(actor: ICharacter) {
         super(BLOOD_ARMOR_EFFECT_ID, {
-            [DamageTypes.HOLY]: 0.8,
-            [DamageTypes.DEATH]: 0.8
+            [DamageTypes.HOLY]: 0.4,
+            [DamageTypes.DEATH]: 0.4
         }, 'Blood armor', 2, actor);
     }
 

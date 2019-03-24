@@ -1,4 +1,3 @@
-import {IUnit} from '../../../models/unit';
 import {Effect} from '../../effect';
 import {DamageTypes} from '../../models/damageTypes';
 import {ICharacter} from '../../../models/character';
