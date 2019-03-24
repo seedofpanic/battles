@@ -5,8 +5,8 @@ import {IAction} from '../../../../models/action';
 
 export class HellHound extends Character {
     actions: { [name: string]: IAction };
-    health = 20;
-    healthMax = 20;
+    health = 15;
+    healthMax = 15;
     name = 'Hell hound';
     resists = {
         [DamageTypes.BLUNT]: 1.3,

@@ -5,6 +5,6 @@ import {ICharacter} from '../../../models/character';
 
 export class WolfAction extends SummonAction {
     constructor(actor: ICharacter) {
-        super(actor, 'Wolf', 'wolf', Wolf);
+        super(actor, 'Wolf', 'wolf', Wolf, 10);
     }
 }

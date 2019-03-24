@@ -8,8 +8,8 @@ let nextSummonId = 1;
 
 export class SummonAction extends Action {
     constructor(actor: ICharacter, name: string, private summonId: string,
-                private summon: new (id: string) => ICharacter) {
-        super(actor, name);
+                private summon: new (id: string) => ICharacter, cooldown: number) {
+        super(actor, name, cooldown);
     }
 
     perform(combat: ICombat, self: ICharacter, target: ICharacter) {

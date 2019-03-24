@@ -1,14 +1,12 @@
 import {Character} from '../../../character';
 import {IAction} from '../../../../models/action';
 import {DamageTypes} from '../../../models/damageTypes';
-import {IUnit} from '../../../../models/unit';
 import {HitAction} from '../../../actions/hitAction';
-import {ICharacter} from '../../../../models/character';
 
 export class Skeleton extends Character {
     actions: { [name: string]: IAction };
-    health = 20;
-    healthMax = 20;
+    health = 10;
+    healthMax = 10;
     name = 'Skeleton';
     resists = {
         [DamageTypes.BLUNT]: 1.3,

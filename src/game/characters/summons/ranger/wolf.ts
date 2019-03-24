@@ -2,8 +2,6 @@ import {DamageTypes} from '../../../models/damageTypes';
 import {HitAction} from '../../../actions/hitAction';
 import {Character} from '../../../character';
 import {IAction} from '../../../../models/action';
-import {IUnit} from '../../../../models/unit';
-import {ICharacter} from '../../../../models/character';
 
 export class Wolf extends Character {
     actions: { [name: string]: IAction };

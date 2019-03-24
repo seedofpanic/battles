@@ -39,7 +39,7 @@ export class Draconite extends Character {
             'poison_bite': new PoisonBiteAction(this),
             'wings_of_steel': new BuffAction(this, WingsOfSteelEffect, 'Wings of steel', 6),
             'high_vitality': new BuffAction(this, HighVitalityEffect, 'High vitality', 6),
-            'summon_imp': new SummonAction(this, 'Summon Imp', 'imp', Imp),
+            'summon_imp': new SummonAction(this, 'Summon Imp', 'imp', Imp, 10),
         };
     }
 }
