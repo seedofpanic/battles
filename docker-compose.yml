@@ -3,7 +3,6 @@ version: '3'
 services:
     battles-backend:
         build: .
-        working_dir: .
         container_name: "battles-backend"
         hostname: "battles-backend"
         restart: always
@@ -23,8 +22,7 @@ services:
             - battles-networks
 
     battlesdb:
-        build: db
-        working_dir: db
+        build: ./db
         hostname: battlesdb
         restart: always
         container_name: battlesdb
