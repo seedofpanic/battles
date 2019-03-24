@@ -62,12 +62,12 @@ export class Game {
     static startCombat(player: IPlayer) {
         const combat = this.getCombatFromQueue();
 
+        this.start(player, combat);
+
         if (combat.isFull()) {
             this.removeCombatFromQueue(combat);
             this.combatsCount++;
         }
-
-        this.start(player, combat);
     }
 
     static removeCombatFromQueue(combat: ICombat) {
