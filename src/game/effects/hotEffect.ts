@@ -1,20 +1,23 @@
 import {Effect} from '../effect';
-import {Player} from '../player';
 import {DamageTypes} from '../models/damageTypes';
-import {Game} from '../game';
+import {calcDamage} from '../../utils/calcDamage';
+import {IUnit} from '../../models/unit';
+import {ICharacter} from '../../models/character';
 
 export class HotEffect extends Effect {
-    constructor(name: string,
+    constructor(id: string,
+                name: string,
                 private minHeal: number,
                 private maxHeal: number,
-                private type: DamageTypes,
+                private damageType: DamageTypes,
                 roundsCount: number,
+                actor: ICharacter,
     ) {
-        super(name, roundsCount);
+        super(id, name, roundsCount, actor);
     }
 
-    tick(player: Player): boolean {
-        player.increaseHp(this, Game.calcDamage(this.minHeal, this.maxHeal));
-        return super.tick(player);
+    preTick(self: ICharacter) {
+        self.increaseHp(this, calcDamage(this.minHeal, this.maxHeal));
+        super.preTick(self);
     }
 }

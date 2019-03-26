@@ -33,6 +33,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - run: cp ./.env.example ./.env
+
       # check linting
       - run: yarn run lint
 
@@ -45,10 +47,13 @@ jobs:
                     if [ "${CIRCLE_BRANCH}" == "release/0.3.0" ]; then
                       echo "${HOST_KEY}" >> ~/.ssh/known_hosts
 
-                      ssh ${HOST_NAME} "cd ${HOST_DIR};git pull"
-                      ssh ${HOST_NAME} "cd ${HOST_DIR};npm i"
-                      ssh ${HOST_NAME} "cd ${HOST_DIR};npm run stop:prod || true"
-                      ssh ${HOST_NAME} "cd ${HOST_DIR};npm run start:prod"
+                      ssh ${HOST_NAME} << EOF
+                        cd ${HOST_DIR}
+                        git pull
+                        npm install
+                        docker-compose down
+                        docker-compose up --build -d
+                    EOF
                     fi
 
 

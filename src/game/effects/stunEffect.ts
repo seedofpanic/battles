@@ -1,17 +1,23 @@
 import {Effect} from '../effect';
-import {Player} from '../player';
-import {StunAction} from '../actions/stunAction';
+import {EffectType} from '../models/effectType';
+import {IUnit} from '../../models/unit';
+import {ICharacter} from '../../models/character';
 
-const NAME = 'Оглушение';
+const NAME = 'Stun';
+
+export const STUN_EFFECT_ID = 'stun';
 
 export class StunEffect extends Effect {
-    constructor(roundsCount: number) {
-        super(NAME, roundsCount);
+    type = {
+        ...super.type,
+        [EffectType.STUN]: true
+    };
+
+    constructor(roundsCount: number, actor: ICharacter) {
+        super(STUN_EFFECT_ID, NAME, roundsCount, actor);
     }
 
-    tick(player: Player): boolean {
-        player.action = new StunAction();
-
-        return super.tick(player);
+    isStunned(value: boolean) {
+        return true;
     }
 }

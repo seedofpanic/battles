@@ -1,14 +1,21 @@
 import {Action} from '../action';
-import {Player} from '../player';
-import {Combat} from '../combat';
+import {EffectType} from '../models/effectType';
+import {ICombat} from '../../models/combat';
+import {IUnit} from '../../models/unit';
+import {ICharacter} from '../../models/character';
 
-const NAME = 'Оглушение';
+const NAME = 'Stun';
 
 export class StunAction extends Action {
-    constructor() {
-        super(NAME);
+    type = {
+        ...super.type,
+        [EffectType.STUN]: true
+    };
+
+    constructor(actor: ICharacter) {
+        super(actor, NAME);
     }
 
-    perform(combat: Combat, player?: Player, target?: Player) {
+    perform(combat: ICombat, self?: ICharacter, target?: ICharacter) {
     }
 }

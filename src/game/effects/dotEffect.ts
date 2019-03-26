@@ -1,23 +1,25 @@
 import {Effect} from '../effect';
-import {Player} from '../player';
 import {DamageTypes} from '../models/damageTypes';
-import {Game} from '../game';
+import {calcDamage} from '../../utils/calcDamage';
+import {IUnit} from '../../models/unit';
+import {ICharacter} from '../../models/character';
 
 export class DotEffect extends Effect {
-    constructor(name: string,
+    constructor(id: string,
+                name: string,
                 private minDamage: number,
                 private maxDamage: number,
-                private type: DamageTypes,
+                private damageType: DamageTypes,
                 roundsCount: number,
+                actor: ICharacter,
     ) {
-        super(name, roundsCount);
+        super(id, name, roundsCount, actor);
     }
 
-    tick(player: Player) {
+    preTick(self: ICharacter) {
+        self.decreaseHp(this, calcDamage(this.minDamage, this.maxDamage)
+            * self.getResist(this.damageType, this), this.damageType);
 
-        player.decreaseHp(this, Game.calcDamage(this.minDamage, this.maxDamage)
-            * player.getResist(this.type));
-
-        return super.tick(player);
+        super.preTick(self);
     }
 }

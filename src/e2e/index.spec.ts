@@ -1,249 +1,354 @@
-import '../index';
-import {bot} from '../game/bot';
-import * as TelegramBot from 'node-telegram-bot-api';
-import {getMessage} from './helpers';
+import {doAction} from '../index';
+import {Player} from '../game/units/player';
+import objectContaining = jasmine.objectContaining;
+import arrayContaining = jasmine.arrayContaining;
+import anything = jasmine.anything;
 
-bot.stopPolling();
+describe('pvp Warrior vs Mage', () => {
 
-describe('bot', () => {
-
-    const results: {
-        chatId: number;
-        text: string;
-        options: TelegramBot.SendMessageOptions;
-    }[] = [];
-    let chat1: TelegramBot.Chat;
-    let chat2: TelegramBot.Chat;
+    const results: any[] = [];
+    const sessions: Player[] = [
+        new Player('1'),
+        new Player('2')
+    ];
 
     beforeAll(() => {
         spyOn(console, 'log').and.callFake(msg => results.push(msg));
-        spyOn(bot, 'sendMessage').and.callFake((chatId, text, options) => {
-            results.push({
-                chatId,
-                text,
-                options,
-            });
+        spyOn(Math, 'random').and.returnValue(0.51);
+        spyOn(sessions[0], 'send').and.callFake((type, payload) => {
+            results.push({[type]: payload});
         });
-        spyOn(Math, 'random').and.returnValue(0.5);
+        spyOn(sessions[1], 'send').and.callFake((type, payload) => {
+            results.push({[type]: payload});
+        });
     });
 
     beforeEach(() => {
-        chat1 = {
-            id: 1,
-            username: 'user 1',
-            type: 'test',
-        };
-        chat2 = {
-            id: 2,
-            username: 'user 2',
-            type: 'test',
-        };
         results.length = 0;
     });
 
     it('Первый игрок сообщил что готов', () => {
-        bot.processUpdate(getMessage(1, '/готов'));
+        doAction(sessions[0], {type: 'start', payload: {}});
 
-        expect(results).toEqual([{
-            'chatId': '1',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/готов Варвар'},
-                        {'text': '/готов Воин'},
-                        {'text': '/готов Маг'},
-                        {'text': '/готов Вампир'},
-                    ]],
-                    'one_time_keyboard': true
-                }
+        expect(results).toEqual([
+            {set_in_battle: true},
+            {set_teams: {myTeam: "team1", opponentTeam: "team2"}},
+            {
+                'select_character': arrayContaining([
+                    objectContaining({'id': 'barbarian', skills: jasmine.anything()}),
+                    objectContaining({'id': 'warrior', skills: jasmine.anything()}),
+                    objectContaining({'id': 'mage', skills: jasmine.anything()}),
+                    objectContaining({'id': 'vampire', skills: jasmine.anything()})
+                ])
             },
-            'text': 'выберите персонажа'
-        }]);
+            {'show_timer': anything()}
+        ]);
     });
 
     it('Первый игрок сообщил что готов играть за Воина', () => {
-        bot.processUpdate(getMessage(1,'/готов Воин'));
+        doAction(sessions[0], {type: 'select_character', payload: 'warrior'});
 
         expect(results).toEqual([{
-            'chatId': '1', 'options': undefined, 'text': 'Ожидаем противника'
-        }]);
+            character_update: {
+                data: {
+                    id: 'warrior',
+                    health: 100,
+                    healthMax: 100,
+                    name: 'Warrior',
+                    effects: []
+                },
+                id: '1',
+                team: 'team1'
+            },
+        },
+            {note: 'Waiting for opponent to join'}
+        ]);
     });
 
     it('Второй игрок сообщил что готов', () => {
-        bot.processUpdate(getMessage(2, '/готов'));
-        expect(results).toEqual([{
-            'chatId': '2',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/готов Варвар'},
-                            {'text': '/готов Воин'},
-                            {'text': '/готов Маг'},
-                            {'text': '/готов Вампир'}
-                        ]],
-                    'one_time_keyboard': true
+        doAction(sessions[1], {type: 'start', payload: {}});
+        expect(results).toEqual([
+            {"set_in_battle": true},
+            {set_teams: {myTeam: "team2", opponentTeam: "team1"}},
+            {
+                character_update: {
+                    data: {
+                        id: 'warrior',
+                        health: 100,
+                        healthMax: 100,
+                        name: "Warrior",
+                        effects: []
+                    },
+                    id: "1",
+                    team: 'team1'
                 }
             },
-            'text': 'выберите персонажа'
-        }]);
+            {
+                "select_character": arrayContaining([
+                    objectContaining({'id': 'barbarian', skills: jasmine.anything()}),
+                    objectContaining({'id': 'warrior', skills: jasmine.anything()}),
+                    objectContaining({'id': 'mage', skills: jasmine.anything()}),
+                    objectContaining({'id': 'vampire', skills: jasmine.anything()})
+                ])
+            },
+            {'show_timer': anything()}]);
     });
 
     it('Второй игрок сообщил что готов играть за Мага', () => {
-        bot.processUpdate(getMessage(2, '/готов Маг'));
+        doAction(sessions[1], {type: 'select_character', payload: 'mage'});
         expect(results).toEqual([{
-            'chatId': '1',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act рассечь'},
-                        {'text': '/act ударить мечем'}, {'text': '/act ударить щитом'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'Противник найден\nВоин vs Маг'
+            character_update: {
+                "data": {"health": 70, "healthMax": 70, "name": "Mage", id: 'mage', effects: []},
+                "id": "2",
+                team: 'team2'
+            }
         }, {
-            'chatId': '2',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act огненный шар'}, {'text': '/act ледяная стрела'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'Противник найден\nВоин vs Маг'
-        }]);
+            character_update: {
+                "data": {"health": 70, "healthMax": 70, "name": "Mage", id: 'mage', effects: []},
+                "id": "2",
+                team: 'team2'
+            }
+        },
+            {"note": "Opponent found: Warrior vs Mage"}, {
+            select_skill: jasmine.arrayContaining([{
+                "id": "piercing_strike",
+                "name": "Piercing strike"
+            }])
+        }, {'show_timer': anything()},
+            {"note": "Opponent found: Warrior vs Mage"}, {
+            select_skill: jasmine.arrayContaining([{
+                "id": "fireball",
+                "name": "Fireball"
+            }])
+        },
+            {'show_timer': anything()}]);
     });
 
-    it('Первый игрок выбирает рассечь', () => {
-        bot.processUpdate(getMessage(1, '/act рассечь'));
+    it('Первый игрок выбирает Piercing strike', () => {
+        doAction(sessions[0], {type: 'select_skill', payload: 'piercing_strike'});
 
-        expect(results).toEqual([{
-            'chatId': '1', 'options': undefined, 'text': 'Вы собрались ударить рассечь'
-        }, {
-            'chatId': '1', 'options': undefined, 'text': 'ожидаем противника'
-        }]);
-    });
-
-    it('Второй игрок выбирает огненный шар', () => {
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
-
-        expect(results).toEqual([{
-            'chatId': '2', 'options': undefined, 'text': 'Вы собрались ударить огненный шар'
-        }, {'chatId': '1', 'options': undefined, 'text': 'Рассечение наносит 11 урона' +
-            '\nРассечение накладывает эффек Кровотечение' +
-            '\nОгненный шар наносит 8 урона' +
-            '\nОгненный шар накладывает эффек Горение' +
-            '\nГорение наносит 4 урона' +
-            '\nКровотечение наносит 6 урона'
-        }, {
-            'chatId': '1',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act ударить мечем'}, {'text': '/act ударить щитом'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'у вас осталось 90/100 здоровья\nу противника 55/70 здоровья'
-        }, {'chatId': '2', 'options': undefined, 'text': 'Рассечение наносит 11 урона' +
-            '\nРассечение накладывает эффек Кровотечение' +
-            '\nОгненный шар наносит 8 урона' +
-            '\nОгненный шар накладывает эффек Горение' +
-            '\nГорение наносит 4 урона' +
-            '\nКровотечение наносит 6 урона'
-        }, {
-            'chatId': '2',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act огненный шар'}, {'text': '/act ледяная стрела'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'у противника 90/100 здоровья\nу вас осталось 55/70 здоровья'
-        }]);
+        expect(results).toEqual([{"note": "You will use Piercing strike skill"},
+            {"note": "Waiting for opponent..."}]);
     });
 
     it('Второй игрок выбирает огненный шар', () => {
-        bot.processUpdate(getMessage(2, '/act огненный шар'));
+        doAction(sessions[1], {type: 'select_skill', payload: 'fireball'});
 
-        expect(results).toEqual([{
-            'chatId': '2', 'options': undefined, 'text': 'Вы собрались ударить огненный шар'
+        expect(results).toEqual([{"note": "You will use Fireball skill"}, {
+            "character_update": {
+                "data": {
+                    "health": 95,
+                    "healthMax": 100,
+                    "id": "warrior",
+                    "name": "Warrior",
+                    "effects": []
+                },
+                "id": "1",
+                team: 'team1'
+            }
         }, {
-            'chatId': '2', 'options': undefined, 'text': 'ожидаем противника'
-        }]);
+            "character_update": {
+                "data": {
+                    "health": 95,
+                    "healthMax": 100,
+                    "id": "warrior",
+                    "name": "Warrior",
+                    "effects": []
+                }, "id": "1", team: 'team1'
+            }
+        }, {
+            "note": 'Piercing strike do 5 damage\n' +
+                'Fireball do 5 damage'
+        }, {
+            "select_skill": jasmine.arrayContaining([{"id": "piercing_strike", "name": "Piercing strike"}])
+        }, {'show_timer': anything()}, {
+            "character_update": {
+                "data": {
+                    "health": 65,
+                    "healthMax": 70,
+                    "id": "mage",
+                    "name": "Mage",
+                    "effects": []
+                },
+                id: "2",
+                team: 'team2'
+            }
+        }, {
+            "character_update": {
+                "data": {
+                    "health": 65,
+                    "healthMax": 70,
+                    "id": "mage",
+                    "name": "Mage",
+                    "effects": []
+                },
+                id: "2",
+                team: 'team2'
+            }
+        }, {
+            "note": 'Piercing strike do 5 damage\n' +
+                'Fireball do 5 damage'
+        }, {"select_skill": jasmine.arrayContaining([{"id": "fireball", "name": "Fireball"}])},
+            {'show_timer': anything()}]);
+    });
+
+    it('Второй игрок выбирает огненный шар еще раз', () => {
+        doAction(sessions[1], {type: 'select_skill', payload: 'fireball'});
+
+        expect(results).toEqual([{"note": "You will use Fireball skill"},
+            {"note": "Waiting for opponent..."}]);
     });
 
     it('Первый игрок выбирает ударить щитом', () => {
-        bot.processUpdate(getMessage(1, '/act ударить щитом'));
+        doAction(sessions[0], {type: 'select_skill', payload: 'shield_strike'});
 
-        expect(results).toEqual([{
-            'chatId': '1', 'options': undefined, 'text': 'Вы собрались ударить ударить щитом'
-        }, {'chatId': '1', 'options': undefined, 'text': 'Удар щитом наносит 9 урона' +
-            '\nУдар щитом накладывает эффек Оглушение' +
-            '\nОгненный шар наносит 8 урона' +
-            '\nОгненный шар накладывает эффек Горение' +
-            '\nГорение наносит 4 урона' +
-            '\nГорение наносит 4 урона'
+        expect(results).toEqual([{"note": "You will use Shield strike skill"}, {
+            character_update: {
+                data: {
+                    health: 90,
+                    healthMax: 100,
+                    id: 'warrior',
+                    name: 'Warrior',
+                    effects: []
+                },
+                id: "1",
+                team: 'team1'
+            }
         }, {
-            'chatId': '1',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act рассечь'}, {'text': '/act ударить мечем'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'у вас осталось 75/100 здоровья\nу противника 46/70 здоровья'
-        }, {'chatId': '2', 'options': undefined, 'text': 'Удар щитом наносит 9 урона' +
-            '\nУдар щитом накладывает эффек Оглушение' +
-            '\nОгненный шар наносит 8 урона' +
-            '\nОгненный шар накладывает эффек Горение' +
-            '\nГорение наносит 4 урона' +
-            '\nГорение наносит 4 урона'
+            character_update: {
+                data: {
+                    health: 90,
+                    healthMax: 100,
+                    id: 'warrior',
+                    name: 'Warrior',
+                    effects: []
+                },
+                id: "1",
+                team: 'team1'
+            }
         }, {
-            'chatId': '2',
-            'options': {},
-            'text': 'у противника 75/100 здоровья\nу вас осталось 46/70 здоровья'
-        }]);
+            "note": 'Shield strike do 7 damage\n' +
+                'Shield strike adds Stun effect\n' +
+                'Fireball do 5 damage'
+        }, {
+            "select_skill": jasmine.arrayContaining([
+                    {"id": "piercing_strike", "name": "Piercing strike"}
+                ])
+        }, {'show_timer': anything()}, {
+            "character_update": {
+                "data": {
+                    "health": 58,
+                    healthMax: 70,
+                    id: 'mage',
+                    name: 'Mage',
+                    "effects": [
+                        {
+                            id: 'stun',
+                            name: 'Stun',
+                            ticks: 1
+                        }
+                    ]
+                },
+                "id": "2",
+                team: 'team2'
+            }
+        }, {
+            "character_update": {
+                "data": {
+                    "health": 58,
+                    healthMax: 70,
+                    id: 'mage',
+                    name: 'Mage',
+                    "effects": [
+                        {
+                            id: 'stun',
+                            name: 'Stun',
+                            ticks: 1
+                        }
+                    ]
+                },
+                "id": "2",
+                team: 'team2'
+            }
+        }, {
+            "note": 'Shield strike do 7 damage\n' +
+                'Shield strike adds Stun effect\n' +
+                'Fireball do 5 damage'
+        }, {"select_skill": []},
+            {'show_timer': anything()}]);
     });
 
     it('Второй игрок выбирает ледяную стрелу', () => {
-        bot.processUpdate(getMessage(2, '/act ледяная стрела'));
+        doAction(sessions[1], {type: 'select_skill', payload: 'frost_arrow'});
 
-        expect(results).toEqual([{
-            'chatId': '2', 'options': undefined, 'text': 'Действие уже выбрано'
-        }]);
+        expect(results).toEqual([{"error": "Skill already selected"}]);
     });
 
     it('Первый игрок выбирает ударить щитом, но это действие не доступно', () => {
-        bot.processUpdate(getMessage(1, '/act ударить щитом'));
+        doAction(sessions[0], {type: 'select_skill', payload: 'shield_strike'});
 
-        expect(results).toEqual([{
-            'chatId': '1', 'options': undefined, 'text': 'Действие ударить щитом сейчас не доступно'
-        }]);
+        expect(results).toEqual([{"error": "Skill shield_strike is not available now"}]);
     });
 
     it('Первый игрок выбирает ударить мечем второй раз', () => {
-        bot.processUpdate(getMessage(1, '/act ударить мечем'));
+        doAction(sessions[0], {type: 'select_skill', payload: 'piercing_strike'});
 
-        expect(results).toEqual([{
-            'chatId': '1', 'options': undefined, 'text': 'Вы собрались ударить ударить мечем'
-        }, {'chatId': '1', 'options': undefined, 'text': 'Удар мечем наносит 11 урона' +
-            '\nГорение наносит 4 урона'
+        expect(results).toEqual([{"note": "You will use Piercing strike skill"}, {
+            "character_update": {
+                "data": {
+                    "health": 90,
+                    healthMax: 100,
+                    id: 'warrior',
+                    name: 'Warrior',
+                    "effects": []
+                },
+                "id": "1",
+                team: 'team1'
+            }
         }, {
-            'chatId': '1',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act рассечь'}, {'text': '/act ударить мечем'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'у вас осталось 72/100 здоровья\nу противника 36/70 здоровья'
-        }, {'chatId': '2', 'options': undefined, 'text': 'Удар мечем наносит 11 урона' +
-            '\nГорение наносит 4 урона'
+            "character_update": {
+                "data": {
+                    "health": 90,
+                    healthMax: 100,
+                    id: 'warrior',
+                    name: 'Warrior',
+                    "effects": []
+                },
+                "id": "1",
+                team: 'team1'
+            }
         }, {
-            'chatId': '2',
-            'options': {
-                'reply_markup': {
-                    'keyboard': [[{'text': '/act огненный шар'}, {'text': '/act ледяная стрела'}]],
-                    'one_time_keyboard': true
-                }
-            },
-            'text': 'у противника 72/100 здоровья\nу вас осталось 36/70 здоровья'
-        }]);
+            "note": "Piercing strike do 5 damage"
+        }, {
+            "select_skill": jasmine.arrayContaining([{"id": "piercing_strike", "name": "Piercing strike"}])
+        }, {'show_timer': anything()}, {
+            "character_update": {
+                "data": {
+                    "health": 53,
+                    healthMax: 70,
+                    id: 'mage',
+                    name: 'Mage',
+                    "effects": []
+                }, "id": "2",
+                team: 'team2'
+            }
+        }, {
+            "character_update": {
+                "data": {
+                    "health": 53,
+                    healthMax: 70,
+                    id: 'mage',
+                    name: 'Mage',
+                    "effects": []
+                },
+                "id": "2",
+                team: 'team2'
+            }
+        }, {
+            "note": 'Piercing strike do 5 damage'
+        }, {"select_skill": jasmine.arrayContaining([
+                {id: 'fireball', name: 'Fireball'}
+            ])},
+            {'show_timer': anything()}]);
     });
 });

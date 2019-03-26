@@ -1,13 +1,15 @@
-import {Player} from './player';
 import {DamageTypes} from './models/damageTypes';
-import {Combat} from './combat';
+import {IAction} from '../models/action';
+import {ICombat} from '../models/combat';
+import {ICharacter} from '../models/character';
 
 // TODO: rename to Skill
-export abstract class Action {
+export abstract class Action implements IAction {
+    type: {[name: string]: boolean} = {};
     charges: number;
     recharge = 0;
 
-    constructor(public name: string, private cooldown = 0, private maxCharges = 1) {
+    constructor(public actor: ICharacter, public name: string, private cooldown = 0, private maxCharges = 1) {
         this.charges = maxCharges;
     }
 
@@ -15,7 +17,7 @@ export abstract class Action {
         return this.charges > 0;
     }
 
-    perform(combat: Combat, player?: Player, target?: Player) {
+    perform(combat?: ICombat, self?: ICharacter, target?: ICharacter) {
         this.charges--;
     }
 
@@ -30,6 +32,9 @@ export abstract class Action {
         } else {
             this.recharge++;
         }
+    }
+
+    beforeResolve(combat?: ICombat, self?: ICharacter, target?: ICharacter) {
     }
 
     modifyIncomeDamage(damage: number, type: DamageTypes) {
