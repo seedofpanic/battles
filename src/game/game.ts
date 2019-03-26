@@ -44,7 +44,7 @@ export class Game {
 
             this.combatsInvites[newCombatId] = combat;
 
-            const link = `http://${process.env.FRONT_HOST || process.env.HOST}?start=${newCombatId}`
+            const link = `http://${process.env.FRONT_HOST || process.env.HOST}?start=${newCombatId}`;
 
 
             player.send('note', 'Duel created, give this link to your opponent');
